@@ -3,10 +3,38 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {createTheme, ThemeProvider} from "@material-ui/core";
+import {BrowserRouter} from "react-router-dom";
+
+const theme = createTheme({
+    typography: {
+        fontFamily: 'IBM Plex Sans'
+    },
+    palette: {
+        primary: {
+            main: '#374151',
+            light: '#6B7280',
+            dark: '#1F2937'
+        },
+        text: {
+            primary: '#E5E7EB',
+            secondary: '#D1D5DB',
+            disabled: '#9CA3AF'
+        },
+        action: {
+            active: '#E5E7EB'
+        }
+    }
+});
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+      <ThemeProvider theme={theme}>
+          <BrowserRouter>
+              <App />
+          </BrowserRouter>
+      </ThemeProvider>
   </React.StrictMode>,
   document.getElementById('root')
 );
