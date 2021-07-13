@@ -10,26 +10,39 @@ const Layout = ({children}) => {
     const useStyles = makeStyles(theme => {
         return {
             content: {
-                paddingTop: 112
+                paddingTop: 142,
+                display: 'flex',
+                flexDirection: 'column',
+                minHeight: '92vh',
+                backgroundColor: theme.palette.background.default
             },
-            appBar: {}
+            appBar: {},
+            root: {
+            },
+            footer: {
 
+            },
+            main: {
+                flexGrow: 1
+            }
         }
     });
 
     const classes = useStyles();
 
     return (
-        <div>
+        <div className={classes.root}>
             <AppBar className={classes.appBar} variant="outlined">
                 <TopDesktopHeader/>
                 <DesktopNavigationHeader/>
             </AppBar>
             <div className={classes.content}>
-                {children}
-            </div>
-            <div>
-                <Footer/>
+                <div className={classes.main}>
+                    {children}
+                </div>
+                <div className={classes.footer}>
+                    <Footer/>
+                </div>
             </div>
         </div>
     )

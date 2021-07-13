@@ -1,12 +1,7 @@
 import React, {useState} from "react";
 import {
-    Avatar,
-    Button, Container,
+    Button,
     Grid,
-    List,
-    ListItem,
-    ListItemAvatar,
-    ListItemText,
     Menu,
     MenuItem,
     Toolbar
@@ -20,13 +15,17 @@ const DesktopNavigationHeader = () => {
     const useStyles = makeStyles(theme => {
         return {
             link: {
-                textDecoration: 'none'
+                textDecoration: 'none',
+                color: theme.palette.text.secondary
+            },
+            toolbar: {
+                backgroundColor: theme.palette.primary.main
             },
             button: {
-                display: 'inline-block',
-                marginLeft: 16,
-                marginRight: 16,
-                color: '#E5E7EB'
+                color: theme.palette.text.primary
+            },
+            menuButton: {
+                color: theme.palette.text.primary
             }
         }
     });
@@ -40,7 +39,7 @@ const DesktopNavigationHeader = () => {
         setBankAnchor(event.currentTarget);
     }
 
-    const handleBankAnchorClose = event => {
+    const handleBankAnchorClose = () => {
         setBankAnchor(null);
     }
 
@@ -48,82 +47,72 @@ const DesktopNavigationHeader = () => {
         setCreditAnchor(event.currentTarget);
     }
 
-    const handleCreditAnchorClose = event => {
+    const handleCreditAnchorClose = () => {
         setCreditAnchor(null);
     }
 
     return (
-        <Toolbar variant="dense">
-            <Grid container={true} justifyContent="center" alignItems="center" spacing={4}>
+        <Toolbar className={classes.toolbar} variant="regular">
+            <Grid container={true} justifyContent="center" alignItems="center" spacing={6}>
                 <Grid item={true}>
                     <Link className={classes.link} to="/">
                         <Button
-                            sx={{
-                                color: '#E5E7EB',
-                                alignItems: "center"
-                            }}
+                            className={classes.button}
                             startIcon={<Dashboard/>}
-                            size="large"
+                            size="small"
                             variant="text">Dashboard</Button>
                     </Link>
                 </Grid>
                 <Grid item={true}>
                     <Button
-                        sx={{
-                            color: '#E5E7EB'
-                        }}
+                        className={classes.button}
                         startIcon={<MonetizationOn/>}
-                        size="large"
+                        size="small"
                         variant="text">Add Funds</Button>
                 </Grid>
                 <Grid item={true}>
-                    <Link className={classes.link} to="/">
+                    <Link className={classes.link} to="/orders">
                         <Button
-                            sx={{
-                                color: '#E5E7EB'
-                            }}
+                            className={classes.button}
                             startIcon={<MenuBook/>}
-                            size="large"
+                            size="small"
                             variant="text">Orders</Button>
                     </Link>
                 </Grid>
                 <Grid item={true}>
                     <Button
-                        sx={{
-                            color: '#E5E7EB'
-                        }}
+                        className={classes.button}
                         startIcon={<AccountBalance/>}
                         endIcon={<KeyboardArrowDown/>}
-                        onMouseEnter={handleBankAnchorClick}
-                        size="large"
+                        onClick={handleBankAnchorClick}
+                        size="small"
                         variant="text">
                         Bank Logins & ShopWithtrip
                     </Button>
                     <Menu
+                        variant="menu"
                         elevation={1}
                         anchorEl={bankAnchor}
                         onClose={handleBankAnchorClose}
                         open={Boolean(bankAnchor)}>
                         <MenuItem>
-                            <Button variant="text" size="large">USA Bank Logins</Button>
+                            <Button className={classes.menuButton} variant="text" size="small">USA Bank Logins</Button>
                         </MenuItem>
                         <MenuItem>
-                            <Button variant="text" size="large">UK Bank Logins</Button>
+                            <Button className={classes.menuButton} variant="text" size="small">UK Bank Logins</Button>
                         </MenuItem>
                         <MenuItem>
-                            <Button variant="text" size="large">Canada Bank Logins</Button>
+                            <Button className={classes.menuButton} variant="text" size="small">Canada Bank Logins</Button>
                         </MenuItem>
                     </Menu>
                 </Grid>
                 <Grid item={true}>
                     <Button
-                        sx={{
-                            color: '#E5E7EB'
-                        }}
+                        className={classes.buton}
                         endIcon={<KeyboardArrowDown/>}
                         startIcon={<CreditCard/>}
-                        onMouseEnter={handleCreditAnchorClick}
-                        size="large"
+                        onClick={handleCreditAnchorClick}
+                        size="small"
                         variant="text">Credit Card</Button>
                     <Menu
                         elevation={1}
@@ -131,10 +120,10 @@ const DesktopNavigationHeader = () => {
                         onClose={handleCreditAnchorClose}
                         open={Boolean(creditAnchor)}>
                         <MenuItem>
-                            <Button variant="text" size="large">Credit Card Logs</Button>
+                            <Button className={classes.menuButton} variant="text" size="small">Credit Card Logs</Button>
                         </MenuItem>
                         <MenuItem>
-                            <Button variant="text" size="large">CC Dump + Pin</Button>
+                            <Button className={classes.menuButton} variant="text" size="small">CC Dump + Pin</Button>
                         </MenuItem>
                     </Menu>
                 </Grid>
