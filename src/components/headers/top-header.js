@@ -3,7 +3,7 @@ import {Hidden} from "@material-ui/core";
 import TopTabletHeader from "./top-tablet-header";
 import TopDesktopHeader from "./top-desktop-header";
 
-const TopHeader = () => {
+const TopHeader = ({handleDrawerClose, handleDrawerOpen}) => {
     return (
         <React.Fragment>
             <Hidden mdDown={true}>

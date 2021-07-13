@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import Layout from "../../components/layout/layout";
-import {Avatar, Button, Card, CardContent, Checkbox, Grid, TextField, Typography} from "@material-ui/core";
+import {Avatar, Button, Card, CardContent, Checkbox, Container, Grid, TextField, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {MoneySharp} from "@material-ui/icons";
 
@@ -54,89 +54,91 @@ const ChangePasswordPage = () => {
     }
     return (
         <Layout>
-            <Grid className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
-                <Grid item={true} xs={12} md={4}>
-                    <Card variant="elevation" elevation={1}>
-                        <CardContent>
-                            <form onSubmit={handleSubmit}>
+            <Container className={classes.container}>
+                <Grid className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
+                    <Grid item={true} xs={12} md={6}>
+                        <Card variant="elevation" elevation={1}>
+                            <CardContent>
+                                <form onSubmit={handleSubmit}>
 
-                                <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
-                                    <Grid item={true}>
-                                        <Avatar>
-                                            <MoneySharp/>
-                                        </Avatar>
+                                    <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
+                                        <Grid item={true}>
+                                            <Avatar>
+                                                <MoneySharp/>
+                                            </Avatar>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
 
-                                <Typography gutterBottom={true} variant="h4" align="center">
-                                    Forgot Password
-                                </Typography>
+                                    <Typography gutterBottom={true} variant="h4" align="center">
+                                        Forgot Password
+                                    </Typography>
 
-                                <TextField
-                                    variant="outlined"
-                                    label="Current password"
-                                    placeholder="Enter your current password"
-                                    margin="dense"
-                                    className={classes.textField}
-                                    value={currentPassword}
-                                    type={visible ? 'text' : 'password'}
-                                    onChange={handleChange}
-                                    name="currentPassword"
-                                    fullWidth={true}
-                                />
+                                    <TextField
+                                        variant="outlined"
+                                        label="Current password"
+                                        placeholder="Enter your current password"
+                                        margin="dense"
+                                        className={classes.textField}
+                                        value={currentPassword}
+                                        type={visible ? 'text' : 'password'}
+                                        onChange={handleChange}
+                                        name="currentPassword"
+                                        fullWidth={true}
+                                    />
 
-                                <TextField
-                                    variant="outlined"
-                                    label="New Password"
-                                    placeholder="Enter new password"
-                                    margin="dense"
-                                    className={classes.textField}
-                                    value={newPassword}
-                                    type={visible ? 'text' : 'password'}
-                                    onChange={handleChange}
-                                    name="newPassword"
-                                    fullWidth={true}
-                                />
+                                    <TextField
+                                        variant="outlined"
+                                        label="New Password"
+                                        placeholder="Enter new password"
+                                        margin="dense"
+                                        className={classes.textField}
+                                        value={newPassword}
+                                        type={visible ? 'text' : 'password'}
+                                        onChange={handleChange}
+                                        name="newPassword"
+                                        fullWidth={true}
+                                    />
 
-                                <TextField
-                                    variant="outlined"
-                                    label="Confirm Password"
-                                    placeholder="Confirm new password"
-                                    margin="dense"
-                                    className={classes.textField}
-                                    value={confirmNewPassword}
-                                    type={visible ? 'text' : 'password'}
-                                    onChange={handleChange}
-                                    name="confirmNewPassword"
-                                    fullWidth={true}
-                                />
+                                    <TextField
+                                        variant="outlined"
+                                        label="Confirm Password"
+                                        placeholder="Confirm new password"
+                                        margin="dense"
+                                        className={classes.textField}
+                                        value={confirmNewPassword}
+                                        type={visible ? 'text' : 'password'}
+                                        onChange={handleChange}
+                                        name="confirmNewPassword"
+                                        fullWidth={true}
+                                    />
 
-                                <Grid container={true} spacing={4} alignItems="center">
-                                    <Grid item={true}>
-                                        <Checkbox checked={visible} onChange={handleShowPassword}/>
+                                    <Grid container={true} spacing={4} alignItems="center">
+                                        <Grid item={true}>
+                                            <Checkbox checked={visible} onChange={handleShowPassword}/>
+                                        </Grid>
+                                        <Grid item={true}>
+                                            <Typography variant="body2" gutterBottom={true}>
+                                                {visible ? 'Hide' : 'Show'}
+                                            </Typography>
+                                        </Grid>
                                     </Grid>
-                                    <Grid item={true}>
-                                        <Typography variant="body2" gutterBottom={true}>
-                                            {visible ? 'Hide' : 'Show'}
-                                        </Typography>
-                                    </Grid>
-                                </Grid>
 
 
-                                <Button
-                                    type="submit"
-                                    onClick={handleSubmit}
-                                    fullWidth={true}
-                                    className={classes.button}
-                                    variant="outlined"
-                                    size="small">
-                                    Change Password
-                                </Button>
-                            </form>
-                        </CardContent>
-                    </Card>
+                                    <Button
+                                        type="submit"
+                                        onClick={handleSubmit}
+                                        fullWidth={true}
+                                        className={classes.button}
+                                        variant="outlined"
+                                        size="small">
+                                        Change Password
+                                    </Button>
+                                </form>
+                            </CardContent>
+                        </Card>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Container>
         </Layout>
     )
 }

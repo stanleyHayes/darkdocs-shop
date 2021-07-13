@@ -43,7 +43,7 @@ const ProfilePage = () => {
         <Layout>
             <Container className={classes.container}>
                 <Grid className={classes.gridContainer} container={true} justifyContent="center">
-                    <Grid item={true} md={8} lg={6}>
+                    <Grid item={true} xs={12} md={8} lg={6}>
                         <Card elevation={1} variant="elevation">
                             <CardContent>
                                 <Typography className={classes.title} gutterBottom={true} variant="h5">

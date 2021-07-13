@@ -77,7 +77,7 @@ const AddFundsDialog = ({open, handleClose}) => {
                     <Typography className={classes.subtitle} gutterBottom={true} variant="h5">
                         Our Address
                     </Typography>
-                    <Typography gutterBottom={true} variant="body1">
+                    <Typography gutterBottom={true} variant="body2">
                         3E792v1meHHpFj2HvcM5pGdNFiafjAWjQZ
                     </Typography>
 

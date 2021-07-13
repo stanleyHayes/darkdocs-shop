@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState} from "react";
 import Footer from "../footer/footer";
-import {AppBar} from "@material-ui/core";
+import {AppBar, SwipeableDrawer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import TopHeader from "../headers/top-header";
 import NavigationHeader from "../headers/navigation-header";
+import DrawerContent from "../drawer-content";
 
 const Layout = ({children}) => {
 
@@ -27,11 +28,27 @@ const Layout = ({children}) => {
 
     const classes = useStyles();
 
+    const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const handleDrawerClose = () => {
+        setDrawerOpen(false);
+    }
+
+    const handleDrawerOpen = () => {
+        setDrawerOpen(true);
+    }
+
     return (
         <div className={classes.root}>
             <AppBar className={classes.appBar} variant="outlined">
-                <TopHeader/>
-                <NavigationHeader/>
+                <TopHeader
+                    handleDrawerClose={handleDrawerClose}
+                    handleDrawerOpen={handleDrawerOpen}
+                />
+                <NavigationHeader
+                    handleDrawerClose={handleDrawerClose}
+                    handleDrawerOpen={handleDrawerOpen}
+                />
             </AppBar>
             <div className={classes.content}>
                 <div className={classes.main}>
@@ -41,6 +58,12 @@ const Layout = ({children}) => {
                     <Footer/>
                 </div>
             </div>
+            <SwipeableDrawer
+                onClose={handleDrawerClose}
+                onOpen={handleDrawerOpen}
+                open={drawerOpen}>
+                <DrawerContent handleDrawerClose={handleDrawerClose}/>
+            </SwipeableDrawer>
         </div>
     )
 }

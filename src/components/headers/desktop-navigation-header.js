@@ -114,8 +114,11 @@ const DesktopNavigationHeader = () => {
                             <Button className={classes.menuButton} variant="text" size="small">UK Bank Logins</Button>
                         </MenuItem>
                         <MenuItem>
-                            <Button className={classes.menuButton} variant="text" size="small">Canada Bank
-                                Logins</Button>
+                            <Button
+                                className={classes.menuButton}
+                                variant="text" size="small">
+                                Canada Bank Logins
+                            </Button>
                         </MenuItem>
                     </Menu>
                 </Grid>

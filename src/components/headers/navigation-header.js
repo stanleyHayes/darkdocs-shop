@@ -4,18 +4,20 @@ import DesktopNavigationHeader from "./desktop-navigation-header";
 import MobileNavigationHeader from "./mobile-navigation-header";
 import TabletNavigationHeader from "./tablet-navigation-header";
 
-const NavigationHeader = () => {
+const NavigationHeader = ({handleDrawerClose, handleDrawerOpen}) => {
     return (
         <React.Fragment>
             <Hidden mdDown={true}>
-                <DesktopNavigationHeader />
+                <DesktopNavigationHeader/>
             </Hidden>
             <Hidden mdUp={true}>
-                <MobileNavigationHeader />
+                <MobileNavigationHeader
+                    handleDrawerClose={handleDrawerClose}
+                    handleDrawerOpen={handleDrawerOpen}/>
             </Hidden>
 
             <Hidden only={['sm', 'xs', 'lg', 'xl']}>
-                <TabletNavigationHeader />
+                <TabletNavigationHeader/>
             </Hidden>
         </React.Fragment>
     )

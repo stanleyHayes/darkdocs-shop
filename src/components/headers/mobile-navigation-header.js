@@ -7,7 +7,7 @@ import {Link} from "react-router-dom";
 import {makeStyles} from "@material-ui/styles";
 import {Menu} from "@material-ui/icons";
 
-const MobileNavigationHeader = () => {
+const MobileNavigationHeader = ({handleDrawerOpen}) => {
 
     const useStyles = makeStyles(theme => {
         return {
@@ -27,6 +27,9 @@ const MobileNavigationHeader = () => {
             logo: {
                 fontWeight: 'bold',
                 color: theme.palette.text.primary
+            },
+            menu: {
+                cursor: 'pointer'
             }
         }
     });
@@ -54,7 +57,7 @@ const MobileNavigationHeader = () => {
                     </Grid>
                 </Grid>
                 <Grid item={true} xs={2}>
-                    <Menu/>
+                    <Menu className={classes.menu} onClick={handleDrawerOpen}/>
                 </Grid>
             </Grid>
         </Toolbar>

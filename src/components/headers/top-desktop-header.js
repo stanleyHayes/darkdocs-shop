@@ -66,7 +66,7 @@ const TopDesktopHeader = () => {
                     item={true}
                     lg={7}
                     container={true}
-                    justifyContent="space-around"
+                    justifyContent="center"
                     alignItems="center">
                     <Grid item={true} lg={6}>
                         <TextField
@@ -120,9 +120,13 @@ const TopDesktopHeader = () => {
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
-                            <Button variant="text"  size="small" className={classes.button}>
-                                Logout
-                            </Button>
+                            <Link
+                                className={classes.link}
+                                to="/auth/login">
+                                <Button variant="text" size="small" className={classes.button}>
+                                    Logout
+                                </Button>
+                            </Link>
                         </MenuItem>
                     </Menu>
                 </Grid>

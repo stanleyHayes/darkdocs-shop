@@ -37,6 +37,10 @@ const DashboardPage = () => {
                     height: 460
                 },
 
+                [theme.breakpoints.up('lg')]: {
+                    height: 450
+                },
+
             }
         }
     });
