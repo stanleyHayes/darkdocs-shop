@@ -34,6 +34,7 @@ const TopDesktopHeader = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [query, setQuery] = useState("");
     const handleProfileClick = event => {
+        console.log('hovered')
         setMenuOpen(true);
         setAnchorEl(event.currentTarget);
     }
@@ -50,7 +51,7 @@ const TopDesktopHeader = () => {
     }
     return (
         <Toolbar className={classes.toolbar} variant="regular">
-            <Grid container={true} justifyContent="center" alignItems="center">
+            <Grid container={true} justifyContent="space-between" alignItems="center">
                 <Grid item={true} lg={2}>
                     <Link to="/" className={classes.link}>
                         <Typography
@@ -62,13 +63,12 @@ const TopDesktopHeader = () => {
                     </Link>
                 </Grid>
                 <Grid
-                    spacing={2}
                     item={true}
-                    lg={8}
+                    lg={7}
                     container={true}
-                    justifyContent="center"
+                    justifyContent="space-around"
                     alignItems="center">
-                    <Grid item={true} lg={7}>
+                    <Grid item={true} lg={6}>
                         <TextField
                             type="text"
                             onChange={handleSearchQuery}
@@ -89,9 +89,9 @@ const TopDesktopHeader = () => {
                         </Button>
                     </Grid>
                 </Grid>
-                <Grid item={true} lg={2}>
+                <Grid item={true} lg={3}>
                     <Button
-                        fullWidth={true}
+                        fullWidth={false}
                         className={classes.name}
                         onClick={handleProfileClick}
                         endIcon={<KeyboardArrowDown/>}

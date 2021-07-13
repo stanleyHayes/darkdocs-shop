@@ -1,9 +1,9 @@
 import React from "react";
 import Footer from "../footer/footer";
-import TopDesktopHeader from "../headers/top-desktop-header";
-import DesktopNavigationHeader from "../headers/desktop-navigation-header";
 import {AppBar} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
+import TopHeader from "../headers/top-header";
+import NavigationHeader from "../headers/navigation-header";
 
 const Layout = ({children}) => {
 
@@ -13,15 +13,12 @@ const Layout = ({children}) => {
                 paddingTop: 142,
                 display: 'flex',
                 flexDirection: 'column',
-                minHeight: '92vh',
+                minHeight: '85vh',
                 backgroundColor: theme.palette.background.default
             },
             appBar: {},
-            root: {
-            },
-            footer: {
-
-            },
+            root: {},
+            footer: {},
             main: {
                 flexGrow: 1
             }
@@ -33,8 +30,8 @@ const Layout = ({children}) => {
     return (
         <div className={classes.root}>
             <AppBar className={classes.appBar} variant="outlined">
-                <TopDesktopHeader/>
-                <DesktopNavigationHeader/>
+                <TopHeader/>
+                <NavigationHeader/>
             </AppBar>
             <div className={classes.content}>
                 <div className={classes.main}>

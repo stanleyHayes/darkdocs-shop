@@ -8,10 +8,9 @@ import {
 } from "@material-ui/core";
 import {Link} from "react-router-dom";
 import {makeStyles} from "@material-ui/styles";
-import {AccountBalance, CreditCard, Dashboard, KeyboardArrowDown, MenuBook, MonetizationOn} from "@material-ui/icons";
-import AddFundsDialog from "../shared/add-funds-dialog";
+import {KeyboardArrowDown} from "@material-ui/icons";
 
-const DesktopNavigationHeader = () => {
+const TabletNavigationHeader = () => {
 
     const useStyles = makeStyles(theme => {
         return {
@@ -35,7 +34,6 @@ const DesktopNavigationHeader = () => {
 
     const [bankAnchor, setBankAnchor] = useState(null);
     const [creditAnchor, setCreditAnchor] = useState(null);
-    const [fundsDialogOpen, setFundsDialogOpen] = useState(false);
 
     const handleBankAnchorClick = event => {
         setBankAnchor(event.currentTarget);
@@ -53,14 +51,6 @@ const DesktopNavigationHeader = () => {
         setCreditAnchor(null);
     }
 
-    const handleAddFundsClick = () => {
-        setFundsDialogOpen(true);
-    }
-
-    const handleFundsDialogClose = () => {
-        setFundsDialogOpen(false);
-    }
-
     return (
         <Toolbar className={classes.toolbar} variant="regular">
             <Grid container={true} justifyContent="center" alignItems="center" spacing={6}>
@@ -68,16 +58,13 @@ const DesktopNavigationHeader = () => {
                     <Link className={classes.link} to="/">
                         <Button
                             className={classes.button}
-                            startIcon={<Dashboard/>}
                             size="small"
                             variant="text">Dashboard</Button>
                     </Link>
                 </Grid>
                 <Grid item={true}>
                     <Button
-                        onClick={handleAddFundsClick}
                         className={classes.button}
-                        startIcon={<MonetizationOn/>}
                         size="small"
                         variant="text">Add Funds</Button>
                 </Grid>
@@ -85,7 +72,6 @@ const DesktopNavigationHeader = () => {
                     <Link className={classes.link} to="/orders">
                         <Button
                             className={classes.button}
-                            startIcon={<MenuBook/>}
                             size="small"
                             variant="text">Orders</Button>
                     </Link>
@@ -93,7 +79,6 @@ const DesktopNavigationHeader = () => {
                 <Grid item={true}>
                     <Button
                         className={classes.button}
-                        startIcon={<AccountBalance/>}
                         endIcon={<KeyboardArrowDown/>}
                         onClick={handleBankAnchorClick}
                         size="small"
@@ -114,8 +99,7 @@ const DesktopNavigationHeader = () => {
                             <Button className={classes.menuButton} variant="text" size="small">UK Bank Logins</Button>
                         </MenuItem>
                         <MenuItem>
-                            <Button className={classes.menuButton} variant="text" size="small">Canada Bank
-                                Logins</Button>
+                            <Button className={classes.menuButton} variant="text" size="small">Canada Bank Logins</Button>
                         </MenuItem>
                     </Menu>
                 </Grid>
@@ -123,7 +107,6 @@ const DesktopNavigationHeader = () => {
                     <Button
                         className={classes.buton}
                         endIcon={<KeyboardArrowDown/>}
-                        startIcon={<CreditCard/>}
                         onClick={handleCreditAnchorClick}
                         size="small"
                         variant="text">Credit Card</Button>
@@ -142,9 +125,8 @@ const DesktopNavigationHeader = () => {
                     </Menu>
                 </Grid>
             </Grid>
-            <AddFundsDialog handleClose={handleFundsDialogClose} open={fundsDialogOpen}/>
         </Toolbar>
     )
 }
 
-export default DesktopNavigationHeader;
+export default TabletNavigationHeader;

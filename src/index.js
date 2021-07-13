@@ -28,8 +28,9 @@ const theme = createTheme({
         },
         background: {
             default: '#121212',
-            paper: '#323232'
-        }
+            paper: '#1F2937'
+        },
+        type: 'dark'
     },
     shape: {
         borderRadius: 32
