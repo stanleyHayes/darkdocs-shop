@@ -7,6 +7,8 @@ import EditProfilePage from "./pages/profile/edit-profile-page";
 import ChangePasswordPage from "./pages/authentication/change-password-page";
 import ForgotPasswordPage from "./pages/authentication/forgot-password-page";
 import VerifyAccountPage from "./pages/authentication/verify-account-page";
+import RegisterPage from "./pages/authentication/register-page";
+import LoginPage from "./pages/authentication/login-page";
 
 function App() {
     return (
@@ -19,6 +21,8 @@ function App() {
                 <Route exact={true} path="/auth/change-password" component={ChangePasswordPage}/>
                 <Route exact={true} path="/auth/forgot-password" component={ForgotPasswordPage}/>
                 <Route exact={true} path="/auth/verify-account" component={VerifyAccountPage}/>
+                <Route exact={true} path="/auth/register" component={RegisterPage}/>
+                <Route exact={true} path="/auth/login" component={LoginPage}/>
             </Switch>
         </div>
     );

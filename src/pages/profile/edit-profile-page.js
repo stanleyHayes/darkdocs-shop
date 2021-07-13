@@ -43,24 +43,24 @@ const EditProfilePage = () => {
                     <Grid item={true} xs={12} md={8} lg={6}>
                         <Card elevation={1} variant="elevation">
                             <CardContent>
-                            <Typography gutterBottom={true} variant="h6" align="center">
-                                Edit Profile
-                            </Typography>
+                                <Typography gutterBottom={true} variant="h6" align="center">
+                                    Edit Profile
+                                </Typography>
 
-                            <Divider variant="fullWidth" className={classes.divider}/>
+                                <Divider variant="fullWidth" className={classes.divider}/>
 
-                            <TextField
-                                variant="outlined"
-                                label="Username"
-                                placeholder="Enter Username"
-                                margin="dense"
-                                className={classes.textField}
-                                value={username}
-                                type="text"
-                                onChange={handleChange}
-                                name="username"
-                                fullWidth={true}
-                            />
+                                <TextField
+                                    variant="outlined"
+                                    label="Username"
+                                    placeholder="Enter Username"
+                                    margin="dense"
+                                    className={classes.textField}
+                                    value={username}
+                                    type="text"
+                                    onChange={handleChange}
+                                    name="username"
+                                    fullWidth={true}
+                                />
 
                                 <TextField
                                     variant="outlined"
