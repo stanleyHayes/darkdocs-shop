@@ -53,7 +53,7 @@ const EditProfilePage = () => {
                                     variant="outlined"
                                     label="Username"
                                     placeholder="Enter Username"
-                                    margin="dense"
+                                    margin="normal"
                                     className={classes.textField}
                                     value={username}
                                     type="text"
@@ -66,7 +66,7 @@ const EditProfilePage = () => {
                                     variant="outlined"
                                     label="Username"
                                     placeholder="Enter Username"
-                                    margin="dense"
+                                    margin="normal"
                                     className={classes.textField}
                                     value={username}
                                     type="text"
@@ -79,7 +79,7 @@ const EditProfilePage = () => {
                                     variant="outlined"
                                     label="Email"
                                     placeholder="Enter email"
-                                    margin="dense"
+                                    margin="normal"
                                     className={classes.textField}
                                     value={email}
                                     type="email"
@@ -93,7 +93,7 @@ const EditProfilePage = () => {
                                     variant="outlined"
                                     label="Name"
                                     placeholder="Enter Name"
-                                    margin="dense"
+                                    margin="normal"
                                     className={classes.textField}
                                     value={name}
                                     type="text"
@@ -106,7 +106,7 @@ const EditProfilePage = () => {
                                     variant="outlined"
                                     label="Country"
                                     placeholder="Enter country"
-                                    margin="dense"
+                                    margin="normal"
                                     className={classes.textField}
                                     value={country}
                                     type="text"
@@ -119,7 +119,7 @@ const EditProfilePage = () => {
                                     variant="outlined"
                                     label="City"
                                     placeholder="Enter city"
-                                    margin="dense"
+                                    margin="normal"
                                     className={classes.textField}
                                     value={city}
                                     type="text"
@@ -132,7 +132,7 @@ const EditProfilePage = () => {
                                     variant="outlined"
                                     label="Postal Code"
                                     placeholder="Enter postal code"
-                                    margin="dense"
+                                    margin="normal"
                                     className={classes.textField}
                                     value={postalCode}
                                     type="number"

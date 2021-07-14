@@ -31,6 +31,10 @@ const RegisterPage = () => {
             },
             gridContainer: {
                 minHeight: '100vh'
+            },
+            title: {
+                marginTop: 32,
+                marginBottom: 32
             }
         }
     });
@@ -70,13 +74,13 @@ const RegisterPage = () => {
                                         </Grid>
                                     </Grid>
 
-                                    <Typography variant="h5">Sign Up</Typography>
+                                    <Typography className={classes.title} align="center" variant="h4">Sign Up</Typography>
 
                                     <TextField
                                         variant="outlined"
                                         label="Username"
                                         placeholder="Enter Username"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={username}
                                         type="text"
@@ -89,7 +93,7 @@ const RegisterPage = () => {
                                         variant="outlined"
                                         label="Email"
                                         placeholder="Enter email"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={email}
                                         type="email"
@@ -103,7 +107,7 @@ const RegisterPage = () => {
                                         variant="outlined"
                                         label="Name"
                                         placeholder="Enter Name"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={name}
                                         type="text"
@@ -116,7 +120,7 @@ const RegisterPage = () => {
                                         variant="outlined"
                                         label="Password"
                                         placeholder="Enter password"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={password}
                                         onChange={handleChange}
@@ -129,7 +133,7 @@ const RegisterPage = () => {
                                         variant="outlined"
                                         label="Confirm password"
                                         placeholder="Confirm password"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={confirmPassword}
                                         type={visible ? 'text' : 'password'}
@@ -148,6 +152,7 @@ const RegisterPage = () => {
                                             </Typography>
                                         </Grid>
                                     </Grid>
+
                                     <Button
                                         type="submit"
                                         onClick={handleSubmit}
@@ -159,7 +164,7 @@ const RegisterPage = () => {
                                     </Button>
 
                                     <Link className={classes.link} to="/auth/login">
-                                        <Button variant="text" size="small">
+                                        <Button fullWidth={true} variant="text" size="small">
                                             Already have an account? Login
                                         </Button>
                                     </Link>

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Avatar, Button, Card, CardContent, Checkbox, Container, Grid, TextField, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {MoneySharp} from "@material-ui/icons";
 
 const LoginPage = () => {
@@ -31,10 +31,15 @@ const LoginPage = () => {
             },
             gridContainer: {
                 minHeight: '100vh'
+            },
+            title: {
+                marginTop: 32,
+                marginBottom: 32
             }
         }
     });
 
+    const history = useHistory();
     const [user, setUser] = useState({});
     const {username, email, password} = user;
     const [visible, setVisible] = useState(false);
@@ -47,6 +52,8 @@ const LoginPage = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
+
+        history.push('/');
     }
 
     const handleShowPassword = () => {
@@ -63,18 +70,19 @@ const LoginPage = () => {
                                 <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
                                     <Grid item={true}>
                                         <Avatar>
-                                            <MoneySharp />
+                                            <MoneySharp/>
                                         </Avatar>
                                     </Grid>
                                 </Grid>
 
-                                <Typography gutterBottom={true} variant="h5">Sign In</Typography>
+                                <Typography className={classes.title} align="center" gutterBottom={true} variant="h4">Sign
+                                    In</Typography>
                                 <form onSubmit={handleSubmit}>
                                     <TextField
                                         variant="outlined"
                                         label="Username"
                                         placeholder="Enter Username"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={username}
                                         type="text"
@@ -87,7 +95,7 @@ const LoginPage = () => {
                                         variant="outlined"
                                         label="Email"
                                         placeholder="Enter email"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={email}
                                         type="email"
@@ -111,7 +119,7 @@ const LoginPage = () => {
                                         variant="outlined"
                                         label="Password"
                                         placeholder="Enter password"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={password}
                                         type={visible ? 'text' : 'password'}
@@ -121,7 +129,7 @@ const LoginPage = () => {
                                     />
 
                                     <Link className={classes.link} to="/auth/forgot-password">
-                                        <Button variant="text" size="small">
+                                        <Button fullWidth={true} variant="text" size="small">
                                             Forgot Password?
                                         </Button>
                                     </Link>
@@ -137,7 +145,7 @@ const LoginPage = () => {
                                     </Button>
 
                                     <Link className={classes.link} to="/auth/register">
-                                        <Button variant="text" size="small">
+                                        <Button fullWidth={true} variant="text" size="small">
                                             Don' have an account? Register
                                         </Button>
                                     </Link>

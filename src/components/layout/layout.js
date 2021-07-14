@@ -4,7 +4,7 @@ import {AppBar, SwipeableDrawer} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import TopHeader from "../headers/top-header";
 import NavigationHeader from "../headers/navigation-header";
-import DrawerContent from "../drawer-content";
+import DrawerContent from "../drawer/drawer-content";
 
 const Layout = ({children}) => {
 
@@ -15,7 +15,10 @@ const Layout = ({children}) => {
                 display: 'flex',
                 flexDirection: 'column',
                 minHeight: '85vh',
-                backgroundColor: theme.palette.background.default
+                backgroundColor: theme.palette.background.default,
+                [theme.breakpoints.down('sm')]: {
+                    paddingTop: 64
+                }
             },
             appBar: {},
             root: {},

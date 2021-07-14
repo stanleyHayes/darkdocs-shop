@@ -9,10 +9,11 @@ import ForgotPasswordPage from "./pages/authentication/forgot-password-page";
 import VerifyAccountPage from "./pages/authentication/verify-account-page";
 import RegisterPage from "./pages/authentication/register-page";
 import LoginPage from "./pages/authentication/login-page";
+import ScrollToTop from "./components/shared/scroll-to-top";
 
 function App() {
     return (
-        <div className="App">
+        <ScrollToTop>
             <Switch>
                 <Route exact={true} path="/" component={DashboardPage}/>
                 <Route exact={true} path="/profile" component={ProfilePage}/>
@@ -24,7 +25,7 @@ function App() {
                 <Route exact={true} path="/auth/register" component={RegisterPage}/>
                 <Route exact={true} path="/auth/login" component={LoginPage}/>
             </Switch>
-        </div>
+        </ScrollToTop>
     );
 }
 

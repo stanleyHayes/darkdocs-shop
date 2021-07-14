@@ -31,6 +31,10 @@ const ForgotPaswordPage = () => {
             },
             gridContainer: {
                 minHeight: '100vh'
+            },
+            title: {
+                marginTop: 32,
+                marginBottom: 32
             }
         }
     });
@@ -65,7 +69,7 @@ const ForgotPaswordPage = () => {
                                         </Grid>
                                     </Grid>
 
-                                    <Typography gutterBottom={true} variant="h4" align="center">
+                                    <Typography className={classes.title} gutterBottom={true} variant="h4" align="center">
                                         Forgot Password
                                     </Typography>
 
@@ -78,7 +82,7 @@ const ForgotPaswordPage = () => {
                                         variant="outlined"
                                         label="Email"
                                         placeholder="Enter your email"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={email}
                                         type="email"
@@ -99,7 +103,7 @@ const ForgotPaswordPage = () => {
                                     </Button>
 
                                     <Link className={classes.link} to="/auth/login">
-                                        <Button variant="text" size="small">
+                                        <Button fullWidth={true} variant="text" size="small">
                                             Go back to login
                                         </Button>
                                     </Link>

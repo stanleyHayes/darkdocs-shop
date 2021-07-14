@@ -6,6 +6,8 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {ThemeProvider} from "@material-ui/styles";
 import {createTheme} from "@material-ui/core";
+import {Provider} from "react-redux";
+import store from "./redux/store";
 
 
 const theme = createTheme({
@@ -33,17 +35,19 @@ const theme = createTheme({
         type: 'dark'
     },
     shape: {
-        borderRadius: 32
+        borderRadius: 8
     }
 });
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <ThemeProvider theme={theme}>
-                <App/>
-            </ThemeProvider>
-        </BrowserRouter>
+        <Provider store={store}>
+            <BrowserRouter>
+                <ThemeProvider theme={theme}>
+                    <App/>
+                </ThemeProvider>
+            </BrowserRouter>
+        </Provider>
     </React.StrictMode>,
     document.getElementById('root')
 );

@@ -30,6 +30,10 @@ const ChangePasswordPage = () => {
             },
             gridContainer: {
                 paddingTop: 32
+            },
+            title: {
+                marginTop: 32,
+                marginBottom: 32
             }
         }
     });
@@ -69,15 +73,15 @@ const ChangePasswordPage = () => {
                                         </Grid>
                                     </Grid>
 
-                                    <Typography gutterBottom={true} variant="h4" align="center">
-                                        Forgot Password
+                                    <Typography className={classes.title} gutterBottom={true} variant="h4" align="center">
+                                        Change Password
                                     </Typography>
 
                                     <TextField
                                         variant="outlined"
                                         label="Current password"
                                         placeholder="Enter your current password"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={currentPassword}
                                         type={visible ? 'text' : 'password'}
@@ -90,7 +94,7 @@ const ChangePasswordPage = () => {
                                         variant="outlined"
                                         label="New Password"
                                         placeholder="Enter new password"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={newPassword}
                                         type={visible ? 'text' : 'password'}
@@ -103,7 +107,7 @@ const ChangePasswordPage = () => {
                                         variant="outlined"
                                         label="Confirm Password"
                                         placeholder="Confirm new password"
-                                        margin="dense"
+                                        margin="normal"
                                         className={classes.textField}
                                         value={confirmNewPassword}
                                         type={visible ? 'text' : 'password'}

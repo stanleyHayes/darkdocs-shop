@@ -18,7 +18,7 @@ import {
     MenuBook,
     MonetizationOn, DeleteForever, ExitToApp, LockOpen, Edit, Lens, VerifiedUser, ExpandMore
 } from "@material-ui/icons";
-import AddFundsDialog from "./shared/add-funds-dialog";
+import AddFundsDialog from "../shared/add-funds-dialog";
 
 const DrawerContent = ({handleDrawerClose}) => {
 
