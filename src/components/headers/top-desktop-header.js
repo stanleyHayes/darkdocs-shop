@@ -34,7 +34,6 @@ const TopDesktopHeader = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [query, setQuery] = useState("");
     const handleProfileClick = event => {
-        console.log('hovered')
         setMenuOpen(true);
         setAnchorEl(event.currentTarget);
     }

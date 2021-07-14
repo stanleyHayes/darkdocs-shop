@@ -1,8 +1,21 @@
 import React, {useState} from "react";
-import {Avatar, Button, Card, CardContent, Checkbox, Container, Grid, TextField, Typography} from "@material-ui/core";
+import {
+    Avatar,
+    Button,
+    Card,
+    CardContent,
+    Checkbox,
+    Container,
+    Grid,
+    LinearProgress,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 import {MoneySharp} from "@material-ui/icons";
+import {useDispatch, useSelector} from "react-redux";
+import {signUp} from "../../redux/authentication/auth-action-creators";
 
 const RegisterPage = () => {
 
@@ -38,43 +51,89 @@ const RegisterPage = () => {
             }
         }
     });
+    const classes = useStyles();
 
     const [user, setUser] = useState({});
     const {username, email, name, password, confirmPassword} = user;
     const [visible, setVisible] = useState(false);
+    const [error, setError] = useState({});
+    const [hasError, setHasError] = useState(false);
+
+    const {loading, error: authError} = useSelector(state => state.auth);
+
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
     }
 
-    const classes = useStyles();
-
     const handleSubmit = event => {
         event.preventDefault();
 
+        if (!username) {
+            setError({...error, username: 'Field required'});
+            setHasError(true);
+        }
+
+        if (!email) {
+            setError({...error, email: 'Field required'});
+            setHasError(true);
+        }
+
+        if (!name) {
+            setError({...error, name: 'Field required'});
+            setHasError(true);
+        }
+
+        if (!password) {
+            setError({...error, password: 'Field required'});
+            setHasError(true);
+        }
+
+        if (!confirmPassword) {
+            setError({...error, confirmPassword: 'Field required'});
+            setHasError(true);
+        }
+
+        if (confirmPassword !== password) {
+            setError({...error, confirmPassword: 'Password mismatch', password: 'Password mismatch'});
+            setHasError(true);
+        }
+
+        if (hasError) {
+            return;
+        }else {
+            dispatch(signUp(user, history));
+        }
     }
 
     const handleShowPassword = () => {
         setVisible(!visible);
     }
+
+
     return (
         <div className={classes.container}>
             <Grid className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
                 <Grid item={true} xs={12} md={4}>
                     <Container>
                         <Card variant="elevation" elevation={1}>
+                            {loading && <LinearProgress variant="query"/>}
                             <CardContent>
+                                {authError && <Typography variant="body2" color="error" align="center">{authError}</Typography> }
                                 <form onSubmit={handleSubmit}>
-
                                     <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
                                         <Grid item={true}>
                                             <Avatar>
-                                                <MoneySharp />
+                                                <MoneySharp/>
                                             </Avatar>
                                         </Grid>
                                     </Grid>
 
-                                    <Typography className={classes.title} align="center" variant="h4">Sign Up</Typography>
+                                    <Typography className={classes.title} align="center" variant="h4">
+                                        Sign Up
+                                    </Typography>
 
                                     <TextField
                                         variant="outlined"
@@ -86,7 +145,10 @@ const RegisterPage = () => {
                                         type="text"
                                         onChange={handleChange}
                                         name="username"
+                                        required={true}
                                         fullWidth={true}
+                                        error={Boolean(error.username)}
+                                        helperText={error.username}
                                     />
 
                                     <TextField
@@ -99,7 +161,10 @@ const RegisterPage = () => {
                                         type="email"
                                         onChange={handleChange}
                                         name="email"
+                                        required={true}
                                         fullWidth={true}
+                                        error={Boolean(error.email)}
+                                        helperText={error.email}
                                     />
 
 
@@ -113,7 +178,10 @@ const RegisterPage = () => {
                                         type="text"
                                         onChange={handleChange}
                                         name="name"
+                                        required={true}
                                         fullWidth={true}
+                                        error={Boolean(error.name)}
+                                        helperText={error.name}
                                     />
 
                                     <TextField
@@ -124,9 +192,12 @@ const RegisterPage = () => {
                                         className={classes.textField}
                                         value={password}
                                         onChange={handleChange}
-                                        name="name"
-                                        type={visible ? 'text' : 'pasword'}
+                                        name="password"
+                                        type={visible ? 'text' : 'password'}
                                         fullWidth={true}
+                                        required={true}
+                                        error={Boolean(error.password)}
+                                        helperText={error.password}
                                     />
 
                                     <TextField
@@ -140,9 +211,12 @@ const RegisterPage = () => {
                                         onChange={handleChange}
                                         name="confirmPassword"
                                         fullWidth={true}
+                                        required={true}
+                                        error={Boolean(error.confirmPassword)}
+                                        helperText={error.confirmPassword}
                                     />
 
-                                    <Grid container={true} spacing={4} alignItems="center">
+                                    <Grid container={true} spacing={2} alignItems="center">
                                         <Grid item={true}>
                                             <Checkbox checked={visible} onChange={handleShowPassword}/>
                                         </Grid>
@@ -154,6 +228,7 @@ const RegisterPage = () => {
                                     </Grid>
 
                                     <Button
+                                        disabled={loading}
                                         type="submit"
                                         onClick={handleSubmit}
                                         fullWidth={true}
