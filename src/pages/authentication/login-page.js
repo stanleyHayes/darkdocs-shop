@@ -1,8 +1,20 @@
 import React, {useState} from "react";
-import {Avatar, Button, Card, CardContent, Checkbox, Container, Grid, TextField, Typography} from "@material-ui/core";
+import {
+    Avatar,
+    Button,
+    Card,
+    CardContent,
+    Checkbox,
+    Container,
+    Grid,
+    LinearProgress,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {Link, useHistory} from "react-router-dom";
-import {MoneySharp} from "@material-ui/icons";
+import {useDispatch, useSelector} from "react-redux";
+import {signIn} from "../../redux/authentication/auth-action-creators";
 
 const LoginPage = () => {
 
@@ -10,7 +22,7 @@ const LoginPage = () => {
         return {
             container: {
                 backgroundColor: theme.palette.background.default,
-                minHeight: '100vh'
+                minHeight: '100vh',
             },
             textField: {
                 marginTop: 8,
@@ -23,26 +35,47 @@ const LoginPage = () => {
             button: {
                 marginTop: 8,
                 marginBottom: 8,
-                paddingTop: 8,
-                paddingBottom: 8
+                paddingBottom: 16,
+                paddingTop: 16,
+                backgroundColor: theme.palette.primary.main
             },
             link: {
                 textDecoration: 'none'
             },
             gridContainer: {
-                minHeight: '100vh'
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
             },
             title: {
-                marginTop: 32,
-                marginBottom: 32
+                marginTop: 16,
+                marginBottom: 16
+            },
+            image: {
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
+            },
+            logo: {
+                width: 100,
+                height: 100
             }
         }
     });
 
     const history = useHistory();
+    const dispatch = useDispatch();
+
     const [user, setUser] = useState({});
-    const {username, email, password} = user;
+    const {email, password} = user;
     const [visible, setVisible] = useState(false);
+    const [error, setError] = useState({});
+    const [hasError, setHasError] = useState(false);
+
+    const {loading, error: authError} = useSelector(state => state.auth);
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -53,7 +86,20 @@ const LoginPage = () => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        history.push('/');
+        if (!email) {
+            setError({...error, email: "Field required"});
+            setHasError(true);
+        }
+
+        if (!email) {
+            setError({...error, email: "Field required"});
+            setHasError(true);
+        }
+        if (hasError) {
+            return;
+        } else {
+            dispatch(signIn({email, password}, history));
+        }
     }
 
     const handleShowPassword = () => {
@@ -62,35 +108,39 @@ const LoginPage = () => {
 
     return (
         <div className={classes.container}>
-            <Grid className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
-                <Grid item={true} xs={12} md={4}>
-                    <Container>
-                        <Card variant="elevation" elevation={1}>
+            <Container className={classes.gridContainer} >
+                <Grid container={true} justifyContent="center" alignItems="center">
+                    <Grid item={true}>
+                        <Avatar className={classes.logo} variant="rounded">
+                            <img className={classes.image} alt="logo" src="/images/logo.png" />
+                        </Avatar>
+                    </Grid>
+                </Grid>
+                <Typography
+                    color="textPrimary"
+                    className={classes.title}
+                    align="center"
+                    gutterBottom={true}
+                    variant="h4">
+                    Darkdocs Shop
+                </Typography>
+
+                <Grid container={true} justifyContent="center" alignItems='center'>
+                    <Grid item={true} xs={12} md={4}>
+                        <Card elevation={4}>
+                            {loading && <LinearProgress variant="query"/>}
                             <CardContent>
-                                <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
-                                    <Grid item={true}>
-                                        <Avatar>
-                                            <MoneySharp/>
-                                        </Avatar>
-                                    </Grid>
-                                </Grid>
-
-                                <Typography className={classes.title} align="center" gutterBottom={true} variant="h4">Sign
-                                    In</Typography>
+                                {authError &&
+                                <Typography variant="body2" color="error" align="center">{authError}</Typography>}
+                                <Typography
+                                    color="textPrimary"
+                                    className={classes.title}
+                                    align="center"
+                                    gutterBottom={true}
+                                    variant="h5">
+                                    Sign In
+                                </Typography>
                                 <form onSubmit={handleSubmit}>
-                                    <TextField
-                                        variant="outlined"
-                                        label="Username"
-                                        placeholder="Enter Username"
-                                        margin="normal"
-                                        className={classes.textField}
-                                        value={username}
-                                        type="text"
-                                        onChange={handleChange}
-                                        name="username"
-                                        fullWidth={true}
-                                    />
-
                                     <TextField
                                         variant="outlined"
                                         label="Email"
@@ -104,12 +154,12 @@ const LoginPage = () => {
                                         fullWidth={true}
                                     />
 
-                                    <Grid container={true} spacing={4} alignItems="center">
+                                    <Grid container={true} spacing={2} alignItems="center">
                                         <Grid item={true}>
                                             <Checkbox checked={visible} onChange={handleShowPassword}/>
                                         </Grid>
                                         <Grid item={true}>
-                                            <Typography variant="body2" gutterBottom={true}>
+                                            <Typography color="textPrimary" variant="body2" gutterBottom={true}>
                                                 {visible ? 'Hide' : 'Show'}
                                             </Typography>
                                         </Grid>
@@ -135,6 +185,7 @@ const LoginPage = () => {
                                     </Link>
 
                                     <Button
+                                        disabled={loading}
                                         type="submit"
                                         onClick={handleSubmit}
                                         fullWidth={true}
@@ -146,15 +197,15 @@ const LoginPage = () => {
 
                                     <Link className={classes.link} to="/auth/register">
                                         <Button fullWidth={true} variant="text" size="small">
-                                            Don' have an account? Register
+                                            Don't have an account? Register
                                         </Button>
                                     </Link>
                                 </form>
                             </CardContent>
                         </Card>
-                    </Container>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Container>
         </div>
     )
 }

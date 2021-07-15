@@ -29,7 +29,7 @@ const theme = createTheme({
             active: '#E5E7EB'
         },
         background: {
-            default: '#121212',
+            default: '#111827',
             paper: '#1F2937'
         },
         type: 'dark'

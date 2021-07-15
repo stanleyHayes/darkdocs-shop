@@ -13,7 +13,6 @@ import {
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {Link, useHistory} from "react-router-dom";
-import {MoneySharp} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {signUp} from "../../redux/authentication/auth-action-creators";
 
@@ -36,18 +35,33 @@ const RegisterPage = () => {
             button: {
                 marginTop: 8,
                 marginBottom: 8,
-                paddingTop: 8,
-                paddingBottom: 8
+                paddingTop: 16,
+                paddingBottom: 16,
+                backgroundColor: theme.palette.primary.main
             },
             link: {
                 textDecoration: 'none'
             },
             gridContainer: {
-                minHeight: '100vh'
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
             },
             title: {
-                marginTop: 32,
-                marginBottom: 32
+                marginTop: 16,
+                marginBottom: 16
+            },
+            image: {
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
+            },
+            logo: {
+                width: 100,
+                height: 100
             }
         }
     });
@@ -103,7 +117,7 @@ const RegisterPage = () => {
 
         if (hasError) {
             return;
-        }else {
+        } else {
             dispatch(signUp(user, history));
         }
     }
@@ -115,23 +129,35 @@ const RegisterPage = () => {
 
     return (
         <div className={classes.container}>
-            <Grid className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
-                <Grid item={true} xs={12} md={4}>
-                    <Container>
-                        <Card variant="elevation" elevation={1}>
-                            {loading && <LinearProgress variant="query"/>}
+            <Container className={classes.gridContainer}>
+                <Grid container={true} justifyContent="center" alignItems="center">
+                    <Grid item={true}>
+                        <Avatar className={classes.logo} variant="rounded">
+                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
+                        </Avatar>
+                    </Grid>
+                </Grid>
+                <Typography
+                    color="textPrimary"
+                    className={classes.title}
+                    align="center"
+                    gutterBottom={true}
+                    variant="h4">
+                    Darkdocs Shop
+                </Typography>
+                <Grid container={true} justifyContent="center" alignItems='center'>
+                    <Grid item={true} xs={12} md={4}>
+                        <Card elevation={4}>
                             <CardContent>
-                                {authError && <Typography variant="body2" color="error" align="center">{authError}</Typography> }
+                                {loading && <LinearProgress variant="query"/>}
+                                {authError &&
+                                <Typography variant="body2" color="error" align="center">{authError}</Typography>}
                                 <form onSubmit={handleSubmit}>
-                                    <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
-                                        <Grid item={true}>
-                                            <Avatar>
-                                                <MoneySharp/>
-                                            </Avatar>
-                                        </Grid>
-                                    </Grid>
-
-                                    <Typography className={classes.title} align="center" variant="h4">
+                                    <Typography
+                                        color="textPrimary"
+                                        className={classes.title}
+                                        align="center"
+                                        variant="h5">
                                         Sign Up
                                     </Typography>
 
@@ -166,7 +192,6 @@ const RegisterPage = () => {
                                         error={Boolean(error.email)}
                                         helperText={error.email}
                                     />
-
 
                                     <TextField
                                         variant="outlined"
@@ -221,7 +246,7 @@ const RegisterPage = () => {
                                             <Checkbox checked={visible} onChange={handleShowPassword}/>
                                         </Grid>
                                         <Grid item={true}>
-                                            <Typography variant="body2" gutterBottom={true}>
+                                            <Typography color="textPrimary" variant="body2" gutterBottom={true}>
                                                 {visible ? 'Hide' : 'Show'}
                                             </Typography>
                                         </Grid>
@@ -246,9 +271,9 @@ const RegisterPage = () => {
                                 </form>
                             </CardContent>
                         </Card>
-                    </Container>
+                    </Grid>
                 </Grid>
-            </Grid>
+            </Container>
         </div>
     )
 }

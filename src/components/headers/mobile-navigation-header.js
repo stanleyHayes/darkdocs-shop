@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    Avatar,
     Grid,
     Toolbar, Typography
 } from "@material-ui/core";
@@ -19,14 +20,16 @@ const MobileNavigationHeader = ({handleDrawerOpen}) => {
                 backgroundColor: theme.palette.primary.main
             },
             button: {
-                color: theme.palette.text.primary
+                color: theme.palette.text.primary,
+                fontWeight: "bold",
+                textTransform: 'uppercase'
             },
             menuButton: {
                 color: theme.palette.text.primary
             },
             logo: {
-                fontWeight: 'bold',
-                color: theme.palette.text.primary
+                width: 50,
+                height: 50
             },
             menu: {
                 cursor: 'pointer'
@@ -41,11 +44,7 @@ const MobileNavigationHeader = ({handleDrawerOpen}) => {
             <Grid container={true} justifyContent="space-between" alignItems="center">
                 <Grid item={true} xs={2}>
                     <Link className={classes.link} to="/">
-                        <Typography
-                            className={classes.logo}
-                            variant="h5">
-                            DS
-                        </Typography>
+                        <Avatar className={classes.logo} src="/images/logo.png" />
                     </Link>
                 </Grid>
                 <Grid container={true} alignItems="center" justifyContent="flex-start" item={true} xs={8}>
@@ -56,7 +55,7 @@ const MobileNavigationHeader = ({handleDrawerOpen}) => {
                             variant="h6">Darkdocs</Typography>
                     </Grid>
                 </Grid>
-                <Grid item={true} xs={2}>
+                <Grid item={true} xs={1}>
                     <Menu className={classes.menu} onClick={handleDrawerOpen}/>
                 </Grid>
             </Grid>

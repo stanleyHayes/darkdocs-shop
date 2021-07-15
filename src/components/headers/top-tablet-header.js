@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {Avatar, Grid, TextField, Toolbar, Typography} from "@material-ui/core";
+import {Avatar, Grid, TextField, Toolbar} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {Search} from "@material-ui/icons";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const TopTabletHeader = () => {
 
@@ -19,9 +20,8 @@ const TopTabletHeader = () => {
                 backgroundColor: theme.palette.primary.dark
             },
             logo: {
-                color: theme.palette.text.primary,
-                textTransform: 'uppercase',
-                fontWeight: 'bold'
+                width: 75,
+                height: 50
             },
             name: {
                 color: theme.palette.text.primary
@@ -31,6 +31,7 @@ const TopTabletHeader = () => {
     });
     const classes = useStyles();
     const [query, setQuery] = useState("");
+    const {user} = useSelector(state => state.auth);
 
     const handleSearchQuery = event => {
         setQuery(event.target.value);
@@ -38,17 +39,21 @@ const TopTabletHeader = () => {
     const handleSearch = event => {
 
     }
+
+    const getInitials = name => {
+        const names = name.split(' ');
+        if (names.length === 1)
+            return names[0][0];
+        if (names.length === 2)
+            return `${names[0][0]}${names[1][0]}`
+    }
+
     return (
-        <Toolbar className={classes.toolbar} variant="regular">
+        <Toolbar className={classes.toolbar} variant="dense">
             <Grid container={true} justifyContent="center" alignItems="center">
                 <Grid item={true} md={1}>
                     <Link to="/" className={classes.link}>
-                        <Typography
-                            className={classes.logo}
-                            variant="h5"
-                            align="center">
-                            DS
-                        </Typography>
+                        <Avatar className={classes.logo} src="/images/logo.png"/>
                     </Link>
                 </Grid>
                 <Grid
@@ -65,7 +70,7 @@ const TopTabletHeader = () => {
                             value={query}
                             fullWidth={true}
                             variant="outlined"
-                            margin="none"
+                            margin="dense"
                             placeholder="Search"
                         />
                     </Grid>
@@ -82,7 +87,7 @@ const TopTabletHeader = () => {
                         <Avatar
                             className={classes.name}
                             variant="circular">
-                            SH
+                            {user && getInitials(user.name)}
                         </Avatar>
                     </Link>
                 </Grid>

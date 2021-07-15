@@ -1,8 +1,9 @@
 import React, {useState} from "react";
-import {Avatar, Button, Grid, Menu, MenuItem, TextField, Toolbar, Typography} from "@material-ui/core";
+import {Avatar, Button, Grid, Menu, MenuItem, TextField, Toolbar} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {KeyboardArrowDown} from "@material-ui/icons";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const TopDesktopHeader = () => {
 
@@ -13,20 +14,25 @@ const TopDesktopHeader = () => {
                 color: theme.palette.text.primary
             },
             button: {
-                color: theme.palette.text.primary
+                color: theme.palette.text.primary,
+                backgroundColor: theme.palette.primary.main
             },
             toolbar: {
                 backgroundColor: theme.palette.primary.dark
             },
-            logo: {
-                color: theme.palette.text.primary,
-                textTransform: 'uppercase',
-                fontWeight: 'bold'
-            },
             name: {
                 color: theme.palette.text.primary
             },
-            avatar: {}
+            avatar: {},
+            logo: {
+                width: 75,
+                height: 50
+            },
+            brand: {
+                textTransform: 'uppercase',
+                fontWeight: 'bold',
+                fontSize: 32
+            }
         }
     });
     const classes = useStyles();
@@ -48,33 +54,47 @@ const TopDesktopHeader = () => {
     const handleSearch = event => {
 
     }
+
+    const {user} = useSelector(state => state.auth);
+
+    const getInitials = name => {
+        const names = name.split(' ');
+        if (names.length === 1)
+            return names[0][0];
+        if (names.length === 2)
+            return `${names[0][0]}${names[1][0]}`
+    }
+
     return (
-        <Toolbar className={classes.toolbar} variant="regular">
+        <Toolbar className={classes.toolbar} variant="dense">
             <Grid container={true} justifyContent="space-between" alignItems="center">
-                <Grid item={true} lg={2}>
+                <Grid container={true} item={true} lg={3} justifyContent="flex-start">
                     <Link to="/" className={classes.link}>
-                        <Typography
-                            className={classes.logo}
-                            variant="h5"
+                        <Button
+                            startIcon={<Avatar className={classes.logo} src="/images/logo.png"/>}
+                            display="inline"
+                            className={classes.brand}
+                            variant="text"
                             align="center">
                             Darkdocs Shop
-                        </Typography>
+                        </Button>
                     </Link>
                 </Grid>
                 <Grid
                     item={true}
-                    lg={7}
+                    lg={6}
+                    spacing={2}
                     container={true}
                     justifyContent="center"
                     alignItems="center">
-                    <Grid item={true} lg={6}>
+                    <Grid item={true} lg={5}>
                         <TextField
                             type="text"
                             onChange={handleSearchQuery}
                             value={query}
                             fullWidth={true}
                             variant="outlined"
-                            margin="none"
+                            margin="dense"
                             placeholder="Search"
                         />
                     </Grid>
@@ -88,15 +108,15 @@ const TopDesktopHeader = () => {
                         </Button>
                     </Grid>
                 </Grid>
-                <Grid item={true} lg={3}>
+                <Grid item={true} lg={3} container={true} justifyContent="flex-end">
                     <Button
                         fullWidth={false}
                         className={classes.name}
                         onClick={handleProfileClick}
                         endIcon={<KeyboardArrowDown/>}
-                        startIcon={<Avatar className={classes.avatar}>SH</Avatar>}
-                        variant="text">
-                        Stanley Hayford
+                        startIcon={<Avatar className={classes.avatar}>{user && getInitials(user.name)}</Avatar>}
+                        variant="outlined">
+                        {user && user.name}
                     </Button>
                     <Menu
                         anchorEl={anchorEl}

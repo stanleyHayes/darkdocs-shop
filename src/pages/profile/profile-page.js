@@ -1,8 +1,10 @@
 import React from "react";
 import Layout from "../../components/layout/layout";
-import {Button, Card, CardContent, Container, Divider, Grid, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, Container, Divider, Grid, LinearProgress, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {Link} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {Skeleton} from "@material-ui/lab";
 
 const ProfilePage = () => {
 
@@ -39,9 +41,12 @@ const ProfilePage = () => {
 
     const classes = useStyles();
 
+    const {loading, user} = useSelector(state => state.auth);
+
     return (
         <Layout>
             <Container className={classes.container}>
+                {loading && <LinearProgress variant="query"/>}
                 <Grid className={classes.gridContainer} container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
                         <Card elevation={1} variant="elevation">
@@ -51,30 +56,35 @@ const ProfilePage = () => {
                                 </Typography>
 
                                 <Divider variant="fullWidth" className={classes.divider}/>
-
                                 <Typography variant="caption">
                                     Name
                                 </Typography>
-                                <Typography variant="body1">
-                                    Stanley Hayford
-                                </Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    <Typography variant="body1">
+                                        {user && user.name}
+                                    </Typography>
+                                )}
 
                                 <Divider variant="fullWidth" light={true} className={classes.divider}/>
 
                                 <Typography variant="caption">
                                     Email
                                 </Typography>
-                                <Typography variant="body1">
-                                    hayfordstanley@gmail.com
-                                </Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    <Typography variant="body1">
+                                        {user && user.email}
+                                    </Typography>
+                                )}
                                 <Divider variant="fullWidth" light={true} className={classes.divider}/>
 
                                 <Typography variant="caption">
                                     Username
                                 </Typography>
-                                <Typography variant="body1">
-                                    sahayford
-                                </Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    <Typography variant="body1">
+                                        {user && user.username}
+                                    </Typography>
+                                )}
                             </CardContent>
                         </Card>
                     </Grid>
@@ -116,6 +126,7 @@ const ProfilePage = () => {
                                 </Button>
 
                                 <Divider variant="fullWidth" light={true} className={classes.divider}/>
+
                                 <Button
                                     fullWidth={true}
                                     className={classes.deleteButton}

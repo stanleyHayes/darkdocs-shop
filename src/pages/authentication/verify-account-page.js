@@ -1,8 +1,17 @@
 import React, {useState} from "react";
-import {Avatar, Button, Card, CardContent, Container, Grid, TextField, Typography} from "@material-ui/core";
+import {
+    Avatar,
+    Button,
+    Card,
+    CardContent,
+    Container,
+    Grid,
+    LinearProgress,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {Link, useHistory} from "react-router-dom";
-import {MoneySharp} from "@material-ui/icons";
 import {useDispatch, useSelector} from "react-redux";
 import {verifyAccount} from "../../redux/authentication/auth-action-creators";
 
@@ -25,8 +34,9 @@ const VerifyAccountPage = () => {
             button: {
                 marginTop: 8,
                 marginBottom: 8,
-                paddingTop: 8,
-                paddingBottom: 8
+                paddingBottom: 16,
+                paddingTop: 16,
+                backgroundColor: theme.palette.primary.main
             },
             link: {
                 textDecoration: 'none'
@@ -37,13 +47,17 @@ const VerifyAccountPage = () => {
             title: {
                 marginTop: 32,
                 marginBottom: 32
+            },
+            logo: {
+                width: 100,
+                height: 100
             }
         }
     });
 
     const [otp, setOTP] = useState("");
     const [error, setError] = useState("");
-    const {token, loading} = useSelector(state => state.auth);
+    const {token, loading, error: authError} = useSelector(state => state.auth);
 
     const handleChange = event => {
         setOTP(event.target.value);
@@ -68,14 +82,14 @@ const VerifyAccountPage = () => {
                 <Grid item={true} xs={12} md={4}>
                     <Container>
                         <Card variant="elevation" elevation={1}>
+                            {loading && <LinearProgress variant="query"/>}
                             <CardContent>
+                                {authError &&
+                                <Typography variant="body2" color="error" align="center">{authError}</Typography>}
                                 <form onSubmit={handleSubmit}>
-
                                     <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
                                         <Grid item={true}>
-                                            <Avatar>
-                                                <MoneySharp/>
-                                            </Avatar>
+                                            <Avatar className={classes.logo} src="/images/logo.png" />
                                         </Grid>
                                     </Grid>
 

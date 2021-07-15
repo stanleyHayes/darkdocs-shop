@@ -9,11 +9,13 @@ import {
     Grid,
     List,
     ListItem,
-    ListItemAvatar, ListItemText,
+    ListItemText,
     Typography
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import {AttachMoney, CheckCircle, Email, Lens, VerifiedUser} from "@material-ui/icons";
+import {AttachMoney, CheckCircle, Email, VerifiedUser} from "@material-ui/icons";
+import {Skeleton} from "@material-ui/lab";
+import {useSelector} from "react-redux";
 
 const DashboardPage = () => {
 
@@ -31,21 +33,13 @@ const DashboardPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
-            },
-            card: {
-                [theme.breakpoints.up('md')]: {
-                    height: 460
-                },
-
-                [theme.breakpoints.up('lg')]: {
-                    height: 450
-                },
-
             }
         }
     });
 
     const classes = useStyles();
+
+    const {loading, user} = useSelector(state => state.auth);
 
     return (
         <Layout>
@@ -63,7 +57,11 @@ const DashboardPage = () => {
                                     </Grid>
                                 </Grid>
                                 <Typography gutterBottom={true} variant="h4" align="center">Balance</Typography>
-                                <Typography variant="body1" align="center">$500.00</Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    <Typography align="center" variant="body1">
+                                        ${user && parseFloat(user.balance).toFixed(2)}
+                                    </Typography>
+                                )}
                             </CardContent>
                         </Card>
                     </Grid>
@@ -79,7 +77,11 @@ const DashboardPage = () => {
                                     </Grid>
                                 </Grid>
                                 <Typography gutterBottom={true} variant="h4" align="center">User</Typography>
-                                <Typography variant="body1" align="center">Stanley Hayford</Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    <Typography align="center" variant="body1">
+                                        {user && user.name}
+                                    </Typography>
+                                )}
                             </CardContent>
                         </Card>
                     </Grid>
@@ -95,7 +97,11 @@ const DashboardPage = () => {
                                     </Grid>
                                 </Grid>
                                 <Typography gutterBottom={true} variant="h4" align="center">Email</Typography>
-                                <Typography variant="body1" align="center">hayfordstanley@gmail.com</Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    <Typography align="center" variant="body1">
+                                        {user && user.email}
+                                    </Typography>
+                                )}
                             </CardContent>
                         </Card>
                     </Grid>
@@ -111,50 +117,19 @@ const DashboardPage = () => {
                                     </Grid>
                                 </Grid>
                                 <Typography gutterBottom={true} variant="h4" align="center">Status</Typography>
-                                <Typography variant="body1" align="center">Active</Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    <Typography align="center" variant="body1">
+                                        {user && user.status}
+                                    </Typography>
+                                )}
                             </CardContent>
                         </Card>
                     </Grid>
                 </Grid>
 
                 <Grid className={classes.gridContainer} container={true} spacing={2}>
-                    <Grid item={true} xs={12} md={4}>
-                        <Card elevation={1} variant="elevation"  className={classes.card}>
-                            <CardContent>
-                                <Typography className={classes.title} gutterBottom={true} variant="h5">
-                                    User Profile
-                                </Typography>
-
-                                <Divider variant="fullWidth" className={classes.divider}/>
-
-                                <Typography variant="caption">
-                                    Name
-                                </Typography>
-                                <Typography variant="body1">
-                                    Stanley Hayford
-                                </Typography>
-
-                                <Divider variant="fullWidth" light={true} className={classes.divider}/>
-
-                                <Typography variant="caption">
-                                    Email
-                                </Typography>
-                                <Typography variant="body1">
-                                    hayfordstanley@gmail.com
-                                </Typography>
-                                <Divider variant="fullWidth" light={true} className={classes.divider}/>
-
-                                <Typography variant="caption">
-                                    Username
-                                </Typography>
-                                <Typography variant="body1">
-                                    sahayford
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                    <Grid item={true} xs={12} md={8}>
-                        <Card elevation={1} variant="elevation" className={classes.card}>
+                    <Grid item={true} xs={12}>
+                        <Card elevation={1} variant="elevation">
                             <CardContent>
                                 <Typography className={classes.title} align="center" gutterBottom={true} variant="h5">
                                     Do's & Don't
@@ -162,18 +137,13 @@ const DashboardPage = () => {
 
                                 <Divider variant="fullWidth" className={classes.divider}/>
 
-                                <Typography gutterBottom={true} variant="body2">
+                                <Typography align="center" gutterBottom={true} variant="body2">
                                     The following basic rules are mandatory and should be adhered to strictly as
                                     ignorance is no excuse.
                                 </Typography>
 
                                 <List dense={true}>
                                     <ListItem divider={true}>
-                                        <ListItemAvatar>
-                                            <Avatar>
-                                                <Lens/>
-                                            </Avatar>
-                                        </ListItemAvatar>
                                         <ListItemText>
                                             After making an order, all ordered logs will be moved to ORDERS SERVED, this
                                             is to ensure that our logs are still fresh and verified by admin before
@@ -181,12 +151,7 @@ const DashboardPage = () => {
                                         </ListItemText>
                                     </ListItem>
 
-                                    <ListItem>
-                                        <ListItemAvatar>
-                                            <Avatar>
-                                                <Lens/>
-                                            </Avatar>
-                                        </ListItemAvatar>
+                                    <ListItem divider={true}>
                                         <ListItemText>
                                             If you face any issue with any log purchased, just take a shot of it and
                                             send directly to hacksell30@gmail.com to be refund or logs changed within 5
@@ -194,12 +159,7 @@ const DashboardPage = () => {
                                         </ListItemText>
                                     </ListItem>
 
-                                    <ListItem>
-                                        <ListItemAvatar>
-                                            <Avatar>
-                                                <Lens/>
-                                            </Avatar>
-                                        </ListItemAvatar>
+                                    <ListItem divider={true}>
                                         <ListItemText>
                                             n adding funds, make sure you write down the EXACT amount of btc in dollars
                                             you are sending, any foul play will be punitive. Paste your btc address or
@@ -211,11 +171,6 @@ const DashboardPage = () => {
                                     </ListItem>
 
                                     <ListItem>
-                                        <ListItemAvatar>
-                                            <Avatar>
-                                                <Lens/>
-                                            </Avatar>
-                                        </ListItemAvatar>
                                         <ListItemText>
                                             Inactive for a month account will be deleted
                                         </ListItemText>

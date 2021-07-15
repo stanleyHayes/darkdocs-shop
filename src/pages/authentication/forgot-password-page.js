@@ -1,10 +1,21 @@
 import React, {useState} from "react";
-import {Avatar, Button, Card, CardContent, Container, Grid, TextField, Typography} from "@material-ui/core";
+import {
+    Avatar,
+    Button,
+    Card,
+    CardContent,
+    Container,
+    Grid,
+    LinearProgress,
+    TextField,
+    Typography
+} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import {Link} from "react-router-dom";
-import {MoneySharp} from "@material-ui/icons";
+import {Link, useHistory} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {forgotPassword} from "../../redux/authentication/auth-action-creators";
 
-const ForgotPaswordPage = () => {
+const ForgotPasswordPage = () => {
 
     const useStyles = makeStyles(theme => {
         return {
@@ -35,21 +46,37 @@ const ForgotPaswordPage = () => {
             title: {
                 marginTop: 32,
                 marginBottom: 32
+            },
+            logo: {
+                width: 100,
+                height: 100
             }
         }
     });
 
-    const [user, setUser] = useState({});
-    const {email} = user;
+    const [email, setEmail] = useState("");
+    const [error, setError] = useState("");
+    const history = useHistory();
+    const dispatch = useDispatch();
+
+    const {loading, error: authError} = useSelector(state => state.auth);
 
     const handleChange = event => {
-        setUser({...user, [event.target.name]: event.target.value});
+        setEmail(event.target.value);
     }
 
     const classes = useStyles();
 
     const handleSubmit = event => {
         event.preventDefault();
+        if(!email){
+            setError("Field required");
+        }
+        if(error){
+            return;
+        }else {
+            dispatch(forgotPassword(email, history));
+        }
     }
 
     return (
@@ -58,18 +85,20 @@ const ForgotPaswordPage = () => {
                 <Grid item={true} xs={12} md={4}>
                     <Container>
                         <Card variant="elevation" elevation={1}>
+                            {loading && <LinearProgress variant="query"/>}
                             <CardContent>
+                                {authError && <Typography variant="body2" color="error" align="center">
+                                    {authError}
+                                </Typography>}
                                 <form onSubmit={handleSubmit}>
 
                                     <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
                                         <Grid item={true}>
-                                            <Avatar>
-                                                <MoneySharp/>
-                                            </Avatar>
+                                            <Avatar className={classes.logo} src="/images/logo.png" />
                                         </Grid>
                                     </Grid>
 
-                                    <Typography className={classes.title} gutterBottom={true} variant="h4" align="center">
+                                    <Typography className={classes.title} gutterBottom={true} variant="h5" align="center">
                                         Forgot Password
                                     </Typography>
 
@@ -93,6 +122,7 @@ const ForgotPaswordPage = () => {
 
 
                                     <Button
+                                        disabled={loading}
                                         type="submit"
                                         onClick={handleSubmit}
                                         fullWidth={true}
@@ -117,4 +147,4 @@ const ForgotPaswordPage = () => {
     )
 }
 
-export default ForgotPaswordPage;
+export default ForgotPasswordPage;

@@ -1,4 +1,5 @@
 import './App.css';
+import React from "react";
 import {Switch, Route} from 'react-router-dom';
 import DashboardPage from "./pages/dashboard/dashboard-page";
 import ProfilePage from "./pages/profile/profile-page";
@@ -10,6 +11,7 @@ import VerifyAccountPage from "./pages/authentication/verify-account-page";
 import RegisterPage from "./pages/authentication/register-page";
 import LoginPage from "./pages/authentication/login-page";
 import ScrollToTop from "./components/shared/scroll-to-top";
+import ResetPasswordPage from "./pages/authentication/reset-password-page";
 
 function App() {
     return (
@@ -24,6 +26,7 @@ function App() {
                 <Route exact={true} path="/auth/verify-account" component={VerifyAccountPage}/>
                 <Route exact={true} path="/auth/register" component={RegisterPage}/>
                 <Route exact={true} path="/auth/login" component={LoginPage}/>
+                <Route exact={true} path="/auth/reset-password" component={ResetPasswordPage}/>
             </Switch>
         </ScrollToTop>
     );

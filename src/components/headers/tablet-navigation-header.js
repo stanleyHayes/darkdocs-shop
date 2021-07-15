@@ -52,7 +52,7 @@ const TabletNavigationHeader = () => {
     }
 
     return (
-        <Toolbar className={classes.toolbar} variant="regular">
+        <Toolbar className={classes.toolbar} variant="dense">
             <Grid container={true} justifyContent="center" alignItems="center" spacing={6}>
                 <Grid item={true}>
                     <Link className={classes.link} to="/">

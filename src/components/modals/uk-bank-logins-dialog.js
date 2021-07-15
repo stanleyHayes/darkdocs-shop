@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, Dialog, DialogContent, Divider, TextField, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 
-const AddFundsDialog = ({open, handleClose}) => {
+const UKBankLoginsDialog = ({open, handleClose}) => {
 
     const useStyles = makeStyles(theme => {
         return {
@@ -143,4 +143,4 @@ const AddFundsDialog = ({open, handleClose}) => {
 }
 
 
-export default AddFundsDialog;
+export default UKBankLoginsDialog;

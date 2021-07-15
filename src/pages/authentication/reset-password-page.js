@@ -1,5 +1,4 @@
 import React, {useState} from "react";
-import Layout from "../../components/layout/layout";
 import {
     Avatar,
     Button,
@@ -17,7 +16,7 @@ import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {changePassword} from "../../redux/authentication/auth-action-creators";
 
-const ChangePasswordPage = () => {
+const ResetPasswordPage = () => {
 
     const useStyles = makeStyles(theme => {
         return {
@@ -44,11 +43,21 @@ const ChangePasswordPage = () => {
                 textDecoration: 'none'
             },
             gridContainer: {
-                paddingTop: 32
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
             },
             title: {
-                marginTop: 32,
-                marginBottom: 32
+                marginTop: 16,
+                marginBottom: 16
+            },
+            image: {
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
             },
             logo: {
                 width: 100,
@@ -74,13 +83,6 @@ const ChangePasswordPage = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
-
-        if (!passwords.currentPassword) {
-            setHasError(true);
-            setError({...error, "currentPassword": 'Field required'});
-        } else {
-            setError({...error, "currentPassword": null});
-        }
 
         if (!passwords.newPassword) {
             setHasError(true);
@@ -111,9 +113,25 @@ const ChangePasswordPage = () => {
 
 
     return (
-        <Layout>
-            <Container className={classes.container}>
-                <Grid className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
+        <div className={classes.container}>
+            <Container className={classes.gridContainer}>
+                <Grid container={true} justifyContent="center" alignItems="center">
+                    <Grid item={true}>
+                        <Avatar className={classes.logo} variant="rounded">
+                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
+                        </Avatar>
+                    </Grid>
+                </Grid>
+                <Typography
+                    color="textPrimary"
+                    className={classes.title}
+                    align="center"
+                    gutterBottom={true}
+                    variant="h4">
+                    Darkdocs Shop
+                </Typography>
+
+                <Grid container={true} justifyContent="center" alignItems='center'>
                     <Grid item={true} xs={12} md={6}>
                         <Card variant="elevation" elevation={1}>
                             {loading && <LinearProgress variant="query"/>}
@@ -122,36 +140,13 @@ const ChangePasswordPage = () => {
                                     {authError}
                                 </Typography>}
                                 <form onSubmit={handleSubmit}>
-
-                                    <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
-                                        <Grid item={true}>
-                                            <Avatar className={classes.logo} src="/images/logo.png" />
-                                        </Grid>
-                                    </Grid>
-
                                     <Typography
                                         className={classes.title}
                                         gutterBottom={true}
                                         variant="h5"
                                         align="center">
-                                        Change Password
+                                        Reset Password
                                     </Typography>
-
-                                    <TextField
-                                        variant="outlined"
-                                        label="Current password"
-                                        placeholder="Enter your current password"
-                                        margin="normal"
-                                        className={classes.textField}
-                                        value={passwords.currentPassword}
-                                        type={visible ? 'text' : 'password'}
-                                        onChange={handleChange}
-                                        name="currentPassword"
-                                        fullWidth={true}
-                                        required={true}
-                                        error={Boolean(error.currentPassword)}
-                                        helperText={error.currentPassword}
-                                    />
 
                                     <TextField
                                         variant="outlined"
@@ -196,7 +191,6 @@ const ChangePasswordPage = () => {
                                         </Grid>
                                     </Grid>
 
-
                                     <Button
                                         disabled={loading}
                                         type="submit"
@@ -205,7 +199,7 @@ const ChangePasswordPage = () => {
                                         className={classes.button}
                                         variant="outlined"
                                         size="small">
-                                        Change Password
+                                        Reset Password
                                     </Button>
                                 </form>
                             </CardContent>
@@ -213,8 +207,8 @@ const ChangePasswordPage = () => {
                     </Grid>
                 </Grid>
             </Container>
-        </Layout>
+        </div>
     )
 }
 
-export default ChangePasswordPage;
+export default ResetPasswordPage;
