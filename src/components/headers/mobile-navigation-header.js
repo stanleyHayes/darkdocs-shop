@@ -28,12 +28,18 @@ const MobileNavigationHeader = ({handleDrawerOpen}) => {
                 color: theme.palette.text.primary
             },
             logo: {
-                width: 50,
-                height: 50
+                width: 30,
+                height: 30
             },
             menu: {
                 cursor: 'pointer'
-            }
+            } ,
+            image: {
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
+            },
         }
     });
 
@@ -44,7 +50,9 @@ const MobileNavigationHeader = ({handleDrawerOpen}) => {
             <Grid container={true} justifyContent="space-between" alignItems="center">
                 <Grid item={true} xs={2}>
                     <Link className={classes.link} to="/">
-                        <Avatar className={classes.logo} src="/images/logo.png" />
+                        <Avatar className={classes.logo} variant="rounded">
+                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
+                        </Avatar>
                     </Link>
                 </Grid>
                 <Grid container={true} alignItems="center" justifyContent="flex-start" item={true} xs={8}>

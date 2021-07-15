@@ -14,6 +14,9 @@ const TopDesktopHeader = () => {
                 color: theme.palette.text.primary
             },
             button: {
+                color: theme.palette.text.primary
+            },
+            searchButton: {
                 color: theme.palette.text.primary,
                 backgroundColor: theme.palette.primary.main
             },
@@ -25,14 +28,20 @@ const TopDesktopHeader = () => {
             },
             avatar: {},
             logo: {
-                width: 75,
+                width: 50,
                 height: 50
             },
             brand: {
                 textTransform: 'uppercase',
                 fontWeight: 'bold',
                 fontSize: 32
-            }
+            },
+            image: {
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
+            },
         }
     });
     const classes = useStyles();
@@ -71,7 +80,11 @@ const TopDesktopHeader = () => {
                 <Grid container={true} item={true} lg={3} justifyContent="flex-start">
                     <Link to="/" className={classes.link}>
                         <Button
-                            startIcon={<Avatar className={classes.logo} src="/images/logo.png"/>}
+                            startIcon={
+                                <Avatar className={classes.logo} variant="rounded">
+                                    <img className={classes.image} alt="logo" src="/images/logo.png"/>
+                                </Avatar>
+                            }
                             display="inline"
                             className={classes.brand}
                             variant="text"
@@ -101,7 +114,7 @@ const TopDesktopHeader = () => {
                     <Grid item={true} lg={1}>
                         <Button
                             fullWidth={true}
-                            className={classes.button}
+                            className={classes.searchButton}
                             onClick={handleSearch}
                             variant="outline">
                             Search

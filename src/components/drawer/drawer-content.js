@@ -68,7 +68,13 @@ const DrawerContent = ({handleDrawerClose}) => {
                 fontWeight: 'bold',
                 color: theme.palette.text.primary,
                 textTransform: 'uppercase'
-            }
+            },
+            image: {
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
+            },
         }
     });
 
@@ -151,7 +157,9 @@ const DrawerContent = ({handleDrawerClose}) => {
 
                 <Grid container={true} justifyContent="center">
                     <Grid item={true}>
-                        <Avatar className={classes.logo} src="/images/logo.png"/>
+                        <Avatar className={classes.logo} variant="rounded">
+                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
+                        </Avatar>
                     </Grid>
                 </Grid>
 

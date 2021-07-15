@@ -16,7 +16,7 @@ import {
     CREATE_ORDER_REQUEST
 } from './order-action-types';
 import axios from "axios";
-import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {DARKDOCS_SHOP_ORDERS_KEY, DEVELOPMENT_SERVER, PRODUCTION_HEROKU_SERVER} from "../../constants/constants";
 
 const createOrderRequest = () => {
     return {
@@ -38,18 +38,18 @@ const createOrderFailure = error => {
     }
 }
 
-export const createOrder = (token, order, history) => {
+export const createOrder = (token, order, handleClose) => {
     return dispatch => {
         dispatch(createOrderRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/orders`,
+            url: `${PRODUCTION_HEROKU_SERVER}/orders`,
             data: order,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
             dispatch(createOrderSuccess(data));
-            history.push('/orders');
+            handleClose();
         }).catch(error => {
             dispatch(createOrderFailure(error.response.data.message));
         });
@@ -82,11 +82,12 @@ export const getOrders = (token) => {
         dispatch(getOrdersRequest());
         axios({
             method: 'GET',
-            url: `${DEVELOPMENT_SERVER}/orders`,
+            url: `${PRODUCTION_HEROKU_SERVER}/orders`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
             dispatch(getOrdersSuccess(data));
+            localStorage.setItem(DARKDOCS_SHOP_ORDERS_KEY, JSON.stringify(data));
         }).catch(error => {
             dispatch(getOrdersFailure(error.response.data.message));
         });

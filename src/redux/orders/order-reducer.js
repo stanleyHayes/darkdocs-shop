@@ -16,8 +16,10 @@ import {
     GET_ORDER_FAILURE
 } from './order-action-types';
 
+import {orders} from "./order.data";
+
 const INITIAL_STATE = {
-    orders: [],
+    orders: [...orders],
     error: "",
     loading: false,
     singleOrder: {}
@@ -25,7 +27,6 @@ const INITIAL_STATE = {
 
 const ordersReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
-
         case CREATE_ORDER_REQUEST:
             return {
                 ...state,

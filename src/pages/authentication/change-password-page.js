@@ -47,8 +47,8 @@ const ChangePasswordPage = () => {
                 paddingTop: 32
             },
             title: {
-                marginTop: 32,
-                marginBottom: 32
+                marginTop: 16,
+                marginBottom: 16
             },
             logo: {
                 width: 100,
@@ -123,7 +123,7 @@ const ChangePasswordPage = () => {
                                 </Typography>}
                                 <form onSubmit={handleSubmit}>
 
-                                    <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
+                                    <Grid container={true} justifyContent="center" alignItems="center">
                                         <Grid item={true}>
                                             <Avatar className={classes.logo} src="/images/logo.png" />
                                         </Grid>

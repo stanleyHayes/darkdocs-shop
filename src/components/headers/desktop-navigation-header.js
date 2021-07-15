@@ -29,7 +29,8 @@ const DesktopNavigationHeader = () => {
                 backgroundColor: theme.palette.primary.main
             },
             button: {
-                color: theme.palette.text.primary
+                color: theme.palette.text.primary,
+                fontWeight: 'bold'
             },
             menuButton: {
                 color: theme.palette.text.primary

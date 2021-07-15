@@ -1,6 +1,8 @@
 import React, {useState} from "react";
 import {Button, Dialog, DialogContent, Divider, TextField, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
+import {useDispatch, useSelector} from "react-redux";
+import {createOrder} from "../../redux/orders/order-action-creators";
 
 const AddFundsDialog = ({open, handleClose}) => {
 
@@ -38,9 +40,14 @@ const AddFundsDialog = ({open, handleClose}) => {
         }
     });
     const classes = useStyles();
+    const dispatch = useDispatch();
 
     const [address, setAddress] = useState("");
     const [amount, setAmount] = useState("");
+    const [e, setError] = useState({});
+    const [hasError, setHasError] = useState(false);
+
+    const {token} = useSelector(state => state.auth);
 
     const handleAddressChange = event => {
         setAddress(event.target.value);
@@ -52,7 +59,22 @@ const AddFundsDialog = ({open, handleClose}) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        handleClose();
+
+        if(!address){
+            setHasError(true);
+            setError({...e, address: 'Field required'})
+        }
+
+        if(!amount){
+            setHasError(true);
+            setError({...e, amount: 'Field required'})
+        }
+
+        if(hasError){
+            return;
+        }else {
+            dispatch(createOrder(token, {address, amount}, handleClose));
+        }
     }
 
     const handleCloseClick = () => {
@@ -97,11 +119,14 @@ const AddFundsDialog = ({open, handleClose}) => {
                         onChange={handleAddressChange}
                         name="address"
                         fullWidth={true}
+                        required={true}
+                        helperText={e.address}
+                        error={Boolean(e.address)}
                     />
 
                     <TextField
                         variant="outlined"
-                        label="Amount"
+                        label="Amount (USD)"
                         placeholder="Enter amount in dollars"
                         margin="normal"
                         className={classes.textField}
@@ -110,6 +135,9 @@ const AddFundsDialog = ({open, handleClose}) => {
                         onChange={handleAmountChange}
                         name="amount"
                         fullWidth={true}
+                        required={true}
+                        helperText={e.amount}
+                        error={Boolean(e.amount)}
                     />
 
                     <Button

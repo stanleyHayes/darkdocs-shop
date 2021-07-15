@@ -22,7 +22,12 @@ import {
     SIGN_OUT_SUCCESS
 } from "./auth-action-types";
 import axios from "axios";
-import {DARKDOCS_SHOP_TOKEN_KEY, DARKDOCS_SHOP_USER_KEY, DEVELOPMENT_SERVER} from "../../constants/constants";
+import {
+    DARKDOCS_SHOP_TOKEN_KEY,
+    DARKDOCS_SHOP_USER_KEY,
+    DEVELOPMENT_SERVER,
+    PRODUCTION_HEROKU_SERVER
+} from "../../constants/constants";
 
 const signInRequest = () => {
     return {
@@ -49,7 +54,7 @@ export const signIn = (user, history) => {
         dispatch(signInRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/auth/login`,
+            url: `${PRODUCTION_HEROKU_SERVER}/auth/login`,
             data: user
         }).then(res => {
             const {data, token} = res.data;
@@ -88,7 +93,7 @@ export const signUp = (user, history) => {
         dispatch(signUpRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/auth/register`,
+            url: `${PRODUCTION_HEROKU_SERVER}/auth/register`,
             data: user
         }).then(res => {
             const {data, token} = res.data;
@@ -127,7 +132,7 @@ export const verifyAccount = (otp, token, history) => {
         dispatch(verifyAccountRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/auth/verify-otp`,
+            url: `${PRODUCTION_HEROKU_SERVER}/auth/verify-otp`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -211,7 +216,7 @@ export const changePassword = (passwords, token, history) => {
         dispatch(changePasswordRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/auth/update-password`,
+            url: `${PRODUCTION_HEROKU_SERVER}/auth/update-password`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'

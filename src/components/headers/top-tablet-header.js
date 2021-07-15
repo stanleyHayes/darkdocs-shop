@@ -20,13 +20,18 @@ const TopTabletHeader = () => {
                 backgroundColor: theme.palette.primary.dark
             },
             logo: {
-                width: 75,
-                height: 50
+                width: 40,
+                height: 40
             },
             name: {
                 color: theme.palette.text.primary
             },
-            avatar: {}
+            image: {
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
+            },
         }
     });
     const classes = useStyles();
@@ -53,7 +58,9 @@ const TopTabletHeader = () => {
             <Grid container={true} justifyContent="center" alignItems="center">
                 <Grid item={true} md={1}>
                     <Link to="/" className={classes.link}>
-                        <Avatar className={classes.logo} src="/images/logo.png"/>
+                        <Avatar className={classes.logo} variant="rounded">
+                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
+                        </Avatar>
                     </Link>
                 </Grid>
                 <Grid

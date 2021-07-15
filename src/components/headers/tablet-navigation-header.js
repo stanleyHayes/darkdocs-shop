@@ -9,6 +9,13 @@ import {
 import {Link} from "react-router-dom";
 import {makeStyles} from "@material-ui/styles";
 import {KeyboardArrowDown} from "@material-ui/icons";
+import AddFundsDialog from "../modals/add-funds-dialog";
+import BankChequesDialog from "../modals/bank-cheques-dialog";
+import CanadaBankLoginsDialog from "../modals/canada-bank-logins-dialog";
+import CCDumpPinsDialog from "../modals/cc-dump-pins-dialog";
+import CreditCardLogsDialog from "../modals/credit-card-logs-dialog";
+import UKBankLoginsDialog from "../modals/uk-bank-logins-dialog";
+import USABankLoginsDialog from "../modals/usa-bank-logins-dialog";
 
 const TabletNavigationHeader = () => {
 
@@ -34,6 +41,13 @@ const TabletNavigationHeader = () => {
 
     const [bankAnchor, setBankAnchor] = useState(null);
     const [creditAnchor, setCreditAnchor] = useState(null);
+    const [fundsDialogOpen, setFundsDialogOpen] = useState(false);
+    const [bankChequesDialogOpen, setBankChequesDialogOpen] = useState(false);
+    const [canadaBankLoginsDialogOpen, setCanadaBankLoginsDialogOpen] = useState(false);
+    const [ccDumpPinsDialogOpen, setCCDumpPinsDialogOpen] = useState(false);
+    const [creditCardLogsDialogOpen, setCreditCardLogsDialogOpen] = useState(false);
+    const [ukBankLoginsDialogOpen, setUKBankLoginsDialogOpen] = useState(false);
+    const [usaBankLoginsDialogOpen, setUSABankLoginsDialogOpen] = useState(false);
 
     const handleBankAnchorClick = event => {
         setBankAnchor(event.currentTarget);
@@ -51,6 +65,61 @@ const TabletNavigationHeader = () => {
         setCreditAnchor(null);
     }
 
+    const handleAddFundsClick = () => {
+        setFundsDialogOpen(true);
+    }
+
+    const handleFundsDialogClose = () => {
+        setFundsDialogOpen(false);
+    }
+
+    const handleBankChequesClick = () => {
+        setBankChequesDialogOpen(true);
+    }
+
+    const handleBankChequesDialogClose = () => {
+        setBankChequesDialogOpen(false);
+    }
+
+    const handleCanadaBankLoginsClick = () => {
+        setCanadaBankLoginsDialogOpen(true);
+    }
+
+    const handleCanadaBankLoginsDialogClose = () => {
+        setCanadaBankLoginsDialogOpen(false);
+    }
+
+    const handleCCDumpPinsClick = () => {
+        setCCDumpPinsDialogOpen(true);
+    }
+
+    const handleCCDumpPinsDialogClose = () => {
+        setCCDumpPinsDialogOpen(false);
+    }
+
+    const handleCreditCardLogsClick = () => {
+        setCreditCardLogsDialogOpen(true);
+    }
+
+    const handleCreditCardLogsDialogClose = () => {
+        setCreditCardLogsDialogOpen(false);
+    }
+
+    const handleUKBankLoginsClick = () => {
+        setUKBankLoginsDialogOpen(true);
+    }
+
+    const handleUKBankLoginsDialogClose = () => {
+        setUKBankLoginsDialogOpen(false);
+    }
+
+    const handleUSABankLoginsClick = () => {
+        setUSABankLoginsDialogOpen(true);
+    }
+
+    const handleUSABankLoginsDialogClose = () => {
+        setUSABankLoginsDialogOpen(false);
+    }
     return (
         <Toolbar className={classes.toolbar} variant="dense">
             <Grid container={true} justifyContent="center" alignItems="center" spacing={6}>
@@ -64,6 +133,7 @@ const TabletNavigationHeader = () => {
                 </Grid>
                 <Grid item={true}>
                     <Button
+                        onClick={handleAddFundsClick}
                         className={classes.button}
                         size="small"
                         variant="text">Add Funds</Button>
@@ -92,20 +162,24 @@ const TabletNavigationHeader = () => {
                         anchorEl={bankAnchor}
                         onClose={handleBankAnchorClose}
                         open={Boolean(bankAnchor)}>
-                        <MenuItem>
+                        <MenuItem onClick={handleUSABankLoginsClick}>
                             <Button className={classes.menuButton} variant="text" size="small">USA Bank Logins</Button>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={handleUKBankLoginsClick}>
                             <Button className={classes.menuButton} variant="text" size="small">UK Bank Logins</Button>
                         </MenuItem>
-                        <MenuItem>
-                            <Button className={classes.menuButton} variant="text" size="small">Canada Bank Logins</Button>
+                        <MenuItem onClick={handleCanadaBankLoginsClick}>
+                            <Button className={classes.menuButton} variant="text" size="small">Canada Bank
+                                Logins</Button>
+                        </MenuItem>
+                        <MenuItem onClick={handleBankChequesClick}>
+                            <Button className={classes.menuButton} variant="text" size="small">Bank Cheques</Button>
                         </MenuItem>
                     </Menu>
                 </Grid>
                 <Grid item={true}>
                     <Button
-                        className={classes.buton}
+                        className={classes.button}
                         endIcon={<KeyboardArrowDown/>}
                         onClick={handleCreditAnchorClick}
                         size="small"
@@ -116,15 +190,23 @@ const TabletNavigationHeader = () => {
                         anchorEl={creditAnchor}
                         onClose={handleCreditAnchorClose}
                         open={Boolean(creditAnchor)}>
-                        <MenuItem>
+                        <MenuItem onClick={handleCreditCardLogsClick}>
                             <Button className={classes.menuButton} variant="text" size="small">Credit Card Logs</Button>
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem onClick={handleCCDumpPinsClick}>
                             <Button className={classes.menuButton} variant="text" size="small">CC Dump + Pin</Button>
                         </MenuItem>
                     </Menu>
                 </Grid>
             </Grid>
+
+            <AddFundsDialog handleClose={handleFundsDialogClose} open={fundsDialogOpen}/>
+            <BankChequesDialog handleClose={handleBankChequesDialogClose} open={bankChequesDialogOpen}/>
+            <CanadaBankLoginsDialog handleClose={handleCanadaBankLoginsDialogClose} open={canadaBankLoginsDialogOpen}/>
+            <CCDumpPinsDialog handleClose={handleCCDumpPinsDialogClose} open={ccDumpPinsDialogOpen}/>
+            <CreditCardLogsDialog handleClose={handleCreditCardLogsDialogClose} open={creditCardLogsDialogOpen}/>
+            <UKBankLoginsDialog handleClose={handleUKBankLoginsDialogClose} open={ukBankLoginsDialogOpen}/>
+            <USABankLoginsDialog handleClose={handleUSABankLoginsDialogClose} open={usaBankLoginsDialogOpen}/>
         </Toolbar>
     )
 }

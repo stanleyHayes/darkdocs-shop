@@ -161,11 +161,11 @@ const DashboardPage = () => {
 
                                     <ListItem divider={true}>
                                         <ListItemText>
-                                            n adding funds, make sure you write down the EXACT amount of btc in dollars
+                                            When adding funds, make sure you write down the EXACT amount of btc in dollars
                                             you are sending, any foul play will be punitive. Paste your btc address or
                                             btc where address funds will be coming from for easier verification, and
                                             make sure money is sent to the official Hacksell btc which is
-                                            (3E792v1meHHpFj2HvcM5pGdNFiafjAWjQZ) Funds will be approved after
+                                            (bc1quvwx4008j0fn3u73uqa9qlhzz8nvmr8axc5zya) Funds will be approved after
                                             verification from bitcoin
                                         </ListItemText>
                                     </ListItem>

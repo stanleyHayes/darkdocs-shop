@@ -54,7 +54,7 @@ const EditProfilePage = () => {
         if (data) {
             setUser({...data});
         }
-    }, []);
+    }, [data]);
 
     const handleSubmit = event => {
         event.preventDefault();

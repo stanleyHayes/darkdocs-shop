@@ -12,7 +12,7 @@ import store from "./redux/store";
 
 const theme = createTheme({
     typography: {
-        fontFamily: 'IBM Plex Sans, sans-serif;'
+        fontFamily: 'IBM Plex Mono, sans-serif;'
     },
     palette: {
         primary: {
