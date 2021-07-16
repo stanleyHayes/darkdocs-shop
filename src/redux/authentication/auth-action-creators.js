@@ -1,25 +1,25 @@
 import {
+    CHANGE_PASSWORD_FAILURE,
+    CHANGE_PASSWORD_REQUEST,
+    CHANGE_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAILURE,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    SIGN_IN_FAILURE,
     SIGN_IN_REQUEST,
     SIGN_IN_SUCCESS,
-    SIGN_IN_FAILURE,
+    SIGN_OUT_FAILURE,
+    SIGN_OUT_REQUEST,
+    SIGN_OUT_SUCCESS,
+    SIGN_UP_FAILURE,
     SIGN_UP_REQUEST,
     SIGN_UP_SUCCESS,
-    SIGN_UP_FAILURE,
-    VERIFY_ACCOUNT_REQUEST,
-    VERIFY_ACCOUNT_FAILURE,
-    VERIFY_ACCOUNT_SUCCESS,
     UPDATE_PROFILE_FAILURE,
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_SUCCESS,
-    CHANGE_PASSWORD_REQUEST,
-    CHANGE_PASSWORD_SUCCESS,
-    CHANGE_PASSWORD_FAILURE,
-    FORGOT_PASSWORD_REQUEST,
-    FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_FAILURE,
-    SIGN_OUT_REQUEST,
-    SIGN_OUT_FAILURE,
-    SIGN_OUT_SUCCESS
+    VERIFY_ACCOUNT_FAILURE,
+    VERIFY_ACCOUNT_REQUEST,
+    VERIFY_ACCOUNT_SUCCESS
 } from "./auth-action-types";
 import axios from "axios";
 import {
@@ -58,10 +58,12 @@ export const signIn = (user, history) => {
             data: user
         }).then(res => {
             const {data, token} = res.data;
-            dispatch(signInSuccess(data, token));
-            localStorage.setItem(DARKDOCS_SHOP_TOKEN_KEY, JSON.stringify(token));
-            localStorage.setItem(DARKDOCS_SHOP_USER_KEY, JSON.stringify(data));
-            history.push('/');
+            if (data) {
+                dispatch(signInSuccess(data, token));
+                localStorage.setItem(DARKDOCS_SHOP_TOKEN_KEY, JSON.stringify(token));
+                localStorage.setItem(DARKDOCS_SHOP_USER_KEY, JSON.stringify(data));
+                history.push('/');
+            }
         }).catch(error => {
             dispatch(signInFailure(error.response.data.message));
         });

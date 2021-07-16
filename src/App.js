@@ -1,6 +1,6 @@
 import './App.css';
-import React from "react";
-import {Switch, Route} from 'react-router-dom';
+import React, {useEffect} from "react";
+import {Switch, Route, useHistory} from 'react-router-dom';
 import DashboardPage from "./pages/dashboard/dashboard-page";
 import ProfilePage from "./pages/profile/profile-page";
 import OrdersPage from "./pages/orders/orders-page";
@@ -12,8 +12,19 @@ import RegisterPage from "./pages/authentication/register-page";
 import LoginPage from "./pages/authentication/login-page";
 import ScrollToTop from "./components/shared/scroll-to-top";
 import ResetPasswordPage from "./pages/authentication/reset-password-page";
+import {DARKDOCS_SHOP_TOKEN_KEY} from "./constants/constants";
 
 function App() {
+
+    const history = useHistory();
+    const token = localStorage.getItem(DARKDOCS_SHOP_TOKEN_KEY);
+    useEffect(() => {
+        if(token){
+            history.push('/');
+        }else {
+            history.push('/auth/login');
+        }
+    }, [history, token]);
     return (
         <ScrollToTop>
             <Switch>

@@ -98,7 +98,7 @@ const DashboardPage = () => {
                                 </Grid>
                                 <Typography gutterBottom={true} variant="h4" align="center">Email</Typography>
                                 {loading ? <Skeleton variant="text"/> : (
-                                    <Typography align="center" variant="body1">
+                                    <Typography noWrap={true} align="center" variant="body1">
                                         {user && user.email}
                                     </Typography>
                                 )}
