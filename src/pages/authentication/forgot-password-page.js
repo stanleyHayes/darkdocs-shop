@@ -34,18 +34,29 @@ const ForgotPasswordPage = () => {
             button: {
                 marginTop: 8,
                 marginBottom: 8,
-                paddingTop: 8,
-                paddingBottom: 8
+                paddingTop: 16,
+                paddingBottom: 16,
+                backgroundColor: theme.palette.primary.main
             },
             link: {
                 textDecoration: 'none'
             },
             gridContainer: {
-                minHeight: '100vh'
+                minHeight: '100vh',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexDirection: 'column'
             },
             title: {
                 marginTop: 32,
                 marginBottom: 32
+            },
+            image: {
+                maxHeight: '100%',
+                maxWidth: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center'
             },
             logo: {
                 width: 100,
@@ -69,36 +80,45 @@ const ForgotPasswordPage = () => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        if(!email){
+        if (!email) {
             setError("Field required");
         }
-        if(error){
+        if (error) {
             return;
-        }else {
+        } else {
             dispatch(forgotPassword(email, history));
         }
     }
 
     return (
         <div className={classes.container}>
-            <Grid className={classes.gridContainer} container={true} justifyContent="center" alignItems='center'>
-                <Grid item={true} xs={12} md={4}>
-                    <Container>
-                        <Card variant="elevation" elevation={1}>
+            <Grid className={classes.gridContainer}>
+                <Grid container={true} justifyContent="center" alignItems="center">
+                    <Grid item={true}>
+                        <Avatar className={classes.logo} variant="rounded">
+                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
+                        </Avatar>
+                    </Grid>
+                </Grid>
+                <Typography
+                    color="textPrimary"
+                    className={classes.title}
+                    align="center"
+                    gutterBottom={true}
+                    variant="h4">
+                    Darkdocs Shop
+                </Typography>
+                <Grid container={true} justifyContent="center" alignItems='center'>
+                    <Grid item={true} xs={12} md={4}>
+                        <Card variant="elevation" elevation={4}>
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
                                 {authError && <Typography variant="body2" color="error" align="center">
                                     {authError}
                                 </Typography>}
                                 <form onSubmit={handleSubmit}>
-
-                                    <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
-                                        <Grid item={true}>
-                                            <Avatar className={classes.logo} src="/images/logo.png" />
-                                        </Grid>
-                                    </Grid>
-
-                                    <Typography className={classes.title} gutterBottom={true} variant="h5" align="center">
+                                    <Typography className={classes.title} gutterBottom={true} variant="h5"
+                                                align="center">
                                         Forgot Password
                                     </Typography>
 
@@ -140,7 +160,7 @@ const ForgotPasswordPage = () => {
                                 </form>
                             </CardContent>
                         </Card>
-                    </Container>
+                    </Grid>
                 </Grid>
             </Grid>
         </div>

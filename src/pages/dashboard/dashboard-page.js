@@ -98,7 +98,7 @@ const DashboardPage = () => {
                                 </Grid>
                                 <Typography gutterBottom={true} variant="h4" align="center">Email</Typography>
                                 {loading ? <Skeleton variant="text"/> : (
-                                    <Typography noWrap={true} align="center" variant="body1">
+                                    <Typography align="center" variant="body1">
                                         {user && user.email}
                                     </Typography>
                                 )}
@@ -137,12 +137,13 @@ const DashboardPage = () => {
 
                                 <Divider variant="fullWidth" className={classes.divider}/>
 
-                                <Typography align="center" gutterBottom={true} variant="body2">
-                                    The following basic rules are mandatory and should be adhered to strictly as
-                                    ignorance is no excuse.
-                                </Typography>
-
                                 <List dense={true}>
+                                    <ListItem divider={true}>
+                                        <ListItemText>
+                                            The following basic rules are mandatory and should be adhered to strictly as
+                                            ignorance is no excuse.
+                                        </ListItemText>
+                                    </ListItem>
                                     <ListItem divider={true}>
                                         <ListItemText>
                                             After making an order, all ordered logs will be moved to ORDERS SERVED, this
@@ -154,7 +155,7 @@ const DashboardPage = () => {
                                     <ListItem divider={true}>
                                         <ListItemText>
                                             If you face any issue with any log purchased, just take a shot of it and
-                                            send directly to hacksell30@gmail.com to be refund or logs changed within 5
+                                            send directly to Darkdocsshop@protonmail.com to be refund or logs changed within 5
                                             minutes.
                                         </ListItemText>
                                     </ListItem>
@@ -164,7 +165,7 @@ const DashboardPage = () => {
                                             When adding funds, make sure you write down the EXACT amount of btc in dollars
                                             you are sending, any foul play will be punitive. Paste your btc address or
                                             btc where address funds will be coming from for easier verification, and
-                                            make sure money is sent to the official Hacksell btc which is
+                                            make sure money is sent to the official Darkdocs BTC which is
                                             (bc1quvwx4008j0fn3u73uqa9qlhzz8nvmr8axc5zya) Funds will be approved after
                                             verification from bitcoin
                                         </ListItemText>
