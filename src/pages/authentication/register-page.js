@@ -15,6 +15,7 @@ import {makeStyles} from "@material-ui/styles";
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {signUp} from "../../redux/authentication/auth-action-creators";
+import {Alert} from "@material-ui/lab";
 
 const RegisterPage = () => {
 
@@ -151,7 +152,9 @@ const RegisterPage = () => {
                             <CardContent>
                                 {loading && <LinearProgress variant="query"/>}
                                 {authError &&
-                                <Typography variant="body2" color="error" align="center">{authError}</Typography>}
+                                <Alert severity="error" variant="outlined" title="Error">
+                                    {authError}
+                                </Alert>}
                                 <form onSubmit={handleSubmit}>
                                     <Typography
                                         color="textPrimary"

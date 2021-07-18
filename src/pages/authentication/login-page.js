@@ -15,6 +15,7 @@ import {makeStyles} from "@material-ui/styles";
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {signIn} from "../../redux/authentication/auth-action-creators";
+import {Alert} from "@material-ui/lab";
 
 const LoginPage = () => {
 
@@ -108,11 +109,11 @@ const LoginPage = () => {
 
     return (
         <div className={classes.container}>
-            <Container className={classes.gridContainer} >
+            <Container className={classes.gridContainer}>
                 <Grid container={true} justifyContent="center" alignItems="center">
                     <Grid item={true}>
                         <Avatar className={classes.logo} variant="rounded">
-                            <img className={classes.image} alt="logo" src="/images/logo.png" />
+                            <img className={classes.image} alt="logo" src="/images/logo.png"/>
                         </Avatar>
                     </Grid>
                 </Grid>
@@ -131,7 +132,9 @@ const LoginPage = () => {
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
                                 {authError &&
-                                <Typography variant="body2" color="error" align="center">{authError}</Typography>}
+                                <Alert severity="error" variant="outlined" title="Error">
+                                    {authError}
+                                </Alert>}
                                 <Typography
                                     color="textPrimary"
                                     className={classes.title}
