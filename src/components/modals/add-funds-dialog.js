@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Button, Dialog, DialogContent, Divider, TextField, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {createOrder} from "../../redux/orders/order-action-creators";
+import {createFund} from "../../redux/funds/funds-action-creators";
 
 const AddFundsDialog = ({open, handleClose}) => {
 
@@ -36,6 +36,16 @@ const AddFundsDialog = ({open, handleClose}) => {
                 paddingTop: 16,
                 paddingBottom: 16,
                 backgroundColor: theme.palette.primary.main
+            },
+            closeButton: {
+                marginTop: 8,
+                marginBottom: 8,
+                paddingTop: 8,
+                paddingBottom: 8,
+                backgroundColor: theme.palette.primary.light
+            },
+            subtitle: {
+                color: theme.palette.text.primary
             }
         }
     });
@@ -60,20 +70,20 @@ const AddFundsDialog = ({open, handleClose}) => {
     const handleSubmit = event => {
         event.preventDefault();
 
-        if(!address){
+        if (!address) {
             setHasError(true);
             setError({...e, address: 'Field required'})
         }
 
-        if(!amount){
+        if (!amount) {
             setHasError(true);
             setError({...e, amount: 'Field required'})
         }
 
-        if(hasError){
+        if (hasError) {
             return;
-        }else {
-            dispatch(createOrder(token, {address, amount}, handleClose));
+        } else {
+            dispatch(createFund(token, {address, amount}, handleClose));
         }
     }
 
@@ -159,7 +169,10 @@ const AddFundsDialog = ({open, handleClose}) => {
                     Please have patience for our 2 confirmations.
                 </Typography>
 
+                <Divider variant="fullWidth" className={classes.divider}/>
+
                 <Button
+                    className={classes.closeButton}
                     onClick={handleCloseClick}
                     variant="outlined"
                     size="small">

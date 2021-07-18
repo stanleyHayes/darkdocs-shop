@@ -1,6 +1,6 @@
 import './App.css';
 import React, {useEffect} from "react";
-import {Switch, Route, useHistory} from 'react-router-dom';
+import {Route, Switch, useHistory,} from 'react-router-dom';
 import DashboardPage from "./pages/dashboard/dashboard-page";
 import ProfilePage from "./pages/profile/profile-page";
 import OrdersPage from "./pages/orders/orders-page";
@@ -19,9 +19,9 @@ function App() {
     const history = useHistory();
     const token = localStorage.getItem(DARKDOCS_SHOP_TOKEN_KEY);
     useEffect(() => {
-        if(token){
+        if (token) {
             history.push('/');
-        }else {
+        } else {
             history.push('/auth/login');
         }
     }, [history, token]);

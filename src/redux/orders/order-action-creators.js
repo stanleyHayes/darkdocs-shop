@@ -1,22 +1,13 @@
-import {
-    CREATE_ORDER_SUCCESS,
-    DELETE_ORDER_SUCCESS,
-    DELETE_ORDER_FAILURE,
-    UPDATE_ORDER_FAILURE,
-    UPDATE_ORDER_SUCCESS,
-    CREATE_ORDER_FAILURE,
-    DELETE_ORDER_REQUEST,
-    GET_ORDERS_REQUEST,
-    GET_ORDER_FAILURE,
-    GET_ORDER_REQUEST,
-    GET_ORDER_SUCCESS,
-    GET_ORDERS_FAILURE,
-    GET_ORDERS_SUCCESS,
-    UPDATE_ORDER_REQUEST,
-    CREATE_ORDER_REQUEST
-} from './order-action-types';
 import axios from "axios";
-import {DARKDOCS_SHOP_ORDERS_KEY, DEVELOPMENT_SERVER, PRODUCTION_HEROKU_SERVER} from "../../constants/constants";
+import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {
+    CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS,
+    DELETE_ORDER_FAILURE, DELETE_ORDER_REQUEST,
+    DELETE_ORDER_SUCCESS, GET_ORDER_FAILURE, GET_ORDER_REQUEST, GET_ORDER_SUCCESS,
+    GET_ORDERS_FAILURE,
+    GET_ORDERS_REQUEST,
+    GET_ORDERS_SUCCESS, UPDATE_ORDER_FAILURE, UPDATE_ORDER_REQUEST, UPDATE_ORDER_SUCCESS
+} from "./order-action-types";
 
 const createOrderRequest = () => {
     return {
@@ -38,20 +29,131 @@ const createOrderFailure = error => {
     }
 }
 
-export const createOrder = (token, order, handleClose) => {
+export const createOrder = (order, token) => {
     return dispatch => {
         dispatch(createOrderRequest());
         axios({
             method: 'post',
-            url: `${PRODUCTION_HEROKU_SERVER}/orders`,
-            data: order,
-            headers: {Authorization: `Bearer ${token}`}
+            url: `${DEVELOPMENT_SERVER}/orders`,
+            headers: {Authorization: `Bearer ${token}`},
+            data: order
         }).then(res => {
             const {data} = res.data;
             dispatch(createOrderSuccess(data));
-            handleClose();
         }).catch(error => {
             dispatch(createOrderFailure(error.response.data.message));
+        });
+    }
+}
+
+
+const getOrderRequest = () => {
+    return {
+        type: GET_ORDER_REQUEST
+    }
+}
+
+const getOrderSuccess = order => {
+    return {
+        type: GET_ORDER_SUCCESS,
+        payload: order
+    }
+}
+
+const getOrderFailure = error => {
+    return {
+        type: GET_ORDER_FAILURE,
+        payload: error
+    }
+}
+
+export const getOrder = (id, token) => {
+    return dispatch => {
+        dispatch(getOrderRequest());
+        axios({
+            method: 'get',
+            url: `${DEVELOPMENT_SERVER}/orders/${id}`,
+            headers: {Authorization: `Bearer ${token}`}
+        }).then(res => {
+            const {data} = res.data;
+            dispatch(getOrderSuccess(data));
+        }).catch(error => {
+            dispatch(getOrderFailure(error.response.data.message));
+        });
+    }
+}
+
+
+const updateOrderRequest = () => {
+    return {
+        type: UPDATE_ORDER_REQUEST
+    }
+}
+
+const updateOrderSuccess = order => {
+    return {
+        type: UPDATE_ORDER_SUCCESS,
+        payload: order
+    }
+}
+
+const updateOrderFailure = error => {
+    return {
+        type: UPDATE_ORDER_FAILURE,
+        payload: error
+    }
+}
+
+export const updateOrder = (id, order, token) => {
+    return dispatch => {
+        dispatch(updateOrderRequest());
+        axios({
+            method: 'put',
+            url: `${DEVELOPMENT_SERVER}/orders/${id}`,
+            headers: {Authorization: `Bearer ${token}`},
+            data: order
+        }).then(res => {
+            const {data} = res.data;
+            dispatch(updateOrderSuccess(data));
+        }).catch(error => {
+            dispatch(updateOrderFailure(error.response.data.message));
+        });
+    }
+}
+
+
+const deleteOrderRequest = () => {
+    return {
+        type: DELETE_ORDER_REQUEST
+    }
+}
+
+const deleteOrderSuccess = order => {
+    return {
+        type: DELETE_ORDER_SUCCESS,
+        payload: order
+    }
+}
+
+const deleteOrderFailure = error => {
+    return {
+        type: DELETE_ORDER_FAILURE,
+        payload: error
+    }
+}
+
+export const deleteOrder = (id, token) => {
+    return dispatch => {
+        dispatch(deleteOrderRequest());
+        axios({
+            method: 'delete',
+            url: `${DEVELOPMENT_SERVER}/orders/${id}`,
+            headers: {Authorization: `Bearer ${token}`}
+        }).then(res => {
+            const {data} = res.data;
+            dispatch(deleteOrderSuccess(data));
+        }).catch(error => {
+            dispatch(deleteOrderFailure(error.response.data.message));
         });
     }
 }
@@ -81,129 +183,14 @@ export const getOrders = (token) => {
     return dispatch => {
         dispatch(getOrdersRequest());
         axios({
-            method: 'GET',
-            url: `${PRODUCTION_HEROKU_SERVER}/orders`,
+            method: 'get',
+            url: `${DEVELOPMENT_SERVER}/orders`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
             dispatch(getOrdersSuccess(data));
-            localStorage.setItem(DARKDOCS_SHOP_ORDERS_KEY, JSON.stringify(data));
         }).catch(error => {
             dispatch(getOrdersFailure(error.response.data.message));
-        });
-    }
-}
-
-
-const getOrderRequest = () => {
-    return {
-        type: GET_ORDER_REQUEST
-    }
-}
-
-const getOrderSuccess = order => {
-    return {
-        type: GET_ORDER_SUCCESS,
-        payload: order
-    }
-}
-
-const getOrderFailure = error => {
-    return {
-        type: GET_ORDER_FAILURE,
-        payload: error
-    }
-}
-
-export const getOrder = (token, orderID, history) => {
-    return dispatch => {
-        dispatch(getOrderRequest());
-        axios({
-            method: 'GET',
-            url: `${DEVELOPMENT_SERVER}/orders/${orderID}`,
-            headers: {Authorization: `Bearer ${token}`}
-        }).then(res => {
-            const {data} = res.data;
-            dispatch(getOrderSuccess(data));
-            history.push('/orders');
-        }).catch(error => {
-            dispatch(getOrderFailure(error.response.data.message));
-        });
-    }
-}
-
-
-const deleteOrderRequest = () => {
-    return {
-        type: DELETE_ORDER_REQUEST
-    }
-}
-
-const deleteOrderSuccess = order => {
-    return {
-        type: DELETE_ORDER_SUCCESS,
-        payload: order
-    }
-}
-
-const deleteOrderFailure = error => {
-    return {
-        type: DELETE_ORDER_FAILURE,
-        payload: error
-    }
-}
-
-export const deleteOrder = (token, orderID, history) => {
-    return dispatch => {
-        dispatch(deleteOrderRequest());
-        axios({
-            method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/orders/${orderID}`,
-            headers: {Authorization: `Bearer ${token}`}
-        }).then(res => {
-            const {data} = res.data;
-            dispatch(deleteOrderSuccess(data));
-            history.push('/orders');
-        }).catch(error => {
-            dispatch(deleteOrderFailure(error.response.data.message));
-        });
-    }
-}
-
-
-const updateOrderRequest = () => {
-    return {
-        type: UPDATE_ORDER_REQUEST
-    }
-}
-
-const updateOrderSuccess = order => {
-    return {
-        type: UPDATE_ORDER_SUCCESS,
-        payload: order
-    }
-}
-
-const updateOrderFailure = error => {
-    return {
-        type: UPDATE_ORDER_FAILURE,
-        payload: error
-    }
-}
-
-export const updateOrder = (token, order, orderID) => {
-    return dispatch => {
-        dispatch(updateOrderRequest());
-        axios({
-            method: 'put',
-            url: `${DEVELOPMENT_SERVER}/orders/${orderID}`,
-            data: order,
-            headers: {Authorization: `Bearer ${token}`}
-        }).then(res => {
-            const {data} = res.data;
-            dispatch(updateOrderSuccess(data));
-        }).catch(error => {
-            dispatch(updateOrderFailure(error.response.data.message));
         });
     }
 }
