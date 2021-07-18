@@ -17,11 +17,13 @@ const Layout = ({children}) => {
                 minHeight: '85vh',
                 backgroundColor: theme.palette.background.default,
                 [theme.breakpoints.down('sm')]: {
-                    paddingTop: 64
+                    paddingTop: 64,
+                    minHeight: '93vh'
                 }
             },
             appBar: {},
-            root: {},
+            root: {
+            },
             footer: {},
             main: {
                 flexGrow: 1

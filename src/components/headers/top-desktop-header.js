@@ -18,7 +18,9 @@ const TopDesktopHeader = () => {
             },
             searchButton: {
                 color: theme.palette.text.primary,
-                backgroundColor: theme.palette.primary.main
+                backgroundColor: theme.palette.primary.main,
+                paddingLeft: 16,
+                paddingRight: 16
             },
             toolbar: {
                 backgroundColor: theme.palette.primary.dark
@@ -42,6 +44,9 @@ const TopDesktopHeader = () => {
                 objectFit: 'cover',
                 objectPosition: 'center'
             },
+            searchInput: {
+
+            }
         }
     });
     const classes = useStyles();
@@ -106,6 +111,7 @@ const TopDesktopHeader = () => {
                             onChange={handleSearchQuery}
                             value={query}
                             fullWidth={true}
+                            className={classes.searchInput}
                             variant="outlined"
                             margin="dense"
                             placeholder="Search"
