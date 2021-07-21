@@ -1,5 +1,5 @@
 import axios from "axios";
-import {DEVELOPMENT_SERVER} from "../../constants/constants";
+import {DARKDOCS_SHOP_BASE_URL_SERVER} from "../../constants/constants";
 import {
     CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS,
     DELETE_ORDER_FAILURE, DELETE_ORDER_REQUEST,
@@ -34,7 +34,7 @@ export const createOrder = (order, token) => {
         dispatch(createOrderRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/orders`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders`,
             headers: {Authorization: `Bearer ${token}`},
             data: order
         }).then(res => {
@@ -72,7 +72,7 @@ export const getOrder = (id, token) => {
         dispatch(getOrderRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/orders/${id}`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -109,7 +109,7 @@ export const updateOrder = (id, order, token) => {
         dispatch(updateOrderRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/orders/${id}`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders/${id}`,
             headers: {Authorization: `Bearer ${token}`},
             data: order
         }).then(res => {
@@ -147,7 +147,7 @@ export const deleteOrder = (id, token) => {
         dispatch(deleteOrderRequest());
         axios({
             method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/orders/${id}`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -184,7 +184,7 @@ export const getOrders = (token) => {
         dispatch(getOrdersRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/orders`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;

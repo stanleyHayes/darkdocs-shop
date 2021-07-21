@@ -23,10 +23,9 @@ import {
 } from "./auth-action-types";
 import axios from "axios";
 import {
+    DARKDOCS_SHOP_BASE_URL_SERVER,
     DARKDOCS_SHOP_TOKEN_KEY,
-    DARKDOCS_SHOP_USER_KEY,
-    DEVELOPMENT_SERVER,
-    PRODUCTION_HEROKU_SERVER
+    DARKDOCS_SHOP_USER_KEY
 } from "../../constants/constants";
 
 const signInRequest = () => {
@@ -54,7 +53,7 @@ export const signIn = (user, history) => {
         dispatch(signInRequest());
         axios({
             method: 'post',
-            url: `${PRODUCTION_HEROKU_SERVER}/auth/login`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/login`,
             data: user
         }).then(res => {
             const {data, token} = res.data;
@@ -95,7 +94,7 @@ export const signUp = (user, history) => {
         dispatch(signUpRequest());
         axios({
             method: 'post',
-            url: `${PRODUCTION_HEROKU_SERVER}/auth/register`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/register`,
             data: user
         }).then(res => {
             const {data, token} = res.data;
@@ -134,7 +133,7 @@ export const verifyAccount = (otp, token, history) => {
         dispatch(verifyAccountRequest());
         axios({
             method: 'put',
-            url: `${PRODUCTION_HEROKU_SERVER}/auth/verify-otp`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/verify-otp`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -176,7 +175,7 @@ export const updateProfile = (user, token, history) => {
         dispatch(updateProfileRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/auth/profile`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/profile`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -218,7 +217,7 @@ export const changePassword = (passwords, token, history) => {
         dispatch(changePasswordRequest());
         axios({
             method: 'put',
-            url: `${PRODUCTION_HEROKU_SERVER}/auth/update-password`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/update-password`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'
@@ -260,7 +259,7 @@ export const forgotPassword = (email, history) => {
         dispatch(forgotPasswordRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/auth/forgot-password`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/forgot-password`,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -300,7 +299,7 @@ export const signOut = (user, token, history) => {
         dispatch(signOutRequest());
         axios({
             method: 'POST',
-            url: `${DEVELOPMENT_SERVER}/auth/logout`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/logout`,
             headers: {
                 Authorization: `Bearer ${token}`,
                 'Content-Type': 'application/json'

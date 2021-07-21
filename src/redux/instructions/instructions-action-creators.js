@@ -16,7 +16,7 @@ import {
     UPDATE_INSTRUCTION_SUCCESS
 } from "./instructions-action-types";
 import axios from "axios";
-import {DARKDOCS_SHOP_ADMIN_INSTRUCTIONS_KEY, DEVELOPMENT_SERVER} from "../../constants/constants";
+import {DARKDOCS_SHOP_BASE_URL_SERVER} from "../../constants/constants";
 
 const addInstructionRequest = () => {
     return {
@@ -43,7 +43,7 @@ export const addInstruction = (instruction, token) => {
         dispatch(addInstructionRequest());
         axios({
             method: 'post',
-            url: `${DEVELOPMENT_SERVER}/instructions`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/instructions`,
             headers: {Authorization: `Bearer ${token}`},
             data: instruction
         }).then(res => {
@@ -81,7 +81,7 @@ export const getInstruction = (id, token) => {
         dispatch(getInstructionRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/instructions/${id}`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/instructions/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -118,7 +118,7 @@ export const updateInstruction = (id, instruction, token) => {
         dispatch(updateInstructionRequest());
         axios({
             method: 'put',
-            url: `${DEVELOPMENT_SERVER}/instructions/${id}`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/instructions/${id}`,
             headers: {Authorization: `Bearer ${token}`},
             data: instruction
         }).then(res => {
@@ -156,7 +156,7 @@ export const deleteInstruction = (id, token) => {
         dispatch(deleteInstructionRequest());
         axios({
             method: 'delete',
-            url: `${DEVELOPMENT_SERVER}/instructions/${id}`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/instructions/${id}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
@@ -193,12 +193,11 @@ export const getInstructions = (token) => {
         dispatch(getInstructionsRequest());
         axios({
             method: 'get',
-            url: `${DEVELOPMENT_SERVER}/instructions`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/instructions`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;
             dispatch(getInstructionsSuccess(data));
-            localStorage.setItem(DARKDOCS_SHOP_ADMIN_INSTRUCTIONS_KEY, JSON.stringify(data));
         }).catch(error => {
             dispatch(getInstructionsFailure(error.response.data.message));
         });
