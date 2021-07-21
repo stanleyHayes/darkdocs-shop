@@ -34,8 +34,15 @@ const CCDumpsPinsProducts = () => {
                 marginBottom: 8
             },
             button: {
-                marginTop: 8,
-                marginBottom: 8,
+                borderColor: 'white',
+                borderWidth: 2,
+                borderStyle: 'solid',
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: 32,
+                transition: 'all 300ms ease-in-out',
+                '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                }
             },
             logo: {
                 width: 100,
@@ -111,7 +118,7 @@ const CCDumpsPinsProducts = () => {
                                                     color="secondary"
                                                     variant="contained"
                                                     disableElevation={true}
-                                                    size="large"
+                                                    size="small"
                                                     className={classes.button}>
                                                     Buy
                                                 </Button>

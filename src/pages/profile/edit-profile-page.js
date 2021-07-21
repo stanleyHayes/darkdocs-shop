@@ -23,10 +23,13 @@ const EditProfilePage = () => {
             },
             button: {
                 marginTop: 8,
-                marginBottom: 8,
                 paddingTop: 16,
                 paddingBottom: 16,
-                backgroundColor: theme.palette.primary.main
+                backgroundColor: theme.palette.primary.main,
+                transition: 'all 300ms ease-in-out',
+                '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                }
             },
             logo: {
                 width: 100,
@@ -212,7 +215,7 @@ const EditProfilePage = () => {
                                         fullWidth={true}
                                         className={classes.button}
                                         variant="outlined"
-                                        size="small">
+                                        size="large">
                                         Update Profile
                                     </Button>
                                 </form>

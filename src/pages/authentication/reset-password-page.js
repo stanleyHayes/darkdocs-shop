@@ -34,10 +34,13 @@ const ResetPasswordPage = () => {
             },
             button: {
                 marginTop: 8,
-                marginBottom: 8,
                 paddingTop: 16,
                 paddingBottom: 16,
-                backgroundColor: theme.palette.primary.main
+                backgroundColor: theme.palette.primary.main,
+                transition: 'all 300ms ease-in-out',
+                '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                }
             },
             link: {
                 textDecoration: 'none'
@@ -70,7 +73,7 @@ const ResetPasswordPage = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const [passwords, setPasswords] = useState({});
+    const [user, setUser] = useState({});
     const [hasError, setHasError] = useState(false);
     const [error, setError] = useState({});
     const [visible, setVisible] = useState(false);
@@ -78,23 +81,23 @@ const ResetPasswordPage = () => {
     const {loading, error: authError, token} = useSelector(state => state.auth);
 
     const handleChange = event => {
-        setPasswords({...passwords, [event.target.name]: event.target.value});
+        setUser({...user, [event.target.name]: event.target.value});
     }
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        if (!passwords.newPassword) {
+        if (!user.newPassword) {
             setHasError(true);
             setError({...error, "newPassword": 'Field required'});
         }
 
-        if (!passwords.confirmNewPassword) {
+        if (!user.confirmNewPassword) {
             setHasError(true);
             setError({...error, "confirmNewPassword": 'Field required'});
         }
 
-        if (passwords.newPassword !== passwords.confirmNewPassword) {
+        if (user.newPassword !== user.confirmNewPassword) {
             setHasError(true);
             setError({...error, "currentPassword": 'Password mismatch', "confirmNewPassword": 'Password mismatch'});
         }
@@ -103,7 +106,7 @@ const ResetPasswordPage = () => {
             return;
         } else {
             console.log(error);
-            dispatch(changePassword(passwords, token, history));
+            dispatch(changePassword(user, token, history));
         }
     }
 
@@ -150,11 +153,43 @@ const ResetPasswordPage = () => {
 
                                     <TextField
                                         variant="outlined"
+                                        label="Email"
+                                        placeholder="Enter email"
+                                        margin="normal"
+                                        className={classes.textField}
+                                        value={user.email}
+                                        type="email"
+                                        onChange={handleChange}
+                                        name="email"
+                                        required={true}
+                                        fullWidth={true}
+                                        error={Boolean(error.email)}
+                                        helperText={error.email}
+                                    />
+
+                                    <TextField
+                                        variant="outlined"
+                                        label="OTP"
+                                        placeholder="Enter your otp"
+                                        margin="normal"
+                                        className={classes.textField}
+                                        value={user.otp}
+                                        type="number"
+                                        onChange={handleChange}
+                                        name="otp"
+                                        fullWidth={true}
+                                        required={true}
+                                        error={Boolean(error)}
+                                        helperText={error}
+                                    />
+
+                                    <TextField
+                                        variant="outlined"
                                         label="New Password"
                                         placeholder="Enter new password"
                                         margin="normal"
                                         className={classes.textField}
-                                        value={passwords.newPassword}
+                                        value={user.newPassword}
                                         type={visible ? 'text' : 'password'}
                                         onChange={handleChange}
                                         name="newPassword"
@@ -170,7 +205,7 @@ const ResetPasswordPage = () => {
                                         placeholder="Confirm new password"
                                         margin="normal"
                                         className={classes.textField}
-                                        value={passwords.confirmNewPassword}
+                                        value={user.confirmNewPassword}
                                         type={visible ? 'text' : 'password'}
                                         onChange={handleChange}
                                         name="confirmNewPassword"
@@ -198,7 +233,7 @@ const ResetPasswordPage = () => {
                                         fullWidth={true}
                                         className={classes.button}
                                         variant="outlined"
-                                        size="small">
+                                        size="large">
                                         Reset Password
                                     </Button>
                                 </form>

@@ -27,14 +27,13 @@ const ProfilePage = () => {
                 textDecoration: 'none'
             },
             button: {
-                paddingTop: 8,
-                paddingBottom: 8
+                paddingTop: 16,
+                paddingBottom: 16
             },
             deleteButton: {
                 color: 'white',
-                backgroundColor: '#DC2626',
-                paddingTop: 8,
-                paddingBottom: 8
+                paddingTop: 16,
+                paddingBottom: 16
             }
         }
     });
@@ -129,7 +128,9 @@ const ProfilePage = () => {
                                 <Button
                                     fullWidth={true}
                                     className={classes.deleteButton}
-                                    variant="outlined"
+                                    variant="contained"
+                                    disableElevation={true}
+                                    color="secondary"
                                     size="small">
                                     Delete Account
                                 </Button>

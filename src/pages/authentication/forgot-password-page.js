@@ -23,10 +23,13 @@ const ForgotPasswordPage = () => {
             },
             button: {
                 marginTop: 8,
-                marginBottom: 8,
                 paddingTop: 16,
                 paddingBottom: 16,
-                backgroundColor: theme.palette.primary.main
+                backgroundColor: theme.palette.primary.main,
+                transition: 'all 300ms ease-in-out',
+                '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                }
             },
             link: {
                 textDecoration: 'none'
@@ -138,7 +141,7 @@ const ForgotPasswordPage = () => {
                                         fullWidth={true}
                                         className={classes.button}
                                         variant="outlined"
-                                        size="small">
+                                        size="large">
                                         Continue
                                     </Button>
 

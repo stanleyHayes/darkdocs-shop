@@ -38,7 +38,11 @@ const LoginPage = () => {
                 marginBottom: 8,
                 paddingBottom: 16,
                 paddingTop: 16,
-                backgroundColor: theme.palette.primary.main
+                backgroundColor: theme.palette.primary.main,
+                transition: 'all 300ms ease-in-out',
+                '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                }
             },
             link: {
                 textDecoration: 'none'
@@ -194,7 +198,7 @@ const LoginPage = () => {
                                         fullWidth={true}
                                         className={classes.button}
                                         variant="outlined"
-                                        size="small">
+                                        size="large">
                                         Login
                                     </Button>
 

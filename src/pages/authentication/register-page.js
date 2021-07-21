@@ -35,10 +35,13 @@ const RegisterPage = () => {
             },
             button: {
                 marginTop: 8,
-                marginBottom: 8,
                 paddingTop: 16,
                 paddingBottom: 16,
-                backgroundColor: theme.palette.primary.main
+                backgroundColor: theme.palette.primary.main,
+                transition: 'all 300ms ease-in-out',
+                '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                }
             },
             link: {
                 textDecoration: 'none'
@@ -148,7 +151,7 @@ const RegisterPage = () => {
                 </Typography>
                 <Grid container={true} justifyContent="center" alignItems='center'>
                     <Grid item={true} xs={12} md={4}>
-                        <Card elevation={4}>
+                        <Card elevation={2}>
                             <CardContent>
                                 {loading && <LinearProgress variant="query"/>}
                                 {authError &&
@@ -262,7 +265,7 @@ const RegisterPage = () => {
                                         fullWidth={true}
                                         className={classes.button}
                                         variant="outlined"
-                                        size="small">
+                                        size="large">
                                         Register
                                     </Button>
 

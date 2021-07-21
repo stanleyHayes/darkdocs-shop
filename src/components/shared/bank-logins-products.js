@@ -37,8 +37,14 @@ const BankLoginsProducts = () => {
                 marginBottom: 8
             },
             button: {
-                marginTop: 8,
-                marginBottom: 8,
+                borderWidth: 2,
+                borderStyle: 'solid',
+                backgroundColor: theme.palette.primary.main,
+                transition: 'all 300ms ease-in-out',
+                borderRadius: 32,
+                '&:hover': {
+                    backgroundColor: theme.palette.primary.dark,
+                }
             },
             logo: {
                 width: 100,
@@ -164,7 +170,7 @@ const BankLoginsProducts = () => {
                                                 <Button
                                                     variant="contained"
                                                     disableElevation={true}
-                                                    size="large"
+                                                    size="small"
                                                     color="secondary"
                                                     className={classes.button}>
                                                     Buy
