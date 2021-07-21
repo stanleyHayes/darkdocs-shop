@@ -1,33 +1,10 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
-import {
-    Box,
-    Container,
-    Divider,
-    Grid,
-    Hidden,
-    LinearProgress,
-    MenuItem,
-    Paper,
-    Select,
-    Tab,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TablePagination,
-    TableRow,
-    Tabs,
-    Typography
-} from "@material-ui/core";
+import {Container, Divider, Hidden, Paper, Tab, Tabs} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
-import moment from "moment";
 import {getOrders} from "../../redux/orders/order-action-creators";
 import {green, grey, red} from "@material-ui/core/colors";
-import {Delete, Edit, Visibility} from "@material-ui/icons";
-import {Alert} from "@material-ui/lab";
 import BankLoginsProducts from "../../components/shared/bank-logins-products";
 import CCDumpsPinsProducts from "../../components/shared/cc-dumps-pins-products";
 
@@ -106,13 +83,11 @@ const OrdersPage = () => {
                     </Tabs>
                 </Hidden>
                 <Hidden smDown={true}>
-                <Tabs component={Paper}  value={currentTabIndex} onChange={handleTabChange} variant="fullWidth">
-                    <Tab value="logins" label="Bank Logins"/>
-                    <Tab value="dumps" label="CC Dumps+ Pins"/>
-                </Tabs>
+                    <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="fullWidth">
+                        <Tab value="logins" label="Bank Logins"/>
+                        <Tab value="dumps" label="CC Dumps+ Pins"/>
+                    </Tabs>
                 </Hidden>
-
-                <Divider variant="fullWidth" light={true} className={classes.divider} />
 
                 {getCurrentTabContent(currentTabIndex)}
 

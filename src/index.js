@@ -20,6 +20,9 @@ const theme = createTheme({
             light: '#6B7280',
             dark: '#1F2937'
         },
+        secondary: {
+            main: '#DC2626'
+        },
         text: {
             primary: '#E5E7EB',
             secondary: '#374151',
@@ -35,7 +38,7 @@ const theme = createTheme({
         type: 'dark'
     },
     shape: {
-        borderRadius: 32
+        borderRadius: 8
     }
 });
 

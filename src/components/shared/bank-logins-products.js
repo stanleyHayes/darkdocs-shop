@@ -61,12 +61,12 @@ const BankLoginsProducts = () => {
         setPage(page);
     }
 
-    const handleCountryChange = () => {
-
+    const handleCountryChange = (event) => {
+        setCountry(event.target.value);
     }
 
-    const handleBankChange = () => {
-
+    const handleBankChange = (event) => {
+        setBank(event.target.value);
     }
 
     return (
