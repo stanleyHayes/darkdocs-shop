@@ -51,11 +51,10 @@ const ProfilePage = () => {
                     <Grid item={true} xs={12} md={8} lg={6}>
                         <Card elevation={1} variant="elevation">
                             <CardContent>
-                                <Typography className={classes.title} gutterBottom={true} variant="h5">
+                                <Typography align="center" className={classes.title} gutterBottom={true} variant="h5">
                                     User Profile
                                 </Typography>
 
-                                <Divider variant="fullWidth" className={classes.divider}/>
                                 <Typography variant="caption">
                                     Name
                                 </Typography>

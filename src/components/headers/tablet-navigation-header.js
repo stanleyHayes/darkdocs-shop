@@ -16,7 +16,8 @@ const TabletNavigationHeader = () => {
                 backgroundColor: theme.palette.primary.main
             },
             button: {
-                color: theme.palette.text.primary
+                color: theme.palette.text.primary,
+                fontWeight: 'bolder'
             },
             menuButton: {
                 color: theme.palette.text.primary
@@ -56,15 +57,6 @@ const TabletNavigationHeader = () => {
                             variant="text">Bank Logs & CC Dumps</Button>
                     </Link>
                 </Grid>
-                <Grid item={true}>
-                    <Link className={classes.link} to="/orders">
-                        <Button
-                            className={classes.button}
-                            startIcon={<ShoppingBasket/>}
-                            size="small"
-                            variant="text">Orders</Button>
-                    </Link>
-                </Grid>
 
                 <Grid item={true}>
                     <Link className={classes.link} to="/cheques">
@@ -73,6 +65,16 @@ const TabletNavigationHeader = () => {
                             startIcon={<Receipt/>}
                             size="small"
                             variant="text">Cheques</Button>
+                    </Link>
+                </Grid>
+
+                <Grid item={true}>
+                    <Link className={classes.link} to="/orders">
+                        <Button
+                            className={classes.button}
+                            startIcon={<ShoppingBasket/>}
+                            size="small"
+                            variant="text">Orders</Button>
                     </Link>
                 </Grid>
             </Grid>

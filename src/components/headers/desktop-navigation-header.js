@@ -17,7 +17,7 @@ const DesktopNavigationHeader = () => {
             },
             button: {
                 color: theme.palette.text.primary,
-                fontWeight: 'bold'
+                fontWeight: 'bolder'
             },
             menuButton: {
                 color: theme.palette.text.primary
@@ -57,15 +57,6 @@ const DesktopNavigationHeader = () => {
                             variant="text">Bank Logs & CC Dumps</Button>
                     </Link>
                 </Grid>
-                <Grid item={true}>
-                    <Link className={classes.link} to="/orders">
-                        <Button
-                            className={classes.button}
-                            startIcon={<ShoppingBasket/>}
-                            size="small"
-                            variant="text">Orders</Button>
-                    </Link>
-                </Grid>
 
                 <Grid item={true}>
                     <Link className={classes.link} to="/cheques">
@@ -74,6 +65,16 @@ const DesktopNavigationHeader = () => {
                             startIcon={<Receipt/>}
                             size="small"
                             variant="text">Cheques</Button>
+                    </Link>
+                </Grid>
+
+                <Grid item={true}>
+                    <Link className={classes.link} to="/orders">
+                        <Button
+                            className={classes.button}
+                            startIcon={<ShoppingBasket/>}
+                            size="small"
+                            variant="text">Orders</Button>
                     </Link>
                 </Grid>
             </Grid>

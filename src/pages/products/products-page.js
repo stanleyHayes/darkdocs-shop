@@ -11,7 +11,8 @@ const ProductsPage = () => {
     const useStyles = makeStyles(theme => {
         return {
             container: {
-                paddingTop: 32
+                paddingTop: 32,
+                paddingBottom: 32
             },
             divider: {
                 marginTop: 16,
@@ -48,27 +49,29 @@ const ProductsPage = () => {
     const getCurrentTabContent = index => {
         switch (index) {
             case 'logins':
-                return <BankLoginsProducts />;
+                return <BankLoginsProducts/>;
             case 'dumps':
-                return <CCDumpsPinsProducts />;
+                return <CCDumpsPinsProducts/>;
             default:
-                return <BankLoginsProducts />;
+                return <BankLoginsProducts/>;
         }
     }
 
     return (
         <Layout>
             <Container className={classes.container}>
-                <Hidden smDown={true}>
+                <Hidden mdUp={true}>
                     <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="scrollable">
                         <Tab value="logins" label="Bank Logins"/>
                         <Tab value="dumps" label="CC Dumps+ Pins"/>
                     </Tabs>
                 </Hidden>
-                <Tabs component={Paper}  value={currentTabIndex} onChange={handleTabChange} variant="fullWidth">
-                    <Tab value="logins" label="Bank Logins"/>
-                    <Tab value="dumps" label="CC Dumps+ Pins"/>
-                </Tabs>
+                <Hidden smDown={true}>
+                    <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="fullWidth">
+                        <Tab value="logins" label="Bank Logins"/>
+                        <Tab value="dumps" label="CC Dumps+ Pins"/>
+                    </Tabs>
+                </Hidden>
 
                 {getCurrentTabContent(currentTabIndex)}
 

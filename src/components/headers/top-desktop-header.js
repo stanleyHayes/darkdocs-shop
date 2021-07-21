@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {Avatar, Button, Grid, Menu, MenuItem, TextField, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import {ChevronRight, Edit, ExitToApp, Face, KeyboardArrowDown} from "@material-ui/icons";
+import {ChevronRight, Edit, ExitToApp, Face, KeyboardArrowDown, ShoppingBasket} from "@material-ui/icons";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 
@@ -161,6 +161,16 @@ const TopDesktopHeader = () => {
                                 <Button startIcon={<Edit/>} endIcon={<ChevronRight/>} variant="text" size="small"
                                         className={classes.button}>
                                     Edit Profile
+                                </Button>
+                            </Link>
+                        </MenuItem>
+                        <MenuItem onClick={handleClose}>
+                            <Link
+                                className={classes.link}
+                                to="/orders">
+                                <Button startIcon={<ShoppingBasket/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                        className={classes.button}>
+                                    Orders
                                 </Button>
                             </Link>
                         </MenuItem>

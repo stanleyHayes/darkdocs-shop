@@ -10,9 +10,9 @@ import {
     Edit,
     ExitToApp,
     LockOpen,
-    MenuBook,
     MonetizationOn,
-    Receipt, ShoppingBasket,
+    Receipt,
+    ShoppingBasket,
     VerifiedUser
 } from "@material-ui/icons";
 
@@ -117,18 +117,6 @@ const DrawerContent = ({handleDrawerClose}) => {
 
                     <Divider variant="fullWidth" className={classes.divider}/>
 
-                    <Link className={classes.link} to="/orders">
-                        <Button
-                            startIcon={<ShoppingBasket/>}
-                            className={classes.button}
-                            fullWidth={false}
-                            size="small">
-                            Orders
-                        </Button>
-                    </Link>
-
-                    <Divider variant="fullWidth" className={classes.divider}/>
-
                     <Link className={classes.link} to="/products">
                         <Button
                             startIcon={<CreditCard/>}
@@ -149,6 +137,19 @@ const DrawerContent = ({handleDrawerClose}) => {
                             size="small"
                             variant="text">Cheques</Button>
                     </Link>
+
+                    <Divider variant="fullWidth" className={classes.divider}/>
+
+                    <Link className={classes.link} to="/orders">
+                        <Button
+                            startIcon={<ShoppingBasket/>}
+                            className={classes.button}
+                            fullWidth={false}
+                            size="small">
+                            Orders
+                        </Button>
+                    </Link>
+
                 </Box>
 
                 <Box>

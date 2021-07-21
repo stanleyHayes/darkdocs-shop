@@ -5,10 +5,13 @@ export const logins = [
         balance: 45,
         price: 5,
         bank: {
-            name: 'Chase'
+            name: 'Chase',
+            country: 'USA'
         },
         createdAt: '07-06-2020',
-        updatedAt: '02-10-2020'
+        updatedAt: '02-10-2020',
+        _id: 1,
+        includes: ['Logins', 'Email Access', 'Phone Number']
     },
     {
         status: 'Available',
@@ -16,9 +19,12 @@ export const logins = [
         balance: 450,
         price: 10,
         bank: {
-            name: 'Barclays'
+            name: 'Barclays',
+            country: 'UK'
         },
         createdAt: '05-07-2020',
-        updatedAt: '01-08-2020'
+        updatedAt: '01-08-2020',
+        _id: 2,
+        includes: ['Logins', 'Security Q & A ', 'Swift/Iban code']
     }
 ];
