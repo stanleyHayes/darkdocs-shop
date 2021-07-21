@@ -6,9 +6,6 @@ export const funds = [
         updatedAt: '06-29-2021',
         address: 'bc1quvwx4008j0fn3u73uqa9qlhzz8nvmr8axc5zya',
         amount: 50,
-        user: {
-            name: 'Florence Kyei-Baffour'
-        }
     },
     {
         _id: 1,
@@ -17,9 +14,6 @@ export const funds = [
         updatedAt: '06-29-2021',
         address: 'bc1quvwx4008j0fn3u73uqa9qlhzz8nvmr8axc5zya',
         amount: 50,
-        user: {
-            name: 'Victoria Sampson'
-        }
     },
     {
         _id: 3,
@@ -28,9 +22,6 @@ export const funds = [
         updatedAt: '06-29-2021',
         address: 'bc1quvwx4008j0fn3u73uqa9qlhzz8nvmr8axc5zya',
         amount: 500,
-        user: {
-            name: 'Antoinette Dewortor'
-        }
     },
     {
         _id: 4,
@@ -39,8 +30,5 @@ export const funds = [
         updatedAt: '06-29-2021',
         address: 'bc1quvwx4008j0fn3u73uqa9qlhzz8nvmr8axc5zya',
         amount: 50,
-        user: {
-            name: 'Emmanuella Sangmuah'
-        }
     }
 ];

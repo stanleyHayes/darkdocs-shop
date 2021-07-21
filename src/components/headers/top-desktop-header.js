@@ -1,7 +1,7 @@
 import React, {useState} from "react";
-import {Avatar, Button, Grid, Menu, MenuItem, TextField, Toolbar} from "@material-ui/core";
+import {Avatar, Button, Grid, Menu, MenuItem, TextField, Toolbar, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import {KeyboardArrowDown} from "@material-ui/icons";
+import {ChevronRight, Edit, ExitToApp, Face, KeyboardArrowDown} from "@material-ui/icons";
 import {Link} from "react-router-dom";
 import {useSelector} from "react-redux";
 
@@ -28,7 +28,10 @@ const TopDesktopHeader = () => {
             name: {
                 color: theme.palette.text.primary
             },
-            avatar: {},
+            avatar: {
+                width: 30,
+                height: 30
+            },
             logo: {
                 width: 50,
                 height: 50
@@ -44,9 +47,7 @@ const TopDesktopHeader = () => {
                 objectFit: 'cover',
                 objectPosition: 'center'
             },
-            searchInput: {
-
-            }
+            searchInput: {}
         }
     });
     const classes = useStyles();
@@ -133,7 +134,11 @@ const TopDesktopHeader = () => {
                         className={classes.name}
                         onClick={handleProfileClick}
                         endIcon={<KeyboardArrowDown/>}
-                        startIcon={<Avatar className={classes.avatar}>{user && getInitials(user.name)}</Avatar>}
+                        startIcon={<Avatar className={classes.avatar}>
+                            <Typography variant="body2" align="center">
+                                {user && getInitials(user.name)}
+                            </Typography>
+                        </Avatar>}
                         variant="outlined">
                         {user && user.name}
                     </Button>
@@ -145,14 +150,16 @@ const TopDesktopHeader = () => {
                         onClose={handleClose}>
                         <MenuItem onClick={handleClose}>
                             <Link className={classes.link} to="/profile">
-                                <Button variant="text" size="small" className={classes.button}>
+                                <Button startIcon={<Face/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                        className={classes.button}>
                                     Profile
                                 </Button>
                             </Link>
                         </MenuItem>
                         <MenuItem onClick={handleClose}>
                             <Link className={classes.link} to="/edit-profile">
-                                <Button variant="text" size="small" className={classes.button}>
+                                <Button startIcon={<Edit/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                        className={classes.button}>
                                     Edit Profile
                                 </Button>
                             </Link>
@@ -161,7 +168,8 @@ const TopDesktopHeader = () => {
                             <Link
                                 className={classes.link}
                                 to="/auth/login">
-                                <Button variant="text" size="small" className={classes.button}>
+                                <Button startIcon={<ExitToApp/>} endIcon={<ChevronRight/>} variant="text" size="small"
+                                        className={classes.button}>
                                     Logout
                                 </Button>
                             </Link>

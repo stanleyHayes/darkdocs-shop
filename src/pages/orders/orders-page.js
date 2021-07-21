@@ -5,10 +5,12 @@ import {
     Container,
     Divider,
     Grid,
+    Hidden,
     LinearProgress,
     MenuItem,
     Paper,
     Select,
+    Tab,
     Table,
     TableBody,
     TableCell,
@@ -16,6 +18,7 @@ import {
     TableHead,
     TablePagination,
     TableRow,
+    Tabs,
     Typography
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
@@ -25,6 +28,8 @@ import {getOrders} from "../../redux/orders/order-action-creators";
 import {green, grey, red} from "@material-ui/core/colors";
 import {Delete, Edit, Visibility} from "@material-ui/icons";
 import {Alert} from "@material-ui/lab";
+import BankLoginsProducts from "../../components/shared/bank-logins-products";
+import CCDumpsPinsProducts from "../../components/shared/cc-dumps-pins-products";
 
 const OrdersPage = () => {
 
@@ -54,7 +59,16 @@ const OrdersPage = () => {
             deleteIcon: {
                 color: red['600'],
                 cursor: 'pointer'
-            }
+            },
+            pending: {
+                color: grey['600'],
+            },
+            completed: {
+                color: green['600'],
+            },
+            cancelled: {
+                color: red['600'],
+            },
         }
     });
     const classes = useStyles();
@@ -82,8 +96,40 @@ const OrdersPage = () => {
 
     const {orders, loading, error} = useSelector(state => state.orders);
 
+    const [currentTabIndex, setCurrentTabIndex] = useState('logins');
+
+    const handleTabChange = (event, index) => {
+        setCurrentTabIndex(index);
+    }
+
+    const getCurrentTabContent = index => {
+        switch (index) {
+            case 'logins':
+                return <BankLoginsProducts/>;
+            case 'dumps':
+                return <CCDumpsPinsProducts/>;
+            default:
+                return <BankLoginsProducts/>;
+        }
+    }
+
     return (
         <Layout>
+            <Container className={classes.container}>
+                <Hidden smDown={true}>
+                    <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="scrollable">
+                        <Tab value="logins" label="Bank Logins"/>
+                        <Tab value="dumps" label="CC Dumps+ Pins"/>
+                    </Tabs>
+                </Hidden>
+                <Tabs component={Paper}  value={currentTabIndex} onChange={handleTabChange} variant="fullWidth">
+                    <Tab value="logins" label="Bank Logins"/>
+                    <Tab value="dumps" label="CC Dumps+ Pins"/>
+                </Tabs>
+
+                {getCurrentTabContent(currentTabIndex)}
+            </Container>
+
             {loading ? <LinearProgress variant="query"/> :
                 (
                     <Container className={classes.container}>

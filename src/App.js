@@ -13,6 +13,9 @@ import LoginPage from "./pages/authentication/login-page";
 import ScrollToTop from "./components/shared/scroll-to-top";
 import ResetPasswordPage from "./pages/authentication/reset-password-page";
 import {DARKDOCS_SHOP_TOKEN_KEY} from "./constants/constants";
+import ChequesPage from "./pages/cheques/cheques-page";
+import FundsPage from "./pages/funds/funds-page";
+import ProductsPage from "./pages/products/products-page";
 
 function App() {
 
@@ -31,6 +34,9 @@ function App() {
                 <Route exact={true} path="/" component={DashboardPage}/>
                 <Route exact={true} path="/profile" component={ProfilePage}/>
                 <Route exact={true} path="/orders" component={OrdersPage}/>
+                <Route exact={true} path="/products" component={ProductsPage}/>
+                <Route exact={true} path="/funds" component={FundsPage}/>
+                <Route exact={true} path="/cheques" component={ChequesPage}/>
                 <Route exact={true} path="/edit-profile" component={EditProfilePage}/>
                 <Route exact={true} path="/auth/change-password" component={ChangePasswordPage}/>
                 <Route exact={true} path="/auth/forgot-password" component={ForgotPasswordPage}/>

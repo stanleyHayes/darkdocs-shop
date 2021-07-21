@@ -1,30 +1,20 @@
-import React, {useState} from "react";
+import React from "react";
 import {Link} from "react-router-dom";
-import {
-    Accordion,
-    AccordionDetails,
-    AccordionSummary, Avatar, Box,
-    Button,
-    Container,
-    Divider,
-    Grid, Typography
-} from "@material-ui/core";
+import {Avatar, Box, Button, Container, Divider, Grid, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {
     Close,
-    Dashboard,
-    AccountBalance,
     CreditCard,
+    Dashboard,
+    DeleteForever,
+    Edit,
+    ExitToApp,
+    LockOpen,
     MenuBook,
-    MonetizationOn, DeleteForever, ExitToApp, LockOpen, Edit, Lens, VerifiedUser, ExpandMore
+    MonetizationOn,
+    Receipt, ShoppingBasket,
+    VerifiedUser
 } from "@material-ui/icons";
-import AddFundsDialog from "../modals/add-funds-dialog";
-import BankChequesDialog from "../modals/bank-cheques-dialog";
-import CanadaBankLoginsDialog from "../modals/canada-bank-logins-dialog";
-import CCDumpPinsDialog from "../modals/cc-dump-pins-dialog";
-import CreditCardLogsDialog from "../modals/credit-card-logs-dialog";
-import UKBankLoginsDialog from "../modals/uk-bank-logins-dialog";
-import USABankLoginsDialog from "../modals/usa-bank-logins-dialog";
 
 const DrawerContent = ({handleDrawerClose}) => {
 
@@ -39,7 +29,8 @@ const DrawerContent = ({handleDrawerClose}) => {
             },
             button: {
                 paddingTop: 8,
-                paddingBottom: 8
+                paddingBottom: 8,
+                textTransform: 'capitalize'
             },
             container: {
                 paddingTop: 16,
@@ -78,72 +69,6 @@ const DrawerContent = ({handleDrawerClose}) => {
         }
     });
 
-    const [fundsDialogOpen, setFundsDialogOpen] = useState(false);
-    const [bankChequesDialogOpen, setBankChequesDialogOpen] = useState(false);
-    const [canadaBankLoginsDialogOpen, setCanadaBankLoginsDialogOpen] = useState(false);
-    const [ccDumpPinsDialogOpen, setCCDumpPinsDialogOpen] = useState(false);
-    const [creditCardLogsDialogOpen, setCreditCardLogsDialogOpen] = useState(false);
-    const [ukBankLoginsDialogOpen, setUKBankLoginsDialogOpen] = useState(false);
-    const [usaBankLoginsDialogOpen, setUSABankLoginsDialogOpen] = useState(false);
-
-    const handleAddFundsClick = () => {
-        setFundsDialogOpen(true);
-    }
-
-    const handleFundsDialogClose = () => {
-        setFundsDialogOpen(false);
-        handleDrawerClose();
-    }
-
-
-    const handleBankChequesClick = () => {
-        setBankChequesDialogOpen(true);
-    }
-
-    const handleBankChequesDialogClose = () => {
-        setBankChequesDialogOpen(false);
-    }
-
-    const handleCanadaBankLoginsClick = () => {
-        setCanadaBankLoginsDialogOpen(true);
-    }
-
-    const handleCanadaBankLoginsDialogClose = () => {
-        setCanadaBankLoginsDialogOpen(false);
-    }
-
-    const handleCCDumpPinsClick = () => {
-        setCCDumpPinsDialogOpen(true);
-    }
-
-    const handleCCDumpPinsDialogClose = () => {
-        setCCDumpPinsDialogOpen(false);
-    }
-
-    const handleCreditCardLogsClick = () => {
-        setCreditCardLogsDialogOpen(true);
-    }
-
-    const handleCreditCardLogsDialogClose = () => {
-        setCreditCardLogsDialogOpen(false);
-    }
-
-    const handleUKBankLoginsClick = () => {
-        setUKBankLoginsDialogOpen(true);
-    }
-
-    const handleUKBankLoginsDialogClose = () => {
-        setUKBankLoginsDialogOpen(false);
-    }
-
-    const handleUSABankLoginsClick = () => {
-        setUSABankLoginsDialogOpen(true);
-    }
-
-    const handleUSABankLoginsDialogClose = () => {
-        setUSABankLoginsDialogOpen(false);
-    }
-
     const classes = useStyles();
 
     return (
@@ -180,20 +105,21 @@ const DrawerContent = ({handleDrawerClose}) => {
 
                     <Divider variant="fullWidth" className={classes.divider}/>
 
-                    <Button
-                        onClick={handleAddFundsClick}
-                        className={classes.button}
-                        startIcon={<MonetizationOn/>}
-                        fullWidth={false}
-                        size="small">
-                        Add Funds
-                    </Button>
+                    <Link className={classes.link} to="/funds">
+                        <Button
+                            className={classes.button}
+                            startIcon={<MonetizationOn/>}
+                            fullWidth={false}
+                            size="small">
+                            Funds
+                        </Button>
+                    </Link>
 
                     <Divider variant="fullWidth" className={classes.divider}/>
 
                     <Link className={classes.link} to="/orders">
                         <Button
-                            startIcon={<MenuBook/>}
+                            startIcon={<ShoppingBasket/>}
                             className={classes.button}
                             fullWidth={false}
                             size="small">
@@ -201,99 +127,28 @@ const DrawerContent = ({handleDrawerClose}) => {
                         </Button>
                     </Link>
 
-                    <Accordion variant="elevation" elevation={0} className={classes.accordion}>
-                        <AccordionSummary expandIcon={<ExpandMore/>}>
-                            <Button
-                                startIcon={<AccountBalance/>}
-                                size="small"
-                                className={classes.button}
-                                fullWidth={false}
-                                variant="text">
-                                BankLogins & ShopWithTrips
-                            </Button>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <div>
-                                <Button
-                                    onClick={handleUSABankLoginsClick}
-                                    startIcon={<Lens/>}
-                                    className={classes.button}
-                                    fullWidth={false}
-                                    size="small">
-                                    USA Bank Logins
-                                </Button>
+                    <Divider variant="fullWidth" className={classes.divider}/>
 
-                                <Divider variant="fullWidth" className={classes.divider}/>
+                    <Link className={classes.link} to="/products">
+                        <Button
+                            startIcon={<CreditCard/>}
+                            size="small"
+                            className={classes.button}
+                            fullWidth={false}
+                            variant="text">
+                            Bank Logs & CC Dumps
+                        </Button>
+                    </Link>
 
-                                <Button
-                                    onClick={handleUKBankLoginsClick}
-                                    startIcon={<Lens/>}
-                                    className={classes.button}
-                                    fullWidth={false}
-                                    size="small">
-                                    UK Bank Logins
-                                </Button>
+                    <Divider variant="fullWidth" className={classes.divider}/>
 
-                                <Divider variant="fullWidth" className={classes.divider}/>
-
-                                <Button
-                                    onClick={handleCanadaBankLoginsClick}
-                                    startIcon={<Lens/>}
-                                    className={classes.button}
-                                    fullWidth={false}
-                                    size="small">
-                                    Canada Bank Logins
-                                </Button>
-
-                                <Divider variant="fullWidth" className={classes.divider}/>
-
-                                <Button
-                                    onClick={handleBankChequesClick}
-                                    startIcon={<Lens/>}
-                                    className={classes.button}
-                                    fullWidth={false}
-                                    size="small">
-                                    Bank Cheques
-                                </Button>
-                            </div>
-                        </AccordionDetails>
-                    </Accordion>
-
-                    <Accordion className={classes.accordion} variant="elevation" elevation={0}>
-                        <AccordionSummary expandIcon={<ExpandMore/>}>
-                            <Button
-                                startIcon={<CreditCard/>}
-                                size="small"
-                                className={classes.button}
-                                fullWidth={false}
-                                variant="text">
-                                Credit Card
-                            </Button>
-                        </AccordionSummary>
-                        <AccordionDetails>
-                            <div>
-                                <Button
-                                    onClick={handleCreditCardLogsClick}
-                                    startIcon={<Lens/>}
-                                    className={classes.button}
-                                    fullWidth={false}
-                                    size="small">
-                                    Credit Card Logs
-                                </Button>
-
-                                <Divider variant="fullWidth" className={classes.divider}/>
-
-                                <Button
-                                    onClick={handleCCDumpPinsClick}
-                                    startIcon={<Lens/>}
-                                    className={classes.button}
-                                    fullWidth={false}
-                                    size="small">
-                                    CC Dump + Pin
-                                </Button>
-                            </div>
-                        </AccordionDetails>
-                    </Accordion>
+                    <Link className={classes.link} to="/cheques">
+                        <Button
+                            className={classes.button}
+                            startIcon={<Receipt/>}
+                            size="small"
+                            variant="text">Cheques</Button>
+                    </Link>
                 </Box>
 
                 <Box>
@@ -365,13 +220,6 @@ const DrawerContent = ({handleDrawerClose}) => {
                     </Button>
                 </Box>
             </Container>
-            <AddFundsDialog handleClose={handleFundsDialogClose} open={fundsDialogOpen}/>
-            <BankChequesDialog handleClose={handleBankChequesDialogClose} open={bankChequesDialogOpen}/>
-            <CanadaBankLoginsDialog handleClose={handleCanadaBankLoginsDialogClose} open={canadaBankLoginsDialogOpen}/>
-            <CCDumpPinsDialog handleClose={handleCCDumpPinsDialogClose} open={ccDumpPinsDialogOpen}/>
-            <CreditCardLogsDialog handleClose={handleCreditCardLogsDialogClose} open={creditCardLogsDialogOpen}/>
-            <UKBankLoginsDialog handleClose={handleUKBankLoginsDialogClose} open={ukBankLoginsDialogOpen}/>
-            <USABankLoginsDialog handleClose={handleUSABankLoginsDialogClose} open={usaBankLoginsDialogOpen}/>
         </React.Fragment>
     )
 }
