@@ -1,12 +1,12 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
-import {Container, Divider, Hidden, Paper, Tab, Tabs} from "@material-ui/core";
+import {Container, Hidden, Paper, Tab, Tabs} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {getOrders} from "../../redux/orders/order-action-creators";
 import {green, grey, red} from "@material-ui/core/colors";
-import BankLoginsProducts from "../../components/shared/bank-logins-products";
-import CCDumpsPinsProducts from "../../components/shared/cc-dumps-pins-products";
+import BankLoginsPurchased from "../../components/shared/bank-logins-purchased";
+import CCDumpsPinsPurchased from "../../components/shared/cc-dumps-pins-purchased";
 
 const OrdersPage = () => {
 
@@ -65,11 +65,11 @@ const OrdersPage = () => {
     const getCurrentTabContent = index => {
         switch (index) {
             case 'logins':
-                return <BankLoginsProducts/>;
+                return <BankLoginsPurchased/>;
             case 'dumps':
-                return <CCDumpsPinsProducts/>;
+                return <CCDumpsPinsPurchased/>;
             default:
-                return <BankLoginsProducts/>;
+                return <BankLoginsPurchased/>;
         }
     }
 

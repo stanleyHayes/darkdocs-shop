@@ -4,7 +4,7 @@ export const orders = [
         updatedAt: '08-29-2020',
         status: 'Pending',
         type: 'Dump',
-        price: 9,
+        price: 15,
         item: {
             ccDumps: {
                 service: 'Track 1&2 Code 201 with Pin',
@@ -13,8 +13,8 @@ export const orders = [
                 countryMark: 'USA DEBIT',
                 dumpedIn: 'USA,MD,Baltimore,21218',
                 bankBase: 'AMERICAN EXPRESS COMPANY',
-                quantity: 45,
-                price: 150,
+                quantity: 30,
+                price: 12,
                 createdAt: '08-08-2020',
                 _id: 1,
                 status: 'Available'
@@ -34,8 +34,8 @@ export const orders = [
             login: {
                 status: 'Available',
                 type: 'Checkings',
-                balance: 45,
-                price: 5,
+                balance: 900,
+                price: 67,
                 bank: {
                     name: 'Chase',
                     country: 'USA'
@@ -43,7 +43,7 @@ export const orders = [
                 createdAt: '07-06-2020',
                 updatedAt: '02-10-2020',
                 _id: 1,
-                includes: ['Logins' ]
+                includes: ['Logins', 'Pins']
             }
         }
     },
@@ -51,7 +51,7 @@ export const orders = [
         createdAt: '08-29-2020',
         updatedAt: '08-29-2020',
         status: 'Pending',
-        type: 'Login',
+        type: 'Dump',
         price: 12,
         user: {
             name: 'Stanley Hayford'
@@ -119,7 +119,7 @@ export const orders = [
                 createdAt: '07-06-2020',
                 updatedAt: '02-10-2020',
                 _id: 1,
-                includes: ['Logins' ]
+                includes: ['Logins']
             }
         }
     },
@@ -145,7 +145,7 @@ export const orders = [
                 createdAt: '07-06-2020',
                 updatedAt: '02-10-2020',
                 _id: 1,
-                includes: ['Logins' ]
+                includes: ['Logins', 'Name']
             }
         }
     },
@@ -179,7 +179,7 @@ export const orders = [
         updatedAt: '08-29-2020',
         status: 'Pending',
         type: 'Login',
-        price: 17,
+        price: 4,
         user: {
             name: 'Stanley Hayford'
         },
@@ -187,8 +187,8 @@ export const orders = [
             login: {
                 status: 'Available',
                 type: 'Checkings',
-                balance: 45,
-                price: 5,
+                balance: 890,
+                price: 4,
                 bank: {
                     name: 'Chase',
                     country: 'USA'
@@ -196,7 +196,7 @@ export const orders = [
                 createdAt: '07-06-2020',
                 updatedAt: '02-10-2020',
                 _id: 1,
-                includes: ['Logins' ]
+                includes: ['Logins','Email', 'Phone']
             }
         }
     },
@@ -205,7 +205,7 @@ export const orders = [
         updatedAt: '08-29-2020',
         status: 'Pending',
         type: 'Login',
-        price: 12,
+        price: 7,
         user: {
             name: 'Victoria Sampson'
         },
@@ -213,8 +213,8 @@ export const orders = [
             login: {
                 status: 'Available',
                 type: 'Checkings',
-                balance: 45,
-                price: 5,
+                balance: 896,
+                price: 7,
                 bank: {
                     name: 'Chase',
                     country: 'USA'
@@ -222,7 +222,7 @@ export const orders = [
                 createdAt: '07-06-2020',
                 updatedAt: '02-10-2020',
                 _id: 1,
-                includes: ['Logins' ]
+                includes: ['Logins', 'Pins', 'Phone']
             }
         }
     },
@@ -231,10 +231,10 @@ export const orders = [
         updatedAt: '08-29-2020',
         status: 'Pending',
         type: 'Dump',
-        price: 9,
+        price: 43,
         user: {
             name: 'Antoinette Dewortor'
-        },item: {
+        }, item: {
             ccDumps: {
                 service: 'Track 1&2 Code 201 with Pin',
                 bin: 372741,
@@ -242,7 +242,7 @@ export const orders = [
                 countryMark: 'USA DEBIT',
                 dumpedIn: 'USA,MD,Baltimore,21218',
                 bankBase: 'AMERICAN EXPRESS COMPANY',
-                quantity: 45,
+                quantity: 43,
                 price: 150,
                 createdAt: '08-08-2020',
                 _id: 1,
@@ -255,7 +255,7 @@ export const orders = [
         updatedAt: '08-29-2020',
         status: 'Pending',
         type: 'Dump',
-        price: 17,
+        price: 12,
         user: {
             name: 'Stanley Hayford'
         },
@@ -267,8 +267,8 @@ export const orders = [
                 countryMark: 'USA DEBIT',
                 dumpedIn: 'USA,MD,Baltimore,21218',
                 bankBase: 'AMERICAN EXPRESS COMPANY',
-                quantity: 45,
-                price: 150,
+                quantity: 6,
+                price: 45,
                 createdAt: '08-08-2020',
                 _id: 1,
                 status: 'Available'
@@ -280,7 +280,7 @@ export const orders = [
         updatedAt: '08-29-2020',
         status: 'Pending',
         type: 'Login',
-        price: 12,
+        price: 78,
         user: {
             name: 'Emmanuella Sangmuah'
         },
@@ -288,8 +288,8 @@ export const orders = [
             login: {
                 status: 'Available',
                 type: 'Checkings',
-                balance: 45,
-                price: 5,
+                balance: 459,
+                price: 78,
                 bank: {
                     name: 'Chase',
                     country: 'USA'
@@ -297,7 +297,7 @@ export const orders = [
                 createdAt: '07-06-2020',
                 updatedAt: '02-10-2020',
                 _id: 1,
-                includes: ['Logins' ]
+                includes: ['Logins', 'Address']
             }
         }
     }

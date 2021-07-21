@@ -8,10 +8,19 @@ const INITIAL_STATE = {
 };
 
 const ordersReducer = (state = INITIAL_STATE, action) => {
-    switch (action.type){
+    switch (action.type) {
         default:
             return state;
     }
+}
+
+export const selectBankLogins = orders => {
+    return orders.filter(order => order.type === 'Login');
+}
+
+
+export const selectCCDumps = orders => {
+    return orders.filter(order => order.type === 'Dump');
 }
 
 export default ordersReducer;
