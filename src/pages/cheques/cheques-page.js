@@ -7,9 +7,16 @@ import {
     Divider,
     Grid,
     LinearProgress,
-    MenuItem, Paper,
-    Select, Table, TableBody, TableCell,
-    TableContainer, TableHead, TablePagination, TableRow,
+    MenuItem,
+    Paper,
+    Select,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TablePagination,
+    TableRow,
     Typography
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
@@ -19,6 +26,7 @@ import {green, grey, red} from "@material-ui/core/colors";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
+import RequestChequeDialog from "../../components/modals/request-cheques-dialog";
 
 const ChequesPage = () => {
 
@@ -96,6 +104,17 @@ const ChequesPage = () => {
         setPage(page);
     }
 
+    const [openRequestChequeDialog, setOpenRequestChequeDialog] = useState(false);
+
+
+    const handleRequestChequeDialogClose = () => {
+        setOpenRequestChequeDialog(false);
+    }
+
+    const handleOpenRequestChequeDialogOpen = () => {
+        setOpenRequestChequeDialog(true);
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
@@ -128,6 +147,7 @@ const ChequesPage = () => {
                         </Grid>
                         <Grid item={true} xs={12} md={3}>
                             <Button
+                                onClick={handleOpenRequestChequeDialogOpen}
                                 startIcon={<Add/>}
                                 variant="contained"
                                 fullWidth={true}
@@ -202,6 +222,11 @@ const ChequesPage = () => {
                         </TableContainer>
                     )}
                 </Box>
+
+                <RequestChequeDialog
+                    handleClose={handleRequestChequeDialogClose}
+                    open={openRequestChequeDialog}
+                />
             </Container>
         </Layout>
     )
