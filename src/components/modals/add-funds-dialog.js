@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Button, Dialog, DialogContent, Divider, TextField, Typography} from "@material-ui/core";
+import {Button, Dialog, DialogActions, DialogContent, Divider, TextField, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {createFund} from "../../redux/funds/funds-action-creators";
@@ -168,9 +168,9 @@ const AddFundsDialog = ({open, handleClose}) => {
                 <Typography gutterBottom={true} variant="body2">
                     Please have patience for our 2 confirmations.
                 </Typography>
-
-                <Divider variant="fullWidth" className={classes.divider}/>
-
+            </DialogContent>
+            <Divider variant="fullWidth" className={classes.divider}/>
+            <DialogActions>
                 <Button
                     className={classes.closeButton}
                     onClick={handleCloseClick}
@@ -178,7 +178,7 @@ const AddFundsDialog = ({open, handleClose}) => {
                     size="small">
                     Close
                 </Button>
-            </DialogContent>
+            </DialogActions>
         </Dialog>
     )
 }

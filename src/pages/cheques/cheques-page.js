@@ -26,7 +26,7 @@ import {green, grey, red} from "@material-ui/core/colors";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
-import RequestChequeDialog from "../../components/modals/request-cheques-dialog";
+import RequestChequeDialog from "../../components/modals/request-cheque-dialog";
 
 const ChequesPage = () => {
 

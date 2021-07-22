@@ -26,6 +26,7 @@ import {green, grey, red} from "@material-ui/core/colors";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
+import AddFundsDialog from "../../components/modals/add-funds-dialog";
 
 const FundsPage = () => {
 
@@ -102,11 +103,22 @@ const FundsPage = () => {
         }
     }
 
+    const [openRequestFundsDialog, setOpenRequestFundsDialog] = useState(false);
+
+
+    const handleRequestFundsDialogClose = () => {
+        setOpenRequestFundsDialog(false);
+    }
+
+    const handleOpenRequestFundsDialogOpen = () => {
+        setOpenRequestFundsDialog(true);
+    }
+
     return (
         <Layout>
             <Container className={classes.container}>
                 <Box className={classes.box}>
-                    <Grid container={true} justifyContent="space-between"  alignItems="center" spacing={2}>
+                    <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
                         <Grid item={true} xs={12} md={6}>
                             <Typography
                                 color="textSecondary"
@@ -132,6 +144,7 @@ const FundsPage = () => {
                         </Grid>
                         <Grid item={true} xs={12} md={3}>
                             <Button
+                                onClick={handleOpenRequestFundsDialogOpen}
                                 startIcon={<Add/>}
                                 variant="contained"
                                 fullWidth={true}
@@ -207,6 +220,11 @@ const FundsPage = () => {
                     )}
                 </Box>
             </Container>
+
+            <AddFundsDialog
+                handleClose={handleRequestFundsDialogClose}
+                open={openRequestFundsDialog}
+            />
         </Layout>
     )
 }
