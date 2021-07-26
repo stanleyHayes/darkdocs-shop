@@ -13,6 +13,7 @@ import {
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {requestCheque} from "../../redux/cheques/cheques-action-creators";
+import {useSnackbar} from "notistack";
 
 const RequestChequeDialog = ({open, handleClose}) => {
 
@@ -64,35 +65,41 @@ const RequestChequeDialog = ({open, handleClose}) => {
     });
     const classes = useStyles();
     const dispatch = useDispatch();
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const [cheque, setCheque] = useState({balance: 'NONE', price: '0'});
     const [e, setError] = useState({});
-    const [hasError, setHasError] = useState(false);
 
     const {token} = useSelector(state => state.auth);
 
     const handleChange = event => {
-        setCheque(event.target.value);
+        setCheque({...cheque, address: event.target.value});
     }
 
     const handleSubmit = event => {
         event.preventDefault();
 
         if (!cheque.address) {
-            setHasError(true);
-            setError({...e, address: 'Field required'})
-        }
-
-        if (!cheque.balance) {
-            setHasError(true);
-            setError({...e, amount: 'Field required'})
-        }
-
-        if (hasError) {
+            setError({e, address: 'Field required'});
+            showNotification('Address field required', {variant: 'error'});
             return;
         } else {
-            dispatch(requestCheque(cheque, token));
+            setError({e, address: null});
         }
+
+        if (cheque.balance === 'NONE') {
+            setError({e, balance: 'Field required'});
+            showNotification('Balance field required', {variant: 'error'});
+            return;
+        } else {
+            setError({e, balance: null});
+        }
+        dispatch(requestCheque(cheque, token, showNotification));
+        handleClose();
     }
 
     const handleCloseClick = () => {
@@ -160,6 +167,7 @@ const RequestChequeDialog = ({open, handleClose}) => {
                         onChange={handleBalanceChange}
                         variant="outlined"
                         name="balance"
+                        error={Boolean(e.balance)}
                         value={cheque.balance}>
                         <MenuItem value="NONE">Select Balance</MenuItem>
                         <MenuItem value="$1k - $5k">$1k - $5k</MenuItem>

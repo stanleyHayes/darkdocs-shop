@@ -21,12 +21,13 @@ import {
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {getOrders} from "../../redux/orders/order-action-creators";
 import {green, grey, red} from "@material-ui/core/colors";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import RequestChequeDialog from "../../components/modals/request-cheque-dialog";
+import {getCheques} from "../../redux/cheques/cheques-action-creators";
+import {useSnackbar} from "notistack";
 
 const ChequesPage = () => {
 
@@ -59,43 +60,59 @@ const ChequesPage = () => {
             },
             requestChequeButton: {},
             pending: {
-                color: grey['600'],
+                backgroundColor: grey['600'],
+                color: 'white',
+                fontWeight: 'bold',
+                padding: 8,
+                borderRadius: 32
             },
             completed: {
-                color: green['600'],
+                backgroundColor: green['600'],
+                color: 'white',
+                fontWeight: 'bold',
+                padding: 8,
+                borderRadius: 32
             },
             cancelled: {
-                color: red['600'],
+                backgroundColor: red['600'],
+                color: 'white',
+                fontWeight: 'bold',
+                padding: 8,
+                borderRadius: 32
             },
         }
     });
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {token} = useSelector(state => state.auth);
-
+    const {token, user} = useSelector(state => state.auth);
     const [status, setStatus] = useState('All');
 
+    const query = `${status === 'All' ? '' : `status=${status}&user=${user._id}`}`;
+    const {enqueueSnackbar} = useSnackbar();
 
     const handleStatusChange = event => {
         setStatus(event.target.value);
     }
 
     useEffect(() => {
-        dispatch(getOrders(token));
-    }, [dispatch, token])
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getCheques(token, query, showNotification));
+    }, [dispatch, token, enqueueSnackbar, query]);
 
     const {cheques, loading, error} = useSelector(state => state.cheques);
 
     const renderStatus = status => {
         switch (status) {
             case 'Completed':
-                return <Typography variant="body2" className={classes.completed}>{status}</Typography>
+                return <Typography display="inline" variant="body2" className={classes.completed}>{status}</Typography>
             case 'Cancelled':
-                return <Typography variant="body2" className={classes.cancelled}>{status}</Typography>
+                return <Typography display="inline" variant="body2" className={classes.cancelled}>{status}</Typography>
             case 'Pending':
-                return <Typography variant="body2" className={classes.pending}>{status}</Typography>
+                return <Typography display="inline" variant="body2" className={classes.pending}>{status}</Typography>
             default:
-                return <Typography variant="body2" className={classes.pending}>{status}</Typography>
+                return <Typography variant="body2" display="inline" className={classes.pending}>{status}</Typography>
         }
     }
 
@@ -126,8 +143,7 @@ const ChequesPage = () => {
                             <Typography
                                 color="textSecondary"
                                 className={classes.title}
-                                variant="h5"
-                                gutterBottom={true}>
+                                variant="h5">
                                 Cheques
                             </Typography>
                         </Grid>
@@ -149,7 +165,7 @@ const ChequesPage = () => {
                             <Button
                                 onClick={handleOpenRequestChequeDialogOpen}
                                 startIcon={<Add/>}
-                                variant="contained"
+                                variant="outlined"
                                 fullWidth={true}
                                 className={classes.requestChequeButton}>
                                 Request Cheque
@@ -163,7 +179,7 @@ const ChequesPage = () => {
                     {loading && <LinearProgress variant="query"/>}
                     {cheques && cheques.length === 0 ? (
                         <Box>
-                            <Typography color="textSecondary" variant="h6" align="center">
+                            <Typography className={classes.title} color="textSecondary" variant="h6">
                                 No Cheques
                             </Typography>
                         </Box>
@@ -175,6 +191,7 @@ const ChequesPage = () => {
                                         <TableCell>#</TableCell>
                                         <TableCell>Address</TableCell>
                                         <TableCell>Balance</TableCell>
+                                        <TableCell>Price</TableCell>
                                         <TableCell>Status</TableCell>
                                         <TableCell>Date Created</TableCell>
                                         <TableCell>Date Updated</TableCell>
@@ -191,10 +208,13 @@ const ChequesPage = () => {
                                                     {cheque.balance}
                                                 </TableCell>
                                                 <TableCell>
+                                                    ${parseFloat(cheque.price).toFixed(2)}
+                                                </TableCell>
+                                                <TableCell>
                                                     {renderStatus(cheque.status)}
                                                 </TableCell>
-                                                <TableCell>{moment(new Date(cheque.createdAt)).fromNow()}</TableCell>
-                                                <TableCell>{moment(new Date(cheque.updatedAt)).fromNow()}</TableCell>
+                                                <TableCell>{moment(cheque.createdAt).fromNow()}</TableCell>
+                                                <TableCell>{moment(cheque.updatedAt).fromNow()}</TableCell>
                                                 <TableCell>
                                                     <Grid container={true} spacing={1}>
                                                         <Grid item={true}>

@@ -38,7 +38,7 @@ const requestChequeFailure = error => {
     }
 }
 
-export const requestCheque = (cheque, token) => {
+export const requestCheque = (cheque, token, showNotification) => {
     return dispatch => {
         dispatch(requestChequeRequest());
         axios({
@@ -47,9 +47,11 @@ export const requestCheque = (cheque, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: cheque
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(requestChequeSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(requestChequeFailure(error.response.data.message));
         });
     }
@@ -188,17 +190,19 @@ const getChequesFailure = error => {
     }
 }
 
-export const getCheques = (token) => {
+export const getCheques = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getChequesRequest());
         axios({
             method: 'get',
-            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/cheques`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/cheques?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(getChequesSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getChequesFailure(error.response.data.message));
         });
     }
