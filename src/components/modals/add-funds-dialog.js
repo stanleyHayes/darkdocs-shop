@@ -3,6 +3,7 @@ import {Button, Dialog, DialogActions, DialogContent, Divider, TextField, Typogr
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {createFund} from "../../redux/funds/funds-action-creators";
+import {useSnackbar} from "notistack";
 
 const AddFundsDialog = ({open, handleClose}) => {
 
@@ -55,7 +56,12 @@ const AddFundsDialog = ({open, handleClose}) => {
     const [address, setAddress] = useState("");
     const [amount, setAmount] = useState("");
     const [e, setError] = useState({});
-    const [hasError, setHasError] = useState(false);
+
+    const {enqueueSnackbar} = useSnackbar();
+
+    const shoNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const {token} = useSelector(state => state.auth);
 
@@ -71,20 +77,21 @@ const AddFundsDialog = ({open, handleClose}) => {
         event.preventDefault();
 
         if (!address) {
-            setHasError(true);
-            setError({...e, address: 'Field required'})
+            setError({e, address: 'Field required'});
+            return;
+        } else {
+            setError({e, address: null});
         }
 
         if (!amount) {
-            setHasError(true);
-            setError({...e, amount: 'Field required'})
-        }
-
-        if (hasError) {
+            setError({e, amount: 'Field required'});
             return;
         } else {
-            dispatch(createFund(token, {address, amount}, handleClose));
+            setError({e, amount: null});
         }
+
+        dispatch(createFund({address, amount}, token, shoNotification));
+        handleClose();
     }
 
     const handleCloseClick = () => {

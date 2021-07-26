@@ -5,9 +5,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {ThemeProvider} from "@material-ui/styles";
-import {createTheme} from "@material-ui/core";
+import {createTheme, Slide} from "@material-ui/core";
 import {Provider} from "react-redux";
 import store from "./redux/store";
+import {SnackbarProvider} from "notistack";
 
 
 const theme = createTheme({
@@ -47,7 +48,11 @@ ReactDOM.render(
         <Provider store={store}>
             <BrowserRouter>
                 <ThemeProvider theme={theme}>
-                    <App/>
+                    <SnackbarProvider
+                        TransitionComponent={Slide}
+                        anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
+                        <App/>
+                    </SnackbarProvider>
                 </ThemeProvider>
             </BrowserRouter>
         </Provider>

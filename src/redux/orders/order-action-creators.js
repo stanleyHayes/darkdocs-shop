@@ -1,12 +1,21 @@
 import axios from "axios";
 import {DARKDOCS_SHOP_BASE_URL_SERVER} from "../../constants/constants";
 import {
-    CREATE_ORDER_FAILURE, CREATE_ORDER_REQUEST, CREATE_ORDER_SUCCESS,
-    DELETE_ORDER_FAILURE, DELETE_ORDER_REQUEST,
-    DELETE_ORDER_SUCCESS, GET_ORDER_FAILURE, GET_ORDER_REQUEST, GET_ORDER_SUCCESS,
+    CREATE_ORDER_FAILURE,
+    CREATE_ORDER_REQUEST,
+    CREATE_ORDER_SUCCESS,
+    DELETE_ORDER_FAILURE,
+    DELETE_ORDER_REQUEST,
+    DELETE_ORDER_SUCCESS,
+    GET_ORDER_FAILURE,
+    GET_ORDER_REQUEST,
+    GET_ORDER_SUCCESS,
     GET_ORDERS_FAILURE,
     GET_ORDERS_REQUEST,
-    GET_ORDERS_SUCCESS, UPDATE_ORDER_FAILURE, UPDATE_ORDER_REQUEST, UPDATE_ORDER_SUCCESS
+    GET_ORDERS_SUCCESS,
+    UPDATE_ORDER_FAILURE,
+    UPDATE_ORDER_REQUEST,
+    UPDATE_ORDER_SUCCESS
 } from "./order-action-types";
 
 const createOrderRequest = () => {
@@ -179,12 +188,12 @@ const getOrdersFailure = error => {
     }
 }
 
-export const getOrders = (token) => {
+export const getOrders = (token, query) => {
     return dispatch => {
         dispatch(getOrdersRequest());
         axios({
             method: 'get',
-            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
             const {data} = res.data;

@@ -21,12 +21,13 @@ import {
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
-import {getOrders} from "../../redux/orders/order-action-creators";
 import {green, grey, red} from "@material-ui/core/colors";
 import {Alert} from "@material-ui/lab";
 import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
 import moment from "moment";
 import AddFundsDialog from "../../components/modals/add-funds-dialog";
+import {getFunds} from "../../redux/funds/funds-action-creators";
+import {useSnackbar} from "notistack";
 
 const FundsPage = () => {
 
@@ -59,23 +60,36 @@ const FundsPage = () => {
             },
             requestChequeButton: {},
             pending: {
-                color: grey['600'],
+                backgroundColor: grey['600'],
+                color: 'white',
+                fontWeight: 'bold',
+                padding: 8,
+                borderRadius: 32
             },
             completed: {
-                color: green['600'],
+                backgroundColor: green['600'],
+                color: 'white',
+                fontWeight: 'bold',
+                padding: 8,
+                borderRadius: 32
             },
             cancelled: {
-                color: red['600'],
+                backgroundColor: red['600'],
+                color: 'white',
+                fontWeight: 'bold',
+                padding: 8,
+                borderRadius: 32
             },
         }
     });
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {token} = useSelector(state => state.auth);
+    const {token, user} = useSelector(state => state.auth);
 
     const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
-
+    const query = `${status === 'All' ? '' : `status=${status}&user=${user._id}`}`;
+    const {enqueueSnackbar} = useSnackbar();
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -85,21 +99,24 @@ const FundsPage = () => {
     }
 
     useEffect(() => {
-        dispatch(getOrders(token));
-    }, [dispatch, token])
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getFunds(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, query, token])
 
     const {funds, loading, error} = useSelector(state => state.funds);
 
     const renderStatus = status => {
         switch (status) {
             case 'Completed':
-                return <Typography variant="body2" className={classes.completed}>{status}</Typography>
+                return <Typography display="inline" variant="body2" className={classes.completed}>{status}</Typography>
             case 'Cancelled':
-                return <Typography variant="body2" className={classes.cancelled}>{status}</Typography>
+                return <Typography display="inline" variant="body2" className={classes.cancelled}>{status}</Typography>
             case 'Pending':
-                return <Typography variant="body2" className={classes.pending}>{status}</Typography>
+                return <Typography display="inline" variant="body2" className={classes.pending}>{status}</Typography>
             default:
-                return <Typography variant="body2" className={classes.pending}>{status}</Typography>
+                return <Typography display="inline" variant="body2" className={classes.pending}>{status}</Typography>
         }
     }
 
@@ -117,14 +134,14 @@ const FundsPage = () => {
     return (
         <Layout>
             <Container className={classes.container}>
+                {loading && <LinearProgress color="primary" variant="query"/>}
                 <Box className={classes.box}>
                     <Grid container={true} justifyContent="space-between" alignItems="center" spacing={2}>
                         <Grid item={true} xs={12} md={6}>
                             <Typography
                                 color="textSecondary"
                                 className={classes.title}
-                                variant="h5"
-                                gutterBottom={true}>
+                                variant="h5">
                                 Funds
                             </Typography>
                         </Grid>
@@ -146,7 +163,7 @@ const FundsPage = () => {
                             <Button
                                 onClick={handleOpenRequestFundsDialogOpen}
                                 startIcon={<Add/>}
-                                variant="contained"
+                                variant="outlined"
                                 fullWidth={true}
                                 className={classes.requestChequeButton}>
                                 Request Funds
@@ -157,10 +174,10 @@ const FundsPage = () => {
                     <Divider variant="fullWidth" className={classes.divider}/>
 
                     {error && <Alert severity="error" title="Error">{error}</Alert>}
-                    {loading && <LinearProgress variant="query"/>}
+                    {loading && <LinearProgress color="primary" variant="query"/>}
                     {funds && funds.length === 0 ? (
                         <Box>
-                            <Typography color="textSecondary" variant="h6" align="center">
+                            <Typography className={classes.title} color="textSecondary" variant="h5">
                                 No Funds
                             </Typography>
                         </Box>

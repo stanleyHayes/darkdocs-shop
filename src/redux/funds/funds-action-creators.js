@@ -1,12 +1,21 @@
 import axios from "axios";
 import {DARKDOCS_SHOP_BASE_URL_SERVER} from "../../constants/constants";
 import {
-    CREATE_FUND_FAILURE, CREATE_FUND_REQUEST, CREATE_FUND_SUCCESS,
-    DELETE_FUND_FAILURE, DELETE_FUND_REQUEST,
-    DELETE_FUND_SUCCESS, GET_FUND_FAILURE, GET_FUND_REQUEST, GET_FUND_SUCCESS,
+    CREATE_FUND_FAILURE,
+    CREATE_FUND_REQUEST,
+    CREATE_FUND_SUCCESS,
+    DELETE_FUND_FAILURE,
+    DELETE_FUND_REQUEST,
+    DELETE_FUND_SUCCESS,
+    GET_FUND_FAILURE,
+    GET_FUND_REQUEST,
+    GET_FUND_SUCCESS,
     GET_FUNDS_FAILURE,
     GET_FUNDS_REQUEST,
-    GET_FUNDS_SUCCESS, UPDATE_FUND_FAILURE, UPDATE_FUND_REQUEST, UPDATE_FUND_SUCCESS
+    GET_FUNDS_SUCCESS,
+    UPDATE_FUND_FAILURE,
+    UPDATE_FUND_REQUEST,
+    UPDATE_FUND_SUCCESS
 } from "./funds-action-types";
 
 const createFundRequest = () => {
@@ -29,7 +38,7 @@ const createFundFailure = error => {
     }
 }
 
-export const createFund = (fund, token) => {
+export const createFund = (fund, token, shoNotification) => {
     return dispatch => {
         dispatch(createFundRequest());
         axios({
@@ -38,9 +47,11 @@ export const createFund = (fund, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: fund
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(createFundSuccess(data));
+            shoNotification(message, {variant: 'success'});
         }).catch(error => {
+            shoNotification(error.response.data.message, {variant: 'error'});
             dispatch(createFundFailure(error.response.data.message));
         });
     }
@@ -179,17 +190,19 @@ const getFundsFailure = error => {
     }
 }
 
-export const getFunds = (token) => {
+export const getFunds = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getFundsRequest());
         axios({
             method: 'get',
-            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/funds`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/funds?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(getFundsSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getFundsFailure(error.response.data.message));
         });
     }

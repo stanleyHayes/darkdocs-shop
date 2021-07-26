@@ -12,22 +12,22 @@ import RegisterPage from "./pages/authentication/register-page";
 import LoginPage from "./pages/authentication/login-page";
 import ScrollToTop from "./components/shared/scroll-to-top";
 import ResetPasswordPage from "./pages/authentication/reset-password-page";
-import {DARKDOCS_SHOP_TOKEN_KEY} from "./constants/constants";
 import ChequesPage from "./pages/cheques/cheques-page";
 import FundsPage from "./pages/funds/funds-page";
 import ProductsPage from "./pages/products/products-page";
+import {useSelector} from "react-redux";
 
 function App() {
 
     const history = useHistory();
-    const token = localStorage.getItem(DARKDOCS_SHOP_TOKEN_KEY);
+    const {loading, token} = useSelector(state => state.auth);
+
     useEffect(() => {
-        if (token) {
-            history.push('/');
-        } else {
+        if (!loading && !token) {
             history.push('/auth/login');
         }
-    }, [history, token]);
+    }, [loading, history, token]);
+
     return (
         <ScrollToTop>
             <Switch>
