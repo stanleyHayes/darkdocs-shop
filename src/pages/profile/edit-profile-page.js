@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
-import {Button, Card, CardContent, Container, Grid, TextField, Typography} from "@material-ui/core";
+import {Button, Card, CardContent, Container, Grid, LinearProgress, TextField, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {useHistory} from "react-router-dom";
 import {updateProfile} from "../../redux/authentication/auth-action-creators";
+import {useSnackbar} from "notistack";
+import {Alert} from "@material-ui/lab";
 
 const EditProfilePage = () => {
 
@@ -50,11 +52,16 @@ const EditProfilePage = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const {enqueueSnackbar} = useSnackbar();
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
     }
 
-    const {loading, user: data, token} = useSelector(state => state.auth);
+    const {loading, user: data, token, error: authError} = useSelector(state => state.auth);
 
     useEffect(() => {
         if (data) {
@@ -85,20 +92,20 @@ const EditProfilePage = () => {
         }
         if (data.username !== username && !username) {
             setHasError(true);
-            setError({...error, 'username': 'Field required'});
+            setError({error, 'username': 'Field required'});
         }
         if (data.email !== email) {
             setHasError(true);
-            setError({...error, 'email': 'Field required'});
+            setError({error, 'email': 'Field required'});
         }
         if (data.name !== name) {
             setHasError(true);
-            setError({...error, 'name': 'Field required'});
+            setError({error, 'name': 'Field required'});
         }
         if (hasError) {
-
+            showNotification('Incorrect fields', {variant: 'error'});
         } else {
-            dispatch(updateProfile(updatedUser, token, history));
+            dispatch(updateProfile(updatedUser, token, history, showNotification));
         }
     }
 
@@ -108,7 +115,9 @@ const EditProfilePage = () => {
                 <Grid container={true} justifyContent="center">
                     <Grid item={true} xs={12} md={8} lg={6}>
                         <Card elevation={1} variant="elevation">
+                            {loading && <LinearProgress variant="buffer"/>}
                             <CardContent>
+                                {authError && <Alert variant="standard" severity="error">{authError}</Alert>}
                                 <Typography gutterBottom={true} className={classes.title} variant="h5" align="center">
                                     Edit Profile
                                 </Typography>

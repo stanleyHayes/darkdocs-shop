@@ -48,7 +48,7 @@ const signInFailure = error => {
     }
 }
 
-export const signIn = (user, history) => {
+export const signIn = (user, history, showNotification) => {
     return dispatch => {
         dispatch(signInRequest());
         axios({
@@ -56,13 +56,12 @@ export const signIn = (user, history) => {
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/login`,
             data: user
         }).then(res => {
-            const {data, token} = res.data;
-            if (data) {
-                dispatch(signInSuccess(data, token));
-                localStorage.setItem(DARKDOCS_SHOP_TOKEN_KEY, JSON.stringify(token));
-                localStorage.setItem(DARKDOCS_SHOP_USER_KEY, JSON.stringify(data));
-                history.push('/');
-            }
+            const {data, token, message} = res.data;
+            dispatch(signInSuccess(data, token));
+            localStorage.setItem(DARKDOCS_SHOP_TOKEN_KEY, JSON.stringify(token));
+            localStorage.setItem(DARKDOCS_SHOP_USER_KEY, JSON.stringify(data));
+            history.push('/');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
             dispatch(signInFailure(error.response.data.message));
         });
@@ -89,7 +88,7 @@ const signUpFailure = error => {
     }
 }
 
-export const signUp = (user, history) => {
+export const signUp = (user, history, showNotification) => {
     return dispatch => {
         dispatch(signUpRequest());
         axios({
@@ -97,11 +96,12 @@ export const signUp = (user, history) => {
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/register`,
             data: user
         }).then(res => {
-            const {data, token} = res.data;
+            const {data, token, message} = res.data;
             dispatch(signUpSuccess(data, token));
             localStorage.setItem(DARKDOCS_SHOP_TOKEN_KEY, JSON.stringify(token));
             localStorage.setItem(DARKDOCS_SHOP_USER_KEY, JSON.stringify(data));
             history.push('/auth/verify-account');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
             dispatch(signUpFailure(error.response.data.message));
         });
@@ -128,7 +128,7 @@ const verifyAccountFailure = error => {
     }
 }
 
-export const verifyAccount = (otp, token, history) => {
+export const verifyAccount = (otp, token, history, showNotification) => {
     return dispatch => {
         dispatch(verifyAccountRequest());
         axios({
@@ -140,9 +140,10 @@ export const verifyAccount = (otp, token, history) => {
             },
             data: {otp}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(verifyAccountSuccess(data));
             history.push('/auth/login');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
             dispatch(verifyAccountFailure(error.response.data.message));
         });
@@ -170,7 +171,7 @@ const updateProfileFailure = error => {
     }
 }
 
-export const updateProfile = (user, token, history) => {
+export const updateProfile = (user, token, history, showNotification) => {
     return dispatch => {
         dispatch(updateProfileRequest());
         axios({
@@ -182,9 +183,10 @@ export const updateProfile = (user, token, history) => {
             },
             data: user
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(updateProfileSuccess(data));
             history.push('/profile');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
             dispatch(updateProfileFailure(error.response.data.message));
         });
@@ -256,7 +258,7 @@ const forgotPasswordFailure = error => {
     }
 }
 
-export const forgotPassword = (email, history) => {
+export const forgotPassword = (email, history, showNotification) => {
     return dispatch => {
         dispatch(forgotPasswordRequest());
         axios({
@@ -267,9 +269,10 @@ export const forgotPassword = (email, history) => {
             },
             data: email
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(forgotPasswordSuccess(data));
             history.push('/auth/login');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
             dispatch(forgotPasswordFailure(error.response.data.message));
         });
