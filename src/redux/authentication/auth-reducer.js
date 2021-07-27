@@ -16,7 +16,7 @@ import {
     FORGOT_PASSWORD_FAILURE,
     CHANGE_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_REQUEST
+    FORGOT_PASSWORD_REQUEST, RESET_PASSWORD_REQUEST, RESET_PASSWORD_SUCCESS, RESET_PASSWORD_FAILURE
 } from './auth-action-types';
 
 const INITIAL_STATE = {
@@ -158,6 +158,27 @@ const authReducer = (state = INITIAL_STATE, action) => {
             }
 
         case FORGOT_PASSWORD_FAILURE:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case RESET_PASSWORD_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                error: ""
+            }
+
+        case RESET_PASSWORD_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: ""
+            }
+
+        case RESET_PASSWORD_FAILURE:
             return {
                 ...state,
                 loading: false,

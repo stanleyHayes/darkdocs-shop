@@ -10,7 +10,9 @@ const DesktopNavigationHeader = () => {
         return {
             link: {
                 textDecoration: 'none',
-                color: theme.palette.text.secondary
+                color: theme.palette.text.secondary,
+                width: '100%',
+                display: 'block'
             },
             toolbar: {
                 backgroundColor: theme.palette.primary.main

@@ -320,3 +320,46 @@ export const signOut = (user, token, history) => {
         });
     }
 }
+
+
+const resetPasswordRequest = () => {
+    return {
+        type: FORGOT_PASSWORD_REQUEST
+    }
+}
+
+const resetPasswordSuccess = user => {
+    return {
+        type: FORGOT_PASSWORD_SUCCESS,
+        payload: user
+    }
+}
+
+const resetPasswordFailure = error => {
+    return {
+        type: FORGOT_PASSWORD_FAILURE,
+        payload: error
+    }
+}
+
+export const resetPassword = (user, history, showNotification) => {
+    return dispatch => {
+        dispatch(resetPasswordRequest());
+        axios({
+            method: 'put',
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/reset-password`,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: user
+        }).then(res => {
+            const {data, message} = res.data;
+            dispatch(resetPasswordSuccess(data));
+            history.push('/auth/login');
+            showNotification(message, {variant: 'success'});
+        }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
+            dispatch(resetPasswordFailure(error.response.data.message));
+        });
+    }
+}

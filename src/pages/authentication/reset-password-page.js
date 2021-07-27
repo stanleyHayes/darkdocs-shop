@@ -14,7 +14,9 @@ import {
 import {makeStyles} from "@material-ui/styles";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {changePassword} from "../../redux/authentication/auth-action-creators";
+import {resetPassword} from "../../redux/authentication/auth-action-creators";
+import {Alert} from "@material-ui/lab";
+import {useSnackbar} from "notistack";
 
 const ResetPasswordPage = () => {
 
@@ -54,7 +56,8 @@ const ResetPasswordPage = () => {
             },
             title: {
                 marginTop: 16,
-                marginBottom: 16
+                marginBottom: 16,
+                textTransform: 'uppercase'
             },
             image: {
                 maxHeight: '100%',
@@ -74,40 +77,59 @@ const ResetPasswordPage = () => {
     const dispatch = useDispatch();
 
     const [user, setUser] = useState({});
-    const [hasError, setHasError] = useState(false);
     const [error, setError] = useState({});
     const [visible, setVisible] = useState(false);
 
-    const {loading, error: authError, token} = useSelector(state => state.auth);
+    const {loading, error: authError} = useSelector(state => state.auth);
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
     }
 
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const handleSubmit = event => {
         event.preventDefault();
 
+        if (!user.email) {
+            setError({error, email: 'Email field required'});
+            return;
+        } else {
+            setError({error, email: null});
+        }
+
+        if (!user.otp) {
+            setError({error, otp: 'Field required'});
+            return;
+        } else {
+            setError({error, otp: null});
+        }
+
         if (!user.newPassword) {
-            setHasError(true);
-            setError({...error, "newPassword": 'Field required'});
+            setError({error, newPassword: 'Field required'});
+            return;
+        } else {
+            setError({error, newPassword: null});
         }
 
         if (!user.confirmNewPassword) {
-            setHasError(true);
-            setError({...error, "confirmNewPassword": 'Field required'});
+            setError({error, confirmNewPassword: 'Field required'});
+            return;
+        } else {
+            setError({error, newPassword: null});
         }
 
         if (user.newPassword !== user.confirmNewPassword) {
-            setHasError(true);
-            setError({...error, "currentPassword": 'Password mismatch', "confirmNewPassword": 'Password mismatch'});
-        }
-
-        if (hasError) {
+            setError({error, currentPassword: 'Password mismatch', confirmNewPassword: 'Password mismatch'});
             return;
         } else {
-            console.log(error);
-            dispatch(changePassword(user, token, history));
+            setError({error, currentPassword: null, confirmNewPassword: null});
         }
+        dispatch(resetPassword(user, history, showNotification));
     }
 
     const handleShowPassword = () => {
@@ -135,13 +157,14 @@ const ResetPasswordPage = () => {
                 </Typography>
 
                 <Grid container={true} justifyContent="center" alignItems='center'>
-                    <Grid item={true} xs={12} md={6}>
+                    <Grid item={true} xs={12} md={4}>
                         <Card variant="elevation" elevation={1}>
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
-                                {authError && <Typography variant="body2" color="error" align="center">
+                                {authError &&
+                                <Alert variant="standard" severity="error">
                                     {authError}
-                                </Typography>}
+                                </Alert>}
                                 <form onSubmit={handleSubmit}>
                                     <Typography
                                         className={classes.title}
@@ -179,8 +202,8 @@ const ResetPasswordPage = () => {
                                         name="otp"
                                         fullWidth={true}
                                         required={true}
-                                        error={Boolean(error)}
-                                        helperText={error}
+                                        error={Boolean(error.otp)}
+                                        helperText={error.otp}
                                     />
 
                                     <TextField

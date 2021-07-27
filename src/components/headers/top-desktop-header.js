@@ -11,7 +11,9 @@ const TopDesktopHeader = () => {
         return {
             link: {
                 textDecoration: 'none',
-                color: theme.palette.text.primary
+                color: theme.palette.text.primary,
+                width: '100%',
+                display: 'block'
             },
             button: {
                 color: theme.palette.text.primary
