@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Button,
@@ -15,8 +15,10 @@ import {
     Typography
 } from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
+import {useSnackbar} from "notistack";
+import {getDumps} from "../../redux/dumps/dumps-action-creators";
 
 const CCDumpsPinsProducts = () => {
 
@@ -55,6 +57,10 @@ const CCDumpsPinsProducts = () => {
         }
     });
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const {token} = useSelector(state => state.auth);
+    const query = ``;
+    const {enqueueSnackbar} = useSnackbar();
 
     const {dumps, loading, error} = useSelector(state => state.dumps);
 
@@ -62,6 +68,13 @@ const CCDumpsPinsProducts = () => {
     const handlePageChange = (event, page) => {
         setPage(page);
     }
+
+    useEffect(() => {
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getDumps(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, query, token]);
 
     return (
         <div className={classes.container}>
@@ -73,8 +86,8 @@ const CCDumpsPinsProducts = () => {
 
                 {dumps && dumps.length === 0 ? (
                     <Box>
-                        <Typography color="textSecondary" variant="h6" align="center">
-                            No CC Dumps + Pins
+                        <Typography className={classes.title} color="textSecondary" variant="h6">
+                            No CC Dumps + Pins available
                         </Typography>
                     </Box>
                 ) : (

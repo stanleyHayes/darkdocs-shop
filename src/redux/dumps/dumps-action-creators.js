@@ -188,17 +188,19 @@ const getDumpsFailure = error => {
     }
 }
 
-export const getDumps = (token) => {
+export const getDumps = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getDumpsRequest());
         axios({
             method: 'get',
-            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/dumps`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/dumps?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(getDumpsSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getDumpsFailure(error.response.data.message));
         });
     }
