@@ -188,17 +188,19 @@ const getLoginsFailure = error => {
     }
 }
 
-export const getLogins = (token) => {
+export const getLogins = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getLoginsRequest());
         axios({
             method: 'get',
-            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/logins`,
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/logins?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(getLoginsSuccess(data));
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getLoginsFailure(error.response.data.message));
         });
     }

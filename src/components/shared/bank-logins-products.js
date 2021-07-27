@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
     Box,
     Button,
@@ -19,7 +19,10 @@ import {
 } from "@material-ui/core";
 import {Alert} from "@material-ui/lab";
 import {makeStyles} from "@material-ui/styles";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {getBanks} from "../../redux/banks/banks-action-creators";
+import {getLogins} from "../../redux/logins/logins-action-creators";
+import {useSnackbar} from "notistack";
 
 const BankLoginsProducts = () => {
 
@@ -58,9 +61,16 @@ const BankLoginsProducts = () => {
     const classes = useStyles();
 
     const {logins, loading, error} = useSelector(state => state.logins);
+    const {token} = useSelector(state => state.auth);
+    const {banks} = useSelector(state => state.banks);
+    const dispatch = useDispatch();
 
     const [country, setCountry] = useState('All');
     const [bank, setBank] = useState('All');
+
+    const query = `${country === 'All' ? '' : `country=${country}`}${country !== 'All' && bank !== 'All' ? '&' : ''}${bank === 'All' ? '' : `bank=${bank}`}`;
+
+    const {enqueueSnackbar} = useSnackbar();
 
     const [page, setPage] = useState(0);
     const handlePageChange = (event, page) => {
@@ -75,10 +85,21 @@ const BankLoginsProducts = () => {
         setBank(event.target.value);
     }
 
+    useEffect(() => {
+        dispatch(getBanks(token));
+    }, [dispatch, token]);
+
+    useEffect(() => {
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getLogins(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, query, token]);
+
     return (
         <div className={classes.container}>
             {loading && <LinearProgress variant="query"/>}
-            {error && <Alert title="Error">{error}</Alert>}
+            {error && <Alert variant="standard" severity="error" title="Error">{error}</Alert>}
             <Box className={classes.box}>
                 <Grid container={true} justifyContent="space-between" spacing={2} alignItems="center">
                     <Grid item={true} xs={12} md={6}>
@@ -99,9 +120,9 @@ const BankLoginsProducts = () => {
                             variant="outlined"
                             value={country}>
                             <MenuItem value='All'>Select Country</MenuItem>
-                            <MenuItem value="Pending">Pending</MenuItem>
-                            <MenuItem value="Completed">Completed</MenuItem>
-                            <MenuItem value="Cancelled">Cancelled</MenuItem>
+                            <MenuItem value="UK">UK</MenuItem>
+                            <MenuItem value="USA">USA</MenuItem>
+                            <MenuItem value="Canada">Canada</MenuItem>
                         </Select>
                     </Grid>
                     <Grid item={true} xs={12} md={3}>
@@ -113,9 +134,11 @@ const BankLoginsProducts = () => {
                             variant="outlined"
                             value={bank}>
                             <MenuItem value='All'>Select Bank</MenuItem>
-                            <MenuItem value="Cheque">Cheque</MenuItem>
-                            <MenuItem value="Dump">CC Dump + Pins</MenuItem>
-                            <MenuItem value="Login">Bank Logins</MenuItem>
+                            {banks && banks.map((b, i) => {
+                                return (
+                                    <MenuItem key={i} value={b._id}>{b.name}</MenuItem>
+                                )
+                            })}
                         </Select>
                     </Grid>
                 </Grid>
@@ -124,8 +147,8 @@ const BankLoginsProducts = () => {
 
                 {logins && logins.length === 0 ? (
                     <Box>
-                        <Typography color="textSecondary" variant="h6" align="center">
-                            No Orders
+                        <Typography className={classes.title} color="textSecondary" variant="h6">
+                            No bank logins available
                         </Typography>
                     </Box>
                 ) : (

@@ -61,7 +61,7 @@ const ProductsPage = () => {
         <Layout>
             <Container className={classes.container}>
                 <Hidden mdUp={true}>
-                    <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="scrollable">
+                    <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="fullWidth">
                         <Tab value="logins" label="Bank Logins"/>
                         <Tab value="dumps" label="CC Dumps+ Pins"/>
                     </Tabs>
