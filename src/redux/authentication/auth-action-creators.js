@@ -212,7 +212,7 @@ const changePasswordFailure = error => {
     }
 }
 
-export const changePassword = (passwords, token, history) => {
+export const changePassword = (passwords, token, history, showNotification) => {
     return dispatch => {
         dispatch(changePasswordRequest());
         axios({
@@ -224,10 +224,12 @@ export const changePassword = (passwords, token, history) => {
             },
             data: passwords
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
             dispatch(changePasswordSuccess(data));
             history.push('/profile');
+            showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(changePasswordFailure(error.response.data.message));
         });
     }

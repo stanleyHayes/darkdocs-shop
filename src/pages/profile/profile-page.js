@@ -34,6 +34,10 @@ const ProfilePage = () => {
                 color: 'white',
                 paddingTop: 16,
                 paddingBottom: 16
+            },
+            caption:{
+                fontWeight: 'bold',
+                textTransform: 'uppercase'
             }
         }
     });
@@ -54,7 +58,7 @@ const ProfilePage = () => {
                                     User Profile
                                 </Typography>
 
-                                <Typography variant="caption">
+                                <Typography gutterBottom={true} variant="caption" className={classes.caption}>
                                     Name
                                 </Typography>
                                 {loading ? <Skeleton variant="text"/> : (
@@ -65,7 +69,7 @@ const ProfilePage = () => {
 
                                 <Divider variant="fullWidth" light={true} className={classes.divider}/>
 
-                                <Typography variant="caption">
+                                <Typography gutterBottom={true} variant="caption" className={classes.caption}>
                                     Email
                                 </Typography>
                                 {loading ? <Skeleton variant="text"/> : (
@@ -75,13 +79,80 @@ const ProfilePage = () => {
                                 )}
                                 <Divider variant="fullWidth" light={true} className={classes.divider}/>
 
-                                <Typography variant="caption">
+                                <Typography gutterBottom={true} variant="caption" className={classes.caption}>
                                     Username
                                 </Typography>
                                 {loading ? <Skeleton variant="text"/> : (
                                     <Typography variant="body1">
                                         {user && user.username}
                                     </Typography>
+                                )}
+
+
+                                <Divider variant="fullWidth" light={true} className={classes.divider}/>
+
+                                <Typography gutterBottom={true} variant="caption" className={classes.caption}>
+                                    Country
+                                </Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    user.country ?
+                                        (<Typography variant="body1">
+                                            {user && user.country}
+                                        </Typography>) : (
+                                            <Link className={classes.link} to="/edit-profile">
+                                                <Button
+                                                    className={classes.button}
+                                                    fullWidth={true}
+                                                    variant="outlined"
+                                                    size="large">
+                                                    Edit Profile
+                                                </Button>
+                                            </Link>
+                                        )
+                                )}
+
+                                <Divider variant="fullWidth" light={true} className={classes.divider}/>
+
+                                <Typography gutterBottom={true} variant="caption" className={classes.caption}>
+                                    City
+                                </Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    user.city ?
+                                        (<Typography variant="body1">
+                                            {user && user.city}
+                                        </Typography>) : (
+                                            <Link className={classes.link} to="/edit-profile">
+                                                <Button
+                                                    className={classes.button}
+                                                    fullWidth={true}
+                                                    variant="outlined"
+                                                    size="large">
+                                                    Edit Profile
+                                                </Button>
+                                            </Link>
+                                        )
+                                )}
+
+                                <Divider variant="fullWidth" light={true} className={classes.divider}/>
+
+                                <Typography gutterBottom={true} variant="caption" className={classes.caption}>
+                                    Postal Code
+                                </Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    user.postalCode ?
+                                        (<Typography variant="body1">
+                                            {user && user.postalCode}
+                                        </Typography>) : (
+                                            <Link className={classes.link} to="/edit-profile">
+                                                <Button
+                                                    className={classes.button}
+                                                    fullWidth={true}
+                                                    variant="outlined"
+                                                    size="large">
+                                                    Edit Profile
+                                                </Button>
+                                            </Link>
+                                        )
                                 )}
                             </CardContent>
                         </Card>
@@ -96,8 +167,8 @@ const ProfilePage = () => {
                                     <Button
                                         className={classes.button}
                                         fullWidth={true}
-                                        variant="text"
-                                        size="small">
+                                        variant="outlined"
+                                        size="large">
                                         Edit Profile
                                     </Button>
                                 </Link>
@@ -108,8 +179,8 @@ const ProfilePage = () => {
                                     <Button
                                         className={classes.button}
                                         fullWidth={true}
-                                        variant="text"
-                                        size="small">
+                                        variant="outlined"
+                                        size="large">
                                         Change Password
                                     </Button>
                                 </Link>
@@ -118,8 +189,8 @@ const ProfilePage = () => {
                                 <Button
                                     fullWidth={true}
                                     className={classes.button}
-                                    variant="text"
-                                    size="small">
+                                    variant="outlined"
+                                    size="large">
                                     Logout
                                 </Button>
 

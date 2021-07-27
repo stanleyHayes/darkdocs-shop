@@ -16,6 +16,8 @@ import {makeStyles} from "@material-ui/styles";
 import {useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {changePassword} from "../../redux/authentication/auth-action-creators";
+import {useSnackbar} from "notistack";
+import {Alert} from "@material-ui/lab";
 
 const ChangePasswordPage = () => {
 
@@ -66,7 +68,6 @@ const ChangePasswordPage = () => {
     const dispatch = useDispatch();
 
     const [passwords, setPasswords] = useState({});
-    const [hasError, setHasError] = useState(false);
     const [error, setError] = useState({});
     const [visible, setVisible] = useState(false);
 
@@ -75,38 +76,42 @@ const ChangePasswordPage = () => {
     const handleChange = event => {
         setPasswords({...passwords, [event.target.name]: event.target.value});
     }
+    const {enqueueSnackbar} = useSnackbar();
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
 
         if (!passwords.currentPassword) {
-            setHasError(true);
-            setError({...error, "currentPassword": 'Field required'});
+            setError({error, currentPassword: 'Field required'});
+            return;
         } else {
-            setError({...error, "currentPassword": null});
+            setError({error, currentPassword: null});
         }
 
         if (!passwords.newPassword) {
-            setHasError(true);
-            setError({...error, "newPassword": 'Field required'});
+            setError({error, newPassword: 'Field required'});
+            return;
+        }else {
+            setError({error, currentPassword: null});
         }
 
         if (!passwords.confirmNewPassword) {
-            setHasError(true);
-            setError({...error, "confirmNewPassword": 'Field required'});
+            setError({error, confirmNewPassword: 'Field required'});
+            return;
+        }else {
+            setError({error, currentPassword: null});
         }
 
         if (passwords.newPassword !== passwords.confirmNewPassword) {
-            setHasError(true);
-            setError({...error, "currentPassword": 'Password mismatch', "confirmNewPassword": 'Password mismatch'});
-        }
-
-        if (hasError) {
+            setError({error, newPassword: 'Password mismatch', confirmNewPassword: 'Password mismatch'});
             return;
-        } else {
-            console.log(error);
-            dispatch(changePassword(passwords, token, history));
+        }else {
+            setError({error, currentPassword: null});
         }
+        dispatch(changePassword(passwords, token, history, showNotification));
     }
 
     const handleShowPassword = () => {
@@ -122,14 +127,15 @@ const ChangePasswordPage = () => {
                         <Card variant="elevation" elevation={1}>
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
-                                {authError && <Typography variant="body2" color="error" align="center">
+                                {authError &&
+                                <Alert variant="standard" severity="error">
                                     {authError}
-                                </Typography>}
+                                </Alert>}
                                 <form onSubmit={handleSubmit}>
 
                                     <Grid container={true} justifyContent="center" alignItems="center">
                                         <Grid item={true}>
-                                            <Avatar className={classes.logo} src="/images/logo.png" />
+                                            <Avatar className={classes.logo} src="/images/logo.png"/>
                                         </Grid>
                                     </Grid>
 
