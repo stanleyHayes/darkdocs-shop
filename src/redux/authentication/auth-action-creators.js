@@ -262,12 +262,9 @@ export const forgotPassword = (email, history, showNotification) => {
     return dispatch => {
         dispatch(forgotPasswordRequest());
         axios({
-            method: 'put',
+            method: 'POST',
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/forgot-password`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: email
+            data: {email}
         }).then(res => {
             const {data, message} = res.data;
             dispatch(forgotPasswordSuccess(data));
@@ -346,11 +343,8 @@ export const resetPassword = (user, history, showNotification) => {
     return dispatch => {
         dispatch(resetPasswordRequest());
         axios({
-            method: 'put',
+            method: 'POST',
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/reset-password`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
             data: user
         }).then(res => {
             const {data, message} = res.data;
