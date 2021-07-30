@@ -106,6 +106,7 @@ export const signUp = (user, history, showNotification) => {
             history.push('/auth/verify-account');
             showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(signUpFailure(error.response.data.message));
         });
     }
@@ -398,10 +399,10 @@ export const getLoggedInUser = (history, token) => {
             localStorage.setItem(DARKDOCS_SHOP_TOKEN_KEY, JSON.stringify(token));
             localStorage.setItem(DARKDOCS_SHOP_USER_KEY, JSON.stringify(data));
         }).catch(error => {
+            dispatch(getLoggedInUserFailure(error.response.data.message));
+            history.push('/auth/login');
             localStorage.removeItem(DARKDOCS_SHOP_TOKEN_KEY);
             localStorage.removeItem(DARKDOCS_SHOP_USER_KEY);
-            dispatch(getLoggedInUserFailure(error.response.data.error));
-            history.push('/auth/login');
         });
     }
 }

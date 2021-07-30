@@ -4,6 +4,7 @@ import {makeStyles} from "@material-ui/styles";
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {forgotPassword} from "../../redux/authentication/auth-action-creators";
+import {Alert} from "@material-ui/lab";
 
 const ForgotPasswordPage = () => {
 
@@ -75,12 +76,12 @@ const ForgotPasswordPage = () => {
         event.preventDefault();
         if (!email) {
             setError("Field required");
-        }
-        if (error) {
             return;
         } else {
-            dispatch(forgotPassword(email, history));
+            setError(null);
         }
+        dispatch(forgotPassword(email, history));
+
     }
 
     return (
@@ -103,12 +104,13 @@ const ForgotPasswordPage = () => {
                 </Typography>
                 <Grid container={true} justifyContent="center" alignItems='center'>
                     <Grid item={true} xs={12} md={4}>
-                        <Card variant="elevation" elevation={4}>
+                        <Card variant="elevation" elevation={1}>
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
-                                {authError && <Typography variant="body2" color="error" align="center">
+                                {authError &&
+                                <Alert severity="error" variant="standard" title="Error">
                                     {authError}
-                                </Typography>}
+                                </Alert>}
                                 <form onSubmit={handleSubmit}>
                                     <Typography className={classes.title} gutterBottom={true} variant="h5"
                                                 align="center">
@@ -131,6 +133,8 @@ const ForgotPasswordPage = () => {
                                         onChange={handleChange}
                                         name="email"
                                         fullWidth={true}
+                                        helperText={error}
+                                        error={Boolean(error)}
                                     />
 
 

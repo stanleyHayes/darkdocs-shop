@@ -16,6 +16,7 @@ import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {signUp} from "../../redux/authentication/auth-action-creators";
 import {Alert} from "@material-ui/lab";
+import {useSnackbar} from "notistack";
 
 const RegisterPage = () => {
 
@@ -75,12 +76,17 @@ const RegisterPage = () => {
     const {username, email, name, password, confirmPassword} = user;
     const [visible, setVisible] = useState(false);
     const [error, setError] = useState({});
-    const [hasError, setHasError] = useState(false);
 
     const {loading, error: authError} = useSelector(state => state.auth);
 
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -90,40 +96,47 @@ const RegisterPage = () => {
         event.preventDefault();
 
         if (!username) {
-            setError({...error, username: 'Field required'});
-            setHasError(true);
+            setError({error, username: 'Field required'});
+            return;
+        } else {
+            setError({error, username: null});
         }
 
         if (!email) {
             setError({...error, email: 'Field required'});
-            setHasError(true);
+            return;
+        }else {
+            setError({error, email: null});
         }
 
         if (!name) {
             setError({...error, name: 'Field required'});
-            setHasError(true);
+            return;
+        }else {
+            setError({error, name: null});
         }
 
         if (!password) {
             setError({...error, password: 'Field required'});
-            setHasError(true);
+            return;
+        }else {
+            setError({error, password: null});
         }
 
         if (!confirmPassword) {
             setError({...error, confirmPassword: 'Field required'});
-            setHasError(true);
+            return;
+        }else {
+            setError({error, confirmPassword: null});
         }
 
         if (confirmPassword !== password) {
             setError({...error, confirmPassword: 'Password mismatch', password: 'Password mismatch'});
-            setHasError(true);
-        }
-
-        if (hasError) {
             return;
-        } else {
-            dispatch(signUp(user, history));
+        }else {
+            setError({error, confirmPassword: null,  password: null});
         }
+        dispatch(signUp(user, history, showNotification));
     }
 
     const handleShowPassword = () => {
@@ -151,11 +164,11 @@ const RegisterPage = () => {
                 </Typography>
                 <Grid container={true} justifyContent="center" alignItems='center'>
                     <Grid item={true} xs={12} md={4}>
-                        <Card elevation={2}>
+                        <Card elevation={1}>
+                            {loading && <LinearProgress variant="query"/>}
                             <CardContent>
-                                {loading && <LinearProgress variant="query"/>}
                                 {authError &&
-                                <Alert severity="error" variant="outlined" title="Error">
+                                <Alert severity="error" variant="standard" title="Error">
                                     {authError}
                                 </Alert>}
                                 <form onSubmit={handleSubmit}>

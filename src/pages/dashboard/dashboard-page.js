@@ -42,6 +42,7 @@ const DashboardPage = () => {
 
     const {loading, user} = useSelector(state => state.auth);
     const {loading: instructionsLoading, instructions} = useSelector(state => state.instructions);
+
     return (
         <Layout>
             <Container className={classes.container}>

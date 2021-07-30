@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import {Redirect, Route, useHistory} from "react-router-dom";
-import {DARKDOCS_SHOP_USER_KEY} from "../../constants/constants";
+import {DARKDOCS_SHOP_TOKEN_KEY} from "../../constants/constants";
 import {useDispatch} from "react-redux";
 import {getLoggedInUser} from "../../redux/authentication/auth-action-creators";
 
@@ -9,7 +9,7 @@ const ProtectedRoute = ({component: Component, ...rest}) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const token = JSON.stringify(localStorage.getItem(DARKDOCS_SHOP_USER_KEY));
+        const token = JSON.parse(localStorage.getItem(DARKDOCS_SHOP_TOKEN_KEY));
         if (!token)
             return history.push('/auth/login');
         dispatch(getLoggedInUser(history, token));
@@ -17,7 +17,7 @@ const ProtectedRoute = ({component: Component, ...rest}) => {
 
     return (
         <Route {...rest} render={(location, ...props) => {
-            const token = JSON.stringify(localStorage.getItem(DARKDOCS_SHOP_USER_KEY));
+            const token = JSON.stringify(localStorage.getItem(DARKDOCS_SHOP_TOKEN_KEY));
             if (!token)
                 return <Redirect to="/auth/login" from={location}/>
             else

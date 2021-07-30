@@ -16,6 +16,7 @@ import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {signIn} from "../../redux/authentication/auth-action-creators";
 import {Alert} from "@material-ui/lab";
+import {useSnackbar} from "notistack";
 
 const LoginPage = () => {
 
@@ -78,9 +79,14 @@ const LoginPage = () => {
     const {email, password} = user;
     const [visible, setVisible] = useState(false);
     const [error, setError] = useState({});
-    const [hasError, setHasError] = useState(false);
 
     const {loading, error: authError} = useSelector(state => state.auth);
+
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
 
     const handleChange = event => {
         setUser({...user, [event.target.name]: event.target.value});
@@ -92,19 +98,19 @@ const LoginPage = () => {
         event.preventDefault();
 
         if (!email) {
-            setError({...error, email: "Field required"});
-            setHasError(true);
+            setError({error, email: "Field required"});
+            return;
+        } else {
+            setError({error, email: null});
         }
 
         if (!email) {
             setError({...error, email: "Field required"});
-            setHasError(true);
-        }
-        if (hasError) {
-            return;
         } else {
-            dispatch(signIn({email, password}, history));
+            setError({error, email: null});
         }
+        dispatch(signIn({email, password}, history, showNotification));
+
     }
 
     const handleShowPassword = () => {
@@ -136,7 +142,7 @@ const LoginPage = () => {
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
                                 {authError &&
-                                <Alert severity="error" variant="outlined" title="Error">
+                                <Alert severity="error" variant="standard" title="Error">
                                     {authError}
                                 </Alert>}
                                 <Typography
@@ -159,6 +165,8 @@ const LoginPage = () => {
                                         onChange={handleChange}
                                         name="email"
                                         fullWidth={true}
+                                        error={Boolean(error.email)}
+                                        helperText={error.email}
                                     />
 
                                     <Grid container={true} spacing={2} alignItems="center">
@@ -183,6 +191,8 @@ const LoginPage = () => {
                                         onChange={handleChange}
                                         name="password"
                                         fullWidth={true}
+                                        error={Boolean(error.password)}
+                                        helperText={error.password}
                                     />
 
                                     <Link className={classes.link} to="/auth/forgot-password">
