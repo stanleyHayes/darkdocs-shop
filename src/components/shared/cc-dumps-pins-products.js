@@ -19,6 +19,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Alert} from "@material-ui/lab";
 import {useSnackbar} from "notistack";
 import {getDumps} from "../../redux/dumps/dumps-action-creators";
+import BuyCCDumpsDialog from "../modals/buy-cc-dumps-dialog";
 
 const CCDumpsPinsProducts = () => {
 
@@ -65,6 +66,7 @@ const CCDumpsPinsProducts = () => {
     const {dumps, loading, error} = useSelector(state => state.dumps);
 
     const [page, setPage] = useState(0);
+    const [selectedCCDump, setSelectedCCDump] = useState(null);
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -75,6 +77,10 @@ const CCDumpsPinsProducts = () => {
         }
         dispatch(getDumps(token, query, showNotification));
     }, [dispatch, enqueueSnackbar, query, token]);
+
+    const handleBuyCCDump = ccDump => {
+        setSelectedCCDump(ccDump);
+    }
 
     return (
         <div className={classes.container}>
@@ -128,6 +134,7 @@ const CCDumpsPinsProducts = () => {
                                             </TableCell>
                                             <TableCell>
                                                 <Button
+                                                    onClick={() => handleBuyCCDump(dump)}
                                                     color="secondary"
                                                     variant="contained"
                                                     disableElevation={true}
@@ -150,6 +157,14 @@ const CCDumpsPinsProducts = () => {
                     </TableContainer>
                 )}
             </Box>
+
+            {selectedCCDump &&
+            <BuyCCDumpsDialog
+                open={Boolean(selectedCCDump)}
+                ccDump={selectedCCDump}
+                handleClose={() => setSelectedCCDump(null)}
+            />
+            }
         </div>
     )
 }
