@@ -23,6 +23,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getBanks} from "../../redux/banks/banks-action-creators";
 import {getLogins} from "../../redux/logins/logins-action-creators";
 import {useSnackbar} from "notistack";
+import BuyLoginDialog from "../modals/buy-login-dialog";
 
 const BankLoginsProducts = () => {
 
@@ -63,6 +64,7 @@ const BankLoginsProducts = () => {
     const {logins, loading, error} = useSelector(state => state.logins);
     const {token} = useSelector(state => state.auth);
     const {banks} = useSelector(state => state.banks);
+    const [selectedLogin, setSelectedLogin] = useState(null);
     const dispatch = useDispatch();
 
     const [country, setCountry] = useState('All');
@@ -95,6 +97,10 @@ const BankLoginsProducts = () => {
         }
         dispatch(getLogins(token, query, showNotification));
     }, [dispatch, enqueueSnackbar, query, token]);
+
+    const handleBuyLogin = login => {
+        setSelectedLogin(login);
+    }
 
     return (
         <div className={classes.container}>
@@ -191,6 +197,7 @@ const BankLoginsProducts = () => {
                                             </TableCell>
                                             <TableCell>
                                                 <Button
+                                                    onClick={() => handleBuyLogin(login)}
                                                     variant="contained"
                                                     disableElevation={true}
                                                     size="small"
@@ -213,6 +220,14 @@ const BankLoginsProducts = () => {
                     </TableContainer>
                 )}
             </Box>
+            {
+                selectedLogin &&
+                <BuyLoginDialog
+                    bankLogin={selectedLogin}
+                    handleClose={() => setSelectedLogin(null)}
+                    open={Boolean(selectedLogin)}
+                />
+            }
         </div>
     )
 }
