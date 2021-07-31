@@ -14,6 +14,8 @@ import {makeStyles} from "@material-ui/styles";
 import {Link, useHistory} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {verifyAccount} from "../../redux/authentication/auth-action-creators";
+import {Alert} from "@material-ui/lab";
+import {useSnackbar} from "notistack";
 
 const VerifyAccountPage = () => {
 
@@ -69,6 +71,13 @@ const VerifyAccountPage = () => {
 
     const dispatch = useDispatch();
     const history = useHistory();
+
+    const {enqueueSnackbar} = useSnackbar();
+
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
     const classes = useStyles();
 
     const handleSubmit = event => {
@@ -76,7 +85,7 @@ const VerifyAccountPage = () => {
         if(!otp){
             setError('OTP required');
         }else {
-            dispatch(verifyAccount(otp, token, history));
+            dispatch(verifyAccount(otp, token, history, showNotification));
         }
     }
 
@@ -89,7 +98,9 @@ const VerifyAccountPage = () => {
                             {loading && <LinearProgress variant="query"/>}
                             <CardContent>
                                 {authError &&
-                                <Typography variant="body2" color="error" align="center">{authError}</Typography>}
+                                <Alert severity="error" variant="standard" title="Error">
+                                    {authError}
+                                </Alert>}
                                 <form onSubmit={handleSubmit}>
                                     <Grid container={true} spacing={4} justifyContent="center" alignItems="center">
                                         <Grid item={true}>

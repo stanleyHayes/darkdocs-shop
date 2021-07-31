@@ -5,6 +5,9 @@ import {
     FORGOT_PASSWORD_FAILURE,
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
+    GET_LOGGED_IN_USER_FAILURE,
+    GET_LOGGED_IN_USER_REQUEST,
+    GET_LOGGED_IN_USER_SUCCESS,
     SIGN_IN_FAILURE,
     SIGN_IN_REQUEST,
     SIGN_IN_SUCCESS,
@@ -103,6 +106,7 @@ export const signUp = (user, history, showNotification) => {
             history.push('/auth/verify-account');
             showNotification(message, {variant: 'success'});
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(signUpFailure(error.response.data.message));
         });
     }
@@ -262,12 +266,9 @@ export const forgotPassword = (email, history, showNotification) => {
     return dispatch => {
         dispatch(forgotPasswordRequest());
         axios({
-            method: 'put',
+            method: 'POST',
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/forgot-password`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            data: email
+            data: {email}
         }).then(res => {
             const {data, message} = res.data;
             dispatch(forgotPasswordSuccess(data));
@@ -346,11 +347,8 @@ export const resetPassword = (user, history, showNotification) => {
     return dispatch => {
         dispatch(resetPasswordRequest());
         axios({
-            method: 'put',
+            method: 'POST',
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/reset-password`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
             data: user
         }).then(res => {
             const {data, message} = res.data;
@@ -360,6 +358,51 @@ export const resetPassword = (user, history, showNotification) => {
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
             dispatch(resetPasswordFailure(error.response.data.message));
+        });
+    }
+}
+
+
+//get logged in user action creators
+export const getLoggedInUserRequest = function () {
+    return {
+        type: GET_LOGGED_IN_USER_REQUEST
+    }
+}
+
+export const getLoggedInUserSuccess = function (user, token) {
+    return {
+        type: GET_LOGGED_IN_USER_SUCCESS,
+        payload: {user, token}
+    }
+}
+
+export const getLoggedInUserFailure = function (error) {
+    return {
+        type: GET_LOGGED_IN_USER_FAILURE,
+        payload: error
+    }
+}
+
+export const getLoggedInUser = (history, token) => {
+    return dispatch => {
+        dispatch(getLoggedInUserRequest());
+        axios({
+            method: 'get',
+            url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/auth/profile`,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(response => {
+            const {data, token} = response.data;
+            dispatch(getLoggedInUserSuccess(data, token));
+            localStorage.setItem(DARKDOCS_SHOP_TOKEN_KEY, JSON.stringify(token));
+            localStorage.setItem(DARKDOCS_SHOP_USER_KEY, JSON.stringify(data));
+        }).catch(error => {
+            dispatch(getLoggedInUserFailure(error.response.data.message));
+            history.push('/auth/login');
+            localStorage.removeItem(DARKDOCS_SHOP_TOKEN_KEY);
+            localStorage.removeItem(DARKDOCS_SHOP_USER_KEY);
         });
     }
 }
