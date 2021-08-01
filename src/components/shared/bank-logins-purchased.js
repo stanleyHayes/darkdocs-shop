@@ -62,6 +62,12 @@ const BankLoginsPurchased = () => {
                 color: red['600'],
                 cursor: 'pointer'
             },
+            emptyText: {
+                textTransform: 'uppercase'
+            },
+            box: {
+                marginTop: 16
+            }
         }
     });
     const classes = useStyles();
@@ -91,8 +97,6 @@ const BankLoginsPurchased = () => {
     const handleBankChange = (event) => {
         setBank(event.target.value);
     }
-
-    console.log('Login Orders', loginOrders)
 
     return (
         <div className={classes.container}>
@@ -142,9 +146,9 @@ const BankLoginsPurchased = () => {
                 <Divider variant="fullWidth" className={classes.divider}/>
 
                 {loginOrders && loginOrders.length === 0 ? (
-                    <Box>
-                        <Typography color="textSecondary" variant="h6" align="center">
-                            No Orders
+                    <Box className={classes.box}>
+                        <Typography className={classes.emptyText} color="textSecondary" variant="h6">
+                            No bank login Orders
                         </Typography>
                     </Box>
                 ) : (

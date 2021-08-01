@@ -38,7 +38,7 @@ const createOrderFailure = error => {
     }
 }
 
-export const createOrder = (order, token) => {
+export const createOrder = (order, token, showNotification) => {
     return dispatch => {
         dispatch(createOrderRequest());
         axios({
@@ -47,9 +47,11 @@ export const createOrder = (order, token) => {
             headers: {Authorization: `Bearer ${token}`},
             data: order
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(createOrderSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(createOrderFailure(error.response.data.message));
         });
     }
@@ -188,7 +190,7 @@ const getOrdersFailure = error => {
     }
 }
 
-export const getOrders = (token, query) => {
+export const getOrders = (token, query, showNotification) => {
     return dispatch => {
         dispatch(getOrdersRequest());
         axios({
@@ -196,9 +198,11 @@ export const getOrders = (token, query) => {
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data} = res.data;
+            const {data, message} = res.data;
+            showNotification(message, {variant: 'success'});
             dispatch(getOrdersSuccess(data));
         }).catch(error => {
+            showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getOrdersFailure(error.response.data.message));
         });
     }

@@ -1,6 +1,9 @@
 import React from "react";
 import {Button, Dialog, DialogActions, DialogContent, Divider, Typography} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
+import {useSnackbar} from "notistack";
+import {useDispatch, useSelector} from "react-redux";
+import {createOrder} from "../../redux/orders/order-action-creators";
 
 const BuyCCDumpsDialog = ({open, handleClose, ccDump}) => {
 
@@ -31,8 +34,21 @@ const BuyCCDumpsDialog = ({open, handleClose, ccDump}) => {
 
     const classes = useStyles();
 
-    const handleOrderConfirm = () => {
+    const dispatch = useDispatch();
+    const {enqueueSnackbar} = useSnackbar();
 
+    const showNotification = (message, options) => {
+        enqueueSnackbar(message, options);
+    }
+
+    const {token} = useSelector(state => state.auth);
+
+
+    const handleOrderConfirm = () => {
+        dispatch(createOrder(
+            {item: ccDump._id, price: ccDump.price, type: 'Dump'},
+            token,
+            showNotification));
         handleClose();
     }
 

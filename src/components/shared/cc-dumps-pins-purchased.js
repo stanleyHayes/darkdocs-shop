@@ -48,7 +48,9 @@ const CCDumpsPinsPurchased = () => {
             title: {
                 textTransform: 'uppercase'
             },
-            box: {},
+            box: {
+                marginTop: 16
+            },
             editIcon: {
                 color: brown['600'],
                 cursor: 'pointer'
@@ -61,6 +63,9 @@ const CCDumpsPinsPurchased = () => {
                 color: red['600'],
                 cursor: 'pointer'
             },
+            emptyText: {
+            textTransform: 'uppercase'
+        }
         }
     });
     const classes = useStyles();
@@ -86,14 +91,14 @@ const CCDumpsPinsPurchased = () => {
     return (
         <div className={classes.container}>
             {loading && <LinearProgress variant="query"/>}
-            {error && <Alert severity="error" title="Error">{error}</Alert>}
-            <Box className={classes.box}>
+            {error && <Alert variant="standard" severity="error" title="Error">{error}</Alert>}
+            <Box>
 
                 <Divider variant="fullWidth" className={classes.divider}/>
 
                 {dumpOrders && dumpOrders.length === 0 ? (
-                    <Box>
-                        <Typography color="textSecondary" variant="h6" align="center">
+                    <Box className={classes.box}>
+                        <Typography color="textSecondary" variant="h6" className={classes.emptyText}>
                             No CC Dumps + Pins
                         </Typography>
                     </Box>
