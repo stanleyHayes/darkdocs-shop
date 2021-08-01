@@ -20,8 +20,9 @@ import {Alert} from "@material-ui/lab";
 import {makeStyles} from "@material-ui/styles";
 import {useSelector} from "react-redux";
 import {selectBankLogins} from "../../redux/orders/order-reducer";
-import {Delete, Edit, Visibility} from "@material-ui/icons";
+import {Visibility} from "@material-ui/icons";
 import {brown, green, red} from "@material-ui/core/colors";
+import ViewOrderDetailDialog from "../modals/view-order-detail-dialog";
 
 const BankLoginsPurchased = () => {
 
@@ -73,8 +74,9 @@ const BankLoginsPurchased = () => {
     const classes = useStyles();
 
     const {loading, error} = useSelector(state => state.logins);
-    const {orders} = useSelector(state => state.orders);
+    const {orders, loading: orderLoading} = useSelector(state => state.orders);
     const [loginOrders, setLoginOrders] = useState([]);
+    const [selectedOrder, setSelectedOrder] = useState(null);
 
     useEffect(() => {
         if (orders) {
@@ -101,6 +103,7 @@ const BankLoginsPurchased = () => {
     return (
         <div className={classes.container}>
             {loading && <LinearProgress variant="query"/>}
+            {orderLoading && <LinearProgress variant="query"/>}
             {error && <Alert severity="error" title="Error">{error}</Alert>}
             <Box className={classes.box}>
                 <Grid container={true} justifyContent="space-between" spacing={2} alignItems="center">
@@ -145,6 +148,8 @@ const BankLoginsPurchased = () => {
 
                 <Divider variant="fullWidth" className={classes.divider}/>
 
+                {orderLoading && <LinearProgress variant="query"/>}
+
                 {loginOrders && loginOrders.length === 0 ? (
                     <Box className={classes.box}>
                         <Typography className={classes.emptyText} color="textSecondary" variant="h6">
@@ -158,10 +163,10 @@ const BankLoginsPurchased = () => {
                                 <TableRow>
                                     <TableCell>#</TableCell>
                                     <TableCell>Price</TableCell>
-                                    <TableCell>Item Type</TableCell>
-                                    <TableCell>Item Balance</TableCell>
-                                    <TableCell>Item Bank</TableCell>
-                                    <TableCell>Item Includes</TableCell>
+                                    <TableCell>Type</TableCell>
+                                    <TableCell>Balance</TableCell>
+                                    <TableCell>Bank</TableCell>
+                                    <TableCell>Includes</TableCell>
                                     <TableCell/>
                                 </TableRow>
                             </TableHead>
@@ -191,14 +196,8 @@ const BankLoginsPurchased = () => {
                                                 <Grid container={true} spacing={1}>
                                                     <Grid item={true}>
                                                         <Visibility
+                                                            onClick={() => setSelectedOrder(login)}
                                                             className={classes.viewIcon}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Edit className={classes.editIcon}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete
-                                                            className={classes.deleteIcon}/>
                                                     </Grid>
                                                 </Grid>
                                             </TableCell>
@@ -216,6 +215,12 @@ const BankLoginsPurchased = () => {
                     </TableContainer>
                 )}
             </Box>
+            {selectedOrder &&
+            <ViewOrderDetailDialog
+                order={selectedOrder}
+                open={Boolean(selectedOrder)}
+                handleClose={() => setSelectedOrder(null)}
+            />}
         </div>
     )
 }

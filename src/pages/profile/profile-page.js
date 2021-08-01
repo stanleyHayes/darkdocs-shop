@@ -88,6 +88,16 @@ const ProfilePage = () => {
                                     </Typography>
                                 )}
 
+                                <Divider variant="fullWidth" light={true} className={classes.divider}/>
+
+                                <Typography gutterBottom={true} variant="caption" className={classes.caption}>
+                                    Balance
+                                </Typography>
+                                {loading ? <Skeleton variant="text"/> : (
+                                    <Typography variant="body1">
+                                        ${parseFloat(user.balance).toFixed(2)}
+                                    </Typography>
+                                )}
 
                                 <Divider variant="fullWidth" light={true} className={classes.divider}/>
 

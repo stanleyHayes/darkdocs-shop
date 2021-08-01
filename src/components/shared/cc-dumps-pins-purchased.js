@@ -19,7 +19,8 @@ import {makeStyles} from "@material-ui/styles";
 import {useSelector} from "react-redux";
 import {selectCCDumps} from "../../redux/orders/order-reducer";
 import {brown, green, red} from "@material-ui/core/colors";
-import {Delete, Edit, Visibility} from "@material-ui/icons";
+import {Visibility} from "@material-ui/icons";
+import ViewOrderDetailDialog from "../modals/view-order-detail-dialog";
 
 const CCDumpsPinsPurchased = () => {
 
@@ -64,14 +65,15 @@ const CCDumpsPinsPurchased = () => {
                 cursor: 'pointer'
             },
             emptyText: {
-            textTransform: 'uppercase'
-        }
+                textTransform: 'uppercase'
+            }
         }
     });
     const classes = useStyles();
 
     const {loading, error} = useSelector(state => state.dumps);
-    const {orders} = useSelector(state => state.orders);
+    const {orders, loading: orderLoading} = useSelector(state => state.orders);
+    const [selectedOrder, setSelectedOrder] = useState(null);
 
     const [dumpOrders, setDumpOrders] = useState([]);
 
@@ -87,10 +89,10 @@ const CCDumpsPinsPurchased = () => {
         setPage(page);
     }
 
-    console.log('Dump Orders', dumpOrders)
     return (
         <div className={classes.container}>
             {loading && <LinearProgress variant="query"/>}
+            {orderLoading && <LinearProgress variant="query"/>}
             {error && <Alert variant="standard" severity="error" title="Error">{error}</Alert>}
             <Box>
 
@@ -142,14 +144,8 @@ const CCDumpsPinsPurchased = () => {
                                                 <Grid container={true} spacing={1}>
                                                     <Grid item={true}>
                                                         <Visibility
+                                                            onClick={() => setSelectedOrder(dump)}
                                                             className={classes.viewIcon}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Edit className={classes.editIcon}/>
-                                                    </Grid>
-                                                    <Grid item={true}>
-                                                        <Delete
-                                                            className={classes.deleteIcon}/>
                                                     </Grid>
                                                 </Grid>
                                             </TableCell>
@@ -167,6 +163,12 @@ const CCDumpsPinsPurchased = () => {
                     </TableContainer>
                 )}
             </Box>
+            {selectedOrder &&
+            <ViewOrderDetailDialog
+                order={selectedOrder}
+                open={Boolean(selectedOrder)}
+                handleClose={() => setSelectedOrder(null)}
+            />}
         </div>
     )
 }

@@ -45,7 +45,7 @@ const BuyLoginDialog = ({open, handleClose, bankLogin}) => {
 
     const handleOrderConfirm = () => {
         dispatch(createOrder(
-            {item: bankLogin._id, price: bankLogin.price, type: 'Login'},
+            {item: {login: bankLogin._id}, price: bankLogin.price, type: 'Login'},
             token,
             showNotification));
         handleClose();

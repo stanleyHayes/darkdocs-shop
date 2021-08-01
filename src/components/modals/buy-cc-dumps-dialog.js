@@ -46,7 +46,7 @@ const BuyCCDumpsDialog = ({open, handleClose, ccDump}) => {
 
     const handleOrderConfirm = () => {
         dispatch(createOrder(
-            {item: ccDump._id, price: ccDump.price, type: 'Dump'},
+            {item: {ccDumps: ccDump._id}, price: ccDump.price, type: 'Dump'},
             token,
             showNotification));
         handleClose();

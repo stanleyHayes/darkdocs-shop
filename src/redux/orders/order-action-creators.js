@@ -48,10 +48,11 @@ export const createOrder = (order, token, showNotification) => {
             data: order
         }).then(res => {
             const {data, message} = res.data;
+            console.log(data);
             showNotification(message, {variant: 'success'});
             dispatch(createOrderSuccess(data));
         }).catch(error => {
-            showNotification(error.response.data.message, {variant: 'error'});
+            // showNotification(error.response.data.message, {variant: 'error'});
             dispatch(createOrderFailure(error.response.data.message));
         });
     }

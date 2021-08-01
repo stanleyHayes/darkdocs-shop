@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import Layout from "../../components/layout/layout";
-import {Container, Hidden, Paper, Tab, Tabs} from "@material-ui/core";
+import {Container, Paper, Tab, Tabs} from "@material-ui/core";
 import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {getOrders} from "../../redux/orders/order-action-creators";
 import {green, grey, red} from "@material-ui/core/colors";
 import BankLoginsPurchased from "../../components/shared/bank-logins-purchased";
 import CCDumpsPinsPurchased from "../../components/shared/cc-dumps-pins-purchased";
+import {useSnackbar} from "notistack";
 
 const OrdersPage = () => {
 
@@ -50,11 +51,16 @@ const OrdersPage = () => {
     });
     const classes = useStyles();
     const dispatch = useDispatch();
-    const {token} = useSelector(state => state.auth);
+    const {enqueueSnackbar} = useSnackbar();
+    const {token, user} = useSelector(state => state.auth);
+    const query = `user=${user._id}`;
 
     useEffect(() => {
-        dispatch(getOrders(token));
-    }, [dispatch, token])
+        const showNotification = (message, options) => {
+            enqueueSnackbar(message, options);
+        }
+        dispatch(getOrders(token, query, showNotification));
+    }, [dispatch, enqueueSnackbar, query, token])
 
     const [currentTabIndex, setCurrentTabIndex] = useState('logins');
 
@@ -76,18 +82,11 @@ const OrdersPage = () => {
     return (
         <Layout>
             <Container className={classes.container}>
-                <Hidden mdUp={true}>
-                    <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="scrollable">
-                        <Tab value="logins" label="Bank Logins"/>
-                        <Tab value="dumps" label="CC Dumps+ Pins"/>
-                    </Tabs>
-                </Hidden>
-                <Hidden smDown={true}>
-                    <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="fullWidth">
-                        <Tab value="logins" label="Bank Logins"/>
-                        <Tab value="dumps" label="CC Dumps+ Pins"/>
-                    </Tabs>
-                </Hidden>
+
+                <Tabs component={Paper} value={currentTabIndex} onChange={handleTabChange} variant="fullWidth">
+                    <Tab value="logins" label="Bank Logins"/>
+                    <Tab value="dumps" label="CC Dumps+ Pins"/>
+                </Tabs>
 
                 {getCurrentTabContent(currentTabIndex)}
 
