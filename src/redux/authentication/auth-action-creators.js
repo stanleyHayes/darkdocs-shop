@@ -103,7 +103,7 @@ export const signUp = (user, history, showNotification) => {
             dispatch(signUpSuccess(data, token));
             localStorage.setItem(DARKDOCS_SHOP_TOKEN_KEY, JSON.stringify(token));
             localStorage.setItem(DARKDOCS_SHOP_USER_KEY, JSON.stringify(data));
-            history.push('/auth/verify-account');
+            history.push('/auth/login');
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
@@ -314,7 +314,8 @@ export const signOut = (user, token, history) => {
         }).then(res => {
             const {data} = res.data;
             dispatch(signOutSuccess(data));
-            localStorage.clear();
+            localStorage.removeItem(DARKDOCS_SHOP_USER_KEY);
+            localStorage.removeItem(DARKDOCS_SHOP_TOKEN_KEY);
             history.push('/auth/login');
         }).catch(error => {
             dispatch(signOutFailure(error.response.data.message));

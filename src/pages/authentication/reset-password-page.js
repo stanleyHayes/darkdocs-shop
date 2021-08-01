@@ -102,13 +102,6 @@ const ResetPasswordPage = () => {
             setError({error, email: null});
         }
 
-        if (!user.otp) {
-            setError({error, otp: 'Field required'});
-            return;
-        } else {
-            setError({error, otp: null});
-        }
-
         if (!user.newPassword) {
             setError({error, newPassword: 'Field required'});
             return;
@@ -188,22 +181,6 @@ const ResetPasswordPage = () => {
                                         fullWidth={true}
                                         error={Boolean(error.email)}
                                         helperText={error.email}
-                                    />
-
-                                    <TextField
-                                        variant="outlined"
-                                        label="OTP"
-                                        placeholder="Enter your otp"
-                                        margin="normal"
-                                        className={classes.textField}
-                                        value={user.otp}
-                                        type="number"
-                                        onChange={handleChange}
-                                        name="otp"
-                                        fullWidth={true}
-                                        required={true}
-                                        error={Boolean(error.otp)}
-                                        helperText={error.otp}
                                     />
 
                                     <TextField
