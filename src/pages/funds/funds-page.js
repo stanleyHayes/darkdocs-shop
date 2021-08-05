@@ -23,7 +23,7 @@ import {makeStyles} from "@material-ui/styles";
 import {useDispatch, useSelector} from "react-redux";
 import {green, grey, red} from "@material-ui/core/colors";
 import {Alert} from "@material-ui/lab";
-import {Add, Delete, Edit, Visibility} from "@material-ui/icons";
+import {Add} from "@material-ui/icons";
 import moment from "moment";
 import AddFundsDialog from "../../components/modals/add-funds-dialog";
 import {getFunds} from "../../redux/funds/funds-action-creators";
@@ -45,18 +45,6 @@ const FundsPage = () => {
             },
             box: {
                 marginBottom: 32
-            },
-            editIcon: {
-                color: grey['300'],
-                cursor: 'pointer'
-            },
-            viewIcon: {
-                color: green['600'],
-                cursor: 'pointer'
-            },
-            deleteIcon: {
-                color: red['600'],
-                cursor: 'pointer'
             },
             requestChequeButton: {},
             pending: {
@@ -191,8 +179,6 @@ const FundsPage = () => {
                                         <TableCell>Amount</TableCell>
                                         <TableCell>Status</TableCell>
                                         <TableCell>Date Created</TableCell>
-                                        <TableCell>Date Updated</TableCell>
-                                        <TableCell>Actions</TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -208,20 +194,6 @@ const FundsPage = () => {
                                                     {renderStatus(order.status)}
                                                 </TableCell>
                                                 <TableCell>{moment(new Date(order.createdAt)).fromNow()}</TableCell>
-                                                <TableCell>{moment(new Date(order.updatedAt)).fromNow()}</TableCell>
-                                                <TableCell>
-                                                    <Grid container={true} spacing={1}>
-                                                        <Grid item={true}>
-                                                            <Visibility className={classes.viewIcon}/>
-                                                        </Grid>
-                                                        <Grid item={true}>
-                                                            <Edit className={classes.editIcon}/>
-                                                        </Grid>
-                                                        <Grid item={true}>
-                                                            <Delete className={classes.deleteIcon}/>
-                                                        </Grid>
-                                                    </Grid>
-                                                </TableCell>
                                             </TableRow>
                                         )
                                     })}
