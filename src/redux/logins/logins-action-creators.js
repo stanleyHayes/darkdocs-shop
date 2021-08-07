@@ -174,10 +174,10 @@ const getLoginsRequest = () => {
     }
 }
 
-const getLoginsSuccess = funds => {
+const getLoginsSuccess = (logins, loginsCount) => {
     return {
         type: GET_LOGINS_SUCCESS,
-        payload: funds
+        payload: {logins, loginsCount}
     }
 }
 
@@ -196,8 +196,8 @@ export const getLogins = (token, query, showNotification) => {
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/logins?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
-            dispatch(getLoginsSuccess(data));
+            const {data, message, loginsCount} = res.data;
+            dispatch(getLoginsSuccess(data, loginsCount));
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});

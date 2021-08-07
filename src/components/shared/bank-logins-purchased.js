@@ -209,7 +209,7 @@ const BankLoginsPurchased = () => {
                                 count={loginOrders.length}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

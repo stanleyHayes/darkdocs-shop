@@ -11,7 +11,8 @@ const INITIAL_STATE = {
     funds: [],
     loading: false,
     error: null,
-    singleFund: {}
+    singleFund: {},
+    fundsCount: 0
 };
 
 const fundsReducer = (state = INITIAL_STATE, action) => {
@@ -27,8 +28,9 @@ const fundsReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loading: false,
-                funds: action.payload,
-                error: ""
+                funds: action.payload.funds,
+                error: "",
+                fundsCount: action.payload.fundsCount
             }
 
         case GET_FUNDS_FAILURE:
@@ -36,7 +38,8 @@ const fundsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: action.payload,
-                funds: []
+                funds: [],
+                fundsCount: 0
             }
 
 
@@ -52,7 +55,8 @@ const fundsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 funds: [...state.funds, action.payload],
-                error: ""
+                error: "",
+                fundsCount: state.fundsCount + 1
             }
 
         case CREATE_FUND_FAILURE:

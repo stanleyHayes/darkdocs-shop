@@ -60,12 +60,12 @@ const CCDumpsPinsProducts = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
     const {token} = useSelector(state => state.auth);
-    const query = ``;
+    const [page, setPage] = useState(0);
+    const query = `page=${page + 1}`;
     const {enqueueSnackbar} = useSnackbar();
 
-    const {dumps, loading, error} = useSelector(state => state.dumps);
+    const {dumps, loading, error, ccDumpsCount} = useSelector(state => state.dumps);
 
-    const [page, setPage] = useState(0);
     const [selectedCCDump, setSelectedCCDump] = useState(null);
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -148,10 +148,10 @@ const CCDumpsPinsProducts = () => {
                                 })}
                             </TableBody>
                             <TablePagination
-                                count={dumps.length}
+                                count={ccDumpsCount}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>

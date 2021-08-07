@@ -76,7 +76,7 @@ const FundsPage = () => {
 
     const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
-    const query = `${status === 'All' ? '' : `status=${status}&user=${user._id}`}`;
+    const query = `page=${page + 1}&${status === 'All' ? '' : `status=${status}&user=${user._id}`}`;
     const {enqueueSnackbar} = useSnackbar();
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -93,7 +93,7 @@ const FundsPage = () => {
         dispatch(getFunds(token, query, showNotification));
     }, [dispatch, enqueueSnackbar, query, token])
 
-    const {funds, loading, error} = useSelector(state => state.funds);
+    const {funds, loading, error, fundsCount} = useSelector(state => state.funds);
 
     const renderStatus = status => {
         switch (status) {
@@ -199,10 +199,10 @@ const FundsPage = () => {
                                     })}
                                 </TableBody>
                                 <TablePagination
-                                    count={funds.length}
+                                    count={fundsCount}
                                     page={page}
                                     onPageChange={handlePageChange}
-                                    rowsPerPage={10}
+                                    rowsPerPage={20}
                                 />
                             </Table>
                         </TableContainer>

@@ -176,10 +176,10 @@ const getOrdersRequest = () => {
     }
 }
 
-const getOrdersSuccess = orders => {
+const getOrdersSuccess = (orders, ordersCount) => {
     return {
         type: GET_ORDERS_SUCCESS,
-        payload: orders
+        payload: {orders, ordersCount}
     }
 }
 
@@ -198,9 +198,9 @@ export const getOrders = (token, query, showNotification) => {
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/orders?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
+            const {data, message, ordersCount} = res.data;
             showNotification(message, {variant: 'success'});
-            dispatch(getOrdersSuccess(data));
+            dispatch(getOrdersSuccess(data, ordersCount));
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getOrdersFailure(error.response.data.message));

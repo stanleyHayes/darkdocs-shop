@@ -174,10 +174,10 @@ const getDumpsRequest = () => {
     }
 }
 
-const getDumpsSuccess = dumps => {
+const getDumpsSuccess = (dumps, ccDumpsCount) => {
     return {
         type: GET_DUMPS_SUCCESS,
-        payload: dumps
+        payload: {dumps, ccDumpsCount}
     }
 }
 
@@ -196,8 +196,8 @@ export const getDumps = (token, query, showNotification) => {
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/dumps?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
-            dispatch(getDumpsSuccess(data));
+            const {data, message, ccDumpsCount} = res.data;
+            dispatch(getDumpsSuccess(data, ccDumpsCount));
             showNotification(message, {variant: 'success'});
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});

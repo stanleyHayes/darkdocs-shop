@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     logins: [],
     loading: false,
     error: null,
-    singleLogin: {}
+    singleLogin: {},
+    loginsCount: 0
 };
 
 const loginsReducer = (state = INITIAL_STATE, action) => {
@@ -22,7 +23,8 @@ const loginsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                logins: action.payload
+                logins: action.payload.logins,
+                loginsCount: action.payload.loginsCount
             }
 
         case GET_LOGINS_FAILURE:
@@ -30,7 +32,8 @@ const loginsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 logins: [],
-                error: action.payload
+                error: action.payload,
+                loginsCount: 0
             }
         default:
             return state;

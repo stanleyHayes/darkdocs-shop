@@ -176,10 +176,10 @@ const getFundsRequest = () => {
     }
 }
 
-const getFundsSuccess = funds => {
+const getFundsSuccess = (funds, fundsCount) => {
     return {
         type: GET_FUNDS_SUCCESS,
-        payload: funds
+        payload: {funds, fundsCount}
     }
 }
 
@@ -198,9 +198,9 @@ export const getFunds = (token, query, showNotification) => {
             url: `${DARKDOCS_SHOP_BASE_URL_SERVER}/funds?${query}`,
             headers: {Authorization: `Bearer ${token}`}
         }).then(res => {
-            const {data, message} = res.data;
+            const {data, message, fundsCount} = res.data;
             showNotification(message, {variant: 'success'});
-            dispatch(getFundsSuccess(data));
+            dispatch(getFundsSuccess(data, fundsCount));
         }).catch(error => {
             showNotification(error.response.data.message, {variant: 'error'});
             dispatch(getFundsFailure(error.response.data.message));

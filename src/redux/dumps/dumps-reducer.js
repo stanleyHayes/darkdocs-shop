@@ -4,7 +4,8 @@ const INITIAL_STATE = {
     dumps: [],
     loading: false,
     error: null,
-    singleDump: {}
+    singleDump: {},
+    ccDumpsCount: 0
 };
 
 const dumpsReducer = (state = INITIAL_STATE, action) => {
@@ -22,14 +23,16 @@ const dumpsReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 loading: false,
                 error: "",
-                dumps: action.payload
+                dumps: action.payload.dumps,
+                ccDumpsCount: action.payload.ccDumpsCount
             }
         case GET_DUMPS_FAILURE:
             return {
                 ...state,
                 loading: false,
                 error: action.payload,
-                dumps: []
+                dumps: [],
+                ccDumpsCount: 0
             }
         default:
             return state;

@@ -86,8 +86,9 @@ const ChequesPage = () => {
     const dispatch = useDispatch();
     const {token, user} = useSelector(state => state.auth);
     const [status, setStatus] = useState('All');
+    const [page, setPage] = useState(0);
 
-    const query = `${status === 'All' ? '' : `status=${status}&user=${user._id}`}`;
+    const query = `page=${page + 1}&${status === 'All' ? '' : `status=${status}&user=${user._id}`}`;
     const {enqueueSnackbar} = useSnackbar();
 
     const handleStatusChange = event => {
@@ -101,7 +102,7 @@ const ChequesPage = () => {
         dispatch(getCheques(token, query, showNotification));
     }, [dispatch, token, enqueueSnackbar, query]);
 
-    const {cheques, loading, error} = useSelector(state => state.cheques);
+    const {cheques, loading, error, chequesCount} = useSelector(state => state.cheques);
 
     const renderStatus = status => {
         switch (status) {
@@ -116,7 +117,6 @@ const ChequesPage = () => {
         }
     }
 
-    const [page, setPage] = useState(0);
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -233,10 +233,10 @@ const ChequesPage = () => {
                                     })}
                                 </TableBody>
                                 <TablePagination
-                                    count={cheques.length}
+                                    count={chequesCount}
                                     page={page}
                                     onPageChange={handlePageChange}
-                                    rowsPerPage={10}
+                                    rowsPerPage={20}
                                 />
                             </Table>
                         </TableContainer>

@@ -61,20 +61,19 @@ const BankLoginsProducts = () => {
     });
     const classes = useStyles();
 
-    const {logins, loading, error} = useSelector(state => state.logins);
+    const {logins, loading, error, loginsCount} = useSelector(state => state.logins);
     const {token} = useSelector(state => state.auth);
     const {banks} = useSelector(state => state.banks);
     const [selectedLogin, setSelectedLogin] = useState(null);
+    const [page, setPage] = useState(0);
     const dispatch = useDispatch();
 
     const [country, setCountry] = useState('All');
     const [bank, setBank] = useState('All');
 
-    const query = `${country === 'All' ? '' : `country=${country}`}${country !== 'All' && bank !== 'All' ? '&' : ''}${bank === 'All' ? '' : `bank=${bank}`}`;
+    const query = `page=${page + 1}&${country === 'All' ? '' : `country=${country}`}${country !== 'All' && bank !== 'All' ? '&' : ''}${bank === 'All' ? '' : `bank=${bank}`}`;
 
     const {enqueueSnackbar} = useSnackbar();
-
-    const [page, setPage] = useState(0);
     const handlePageChange = (event, page) => {
         setPage(page);
     }
@@ -211,10 +210,10 @@ const BankLoginsProducts = () => {
                                 })}
                             </TableBody>
                             <TablePagination
-                                count={logins.length}
+                                count={loginsCount}
                                 page={page}
                                 onPageChange={handlePageChange}
-                                rowsPerPage={10}
+                                rowsPerPage={20}
                             />
                         </Table>
                     </TableContainer>
