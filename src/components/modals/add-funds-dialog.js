@@ -118,7 +118,7 @@ const AddFundsDialog = ({open, handleClose}) => {
                         Our Address
                     </Typography>
                     <Typography gutterBottom={true} variant="body2">
-                        3E792v1meHHpFj2HvcM5pGdNFiafjAWjQZ
+                        bc1qdwcgmkczltr6el8xyc5xqv2qj0uac64n64vfzg
                     </Typography>
 
                     <Typography gutterBottom={true} variant="body2">
