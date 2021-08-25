@@ -34,6 +34,9 @@ const DashboardPage = () => {
             },
             title: {
                 textTransform: 'uppercase'
+            },
+            instruction: {
+                wordBreak: 'break-word'
             }
         }
     });
@@ -151,7 +154,7 @@ const DashboardPage = () => {
                                     {instructions && instructions.map((instruction, index) => {
                                         return (
                                             <ListItem button={true} divider={true} key={index}>
-                                                <ListItemText primary={instruction.text}/>
+                                                <ListItemText className={classes.instruction} primary={instruction.text}/>
                                             </ListItem>
                                         )
                                     })}
