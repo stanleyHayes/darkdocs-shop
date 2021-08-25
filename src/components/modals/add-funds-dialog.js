@@ -47,6 +47,9 @@ const AddFundsDialog = ({open, handleClose}) => {
             },
             subtitle: {
                 color: theme.palette.text.primary
+            },
+            btcAddress: {
+                wordBreak: 'break-word'
             }
         }
     });
@@ -117,7 +120,7 @@ const AddFundsDialog = ({open, handleClose}) => {
                     <Typography className={classes.subtitle} gutterBottom={true} variant="h5">
                         Our Address
                     </Typography>
-                    <Typography gutterBottom={true} variant="body2">
+                    <Typography className={classes.btcAddress} gutterBottom={true} variant="body2">
                         bc1qdwcgmkczltr6el8xyc5xqv2qj0uac64n64vfzg
                     </Typography>
 

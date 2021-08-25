@@ -76,7 +76,7 @@ const FundsPage = () => {
 
     const [status, setStatus] = useState('All');
     const [page, setPage] = useState(0);
-    const query = `page=${page + 1}&${status === 'All' ? '' : `status=${status}&user=${user._id}`}`;
+    const query = `page=${page + 1}&user=${user._id}&${status === 'All' ? '' : `status=${status}`}`;
     const {enqueueSnackbar} = useSnackbar();
     const handlePageChange = (event, page) => {
         setPage(page);
@@ -203,6 +203,7 @@ const FundsPage = () => {
                                     page={page}
                                     onPageChange={handlePageChange}
                                     rowsPerPage={20}
+                                    rowsPerPageOptions={[20]}
                                 />
                             </Table>
                         </TableContainer>
